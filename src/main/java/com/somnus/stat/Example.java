@@ -10,9 +10,9 @@ public class Example extends Base{
 	private BigDecimal value3;
 	
 	public Example(){
-		this.value = new BigDecimal(0);
-		this.value2 = new BigDecimal(0);
-		this.value3 = new BigDecimal(0);
+		this.value = BigDecimal.ZERO;
+		this.value2 = BigDecimal.ZERO;
+		this.value3 = BigDecimal.ZERO;
 	}
 
 	public BigDecimal getValue() {
@@ -38,7 +38,5 @@ public class Example extends Base{
 	public void setValue3(BigDecimal value3) {
 		this.value3 = value3;
 	}
-
-	
 	
 }

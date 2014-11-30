@@ -16,10 +16,9 @@ public class StatCount<T extends Base> {
 	 *              比如8月份没数据，要实例化一个8月份的数据，并给所有的数据默认初始化，如0
 	 * @param arr
 	 *            统计的集合 例如 一年中的月份（12），一个月中的天数（30） new String
-	 *            {"01月","02月","03月","04月"
-	 *            ,"05月","06月","07月","08月","09月","10月","11月","12月"}
+	 *            {"01月","02月","03月","04月" ,"05月","06月","07月","08月","09月","10月","11月","12月"}
 	 * @param statlist
-	 *            需要重新组装的数据
+	 *            	需要重新组装的数据
 	 * @return 新组装的数据
 	 * @throws Exception
 	 */
@@ -55,7 +54,7 @@ public class StatCount<T extends Base> {
 				type = type.substring(16);
 			}
 			if (type.equals("BigDecimal")) {
-				summap.put(field.getName(), new BigDecimal(0));
+				summap.put(field.getName(), BigDecimal.ZERO);
 			}
 		}
 		// sum = sum + value
