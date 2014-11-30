@@ -1,13 +1,14 @@
 package com.somnus.stat;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class StatCount<T extends Base> {
 
@@ -36,10 +37,8 @@ public class StatCount<T extends Base> {
 		for (int i = 0; i < statlist.size(); i++) {
 			T object = statlist.get(i);
 			String value = object.getName();
-			for (String data : datamap.keySet()) {
-				if (data.equals(value)) {
-					datamap.put(data, object);
-				}
+			if(datamap.containsKey(value)){
+				datamap.put(value, object);
 			}
 		}
 		Field[] fields = clazz.getDeclaredFields();
@@ -49,11 +48,7 @@ public class StatCount<T extends Base> {
 		Map<String, Object> summap = new HashMap<String, Object>();
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
-			String type = field.getType().toString();
-			if (type.length() > 10) {
-				type = type.substring(16);
-			}
-			if (type.equals("BigDecimal")) {
+			if (BigDecimal.class.equals(field.getType())) {
 				summap.put(field.getName(), BigDecimal.ZERO);
 			}
 		}
@@ -68,24 +63,12 @@ public class StatCount<T extends Base> {
 			for (int i = 0; i < fields.length; i++) {
 				Field field = fields[i];
 				String fieldName = field.getName();
-				String firstLetter = fieldName.substring(0, 1).toUpperCase();
-
-				String getMethodName = "get" + firstLetter+ fieldName.substring(1);
-				Method getMethod = clazz.getMethod(getMethodName,new Class[] {});
-
-				String setMethodName = "set" + firstLetter+ fieldName.substring(1);
-				Method setMethod = clazz.getMethod(setMethodName,new Class[] { field.getType() });
-
-				String type = field.getType().toString();
-				if (type.length() > 10) {
-					type = type.substring(16);
-				}
 				for (String sum : summap.keySet()) {
-					if (sum.equals(fieldName) && type.equals("BigDecimal")) {
-						BigDecimal getValue = (BigDecimal) getMethod.invoke(object, new Object[] {});
+					if (sum.equals(fieldName) && BigDecimal.class.equals(field.getType())) {
+						BigDecimal getValue = (BigDecimal) PropertyUtils.getProperty(object, fieldName);
 						BigDecimal totalValue = (BigDecimal) summap.get(sum);
 						summap.put(sum, totalValue.add(getValue));
-						setMethod.invoke(total,new Object[] { (BigDecimal) summap.get(sum) });
+						PropertyUtils.setProperty(total, fieldName, totalValue);
 					}
 				}
 			}
