@@ -16,13 +16,14 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
+import org.apache.commons.lang.StringUtils;
 
 public class ZipUtil {
 
 	public static String encodeBase64String(String str) 
 	{
 		String result = null;
-		if (StringUtil.isNotEmpty(str)) 
+		if (StringUtils.isNotEmpty(str)) 
 		{
 			try {
 				result = Base64.encodeBase64String(compress(str.getBytes("UTF-8")));
@@ -58,7 +59,7 @@ public class ZipUtil {
 	public static String decodeBase64(String str) 
 	{
 		String result = null;
-		if (StringUtil.isNotEmpty(str)) 
+		if (StringUtils.isNotEmpty(str)) 
 		{
 			try {
 				result = new String(uncompress(Base64.decodeBase64(str)), "UTF-8");
@@ -112,7 +113,7 @@ public class ZipUtil {
 		File resourcesFile = new File(resourcesPath);     //源文件
 		String directoryPath = "";
 		//如果为null或空字符串则默认解压缩到跟源文件夹或者文件所在的同一目录
-		if (StringUtil.isEmpty(targetPath)) 
+		if (StringUtils.isEmpty(targetPath)) 
 			directoryPath = resourcesPath.substring(0,resourcesPath.replaceAll("\\*", "/").lastIndexOf("/"));
 		else 
 			directoryPath = targetPath;
@@ -182,7 +183,7 @@ public class ZipUtil {
 		ZipFile zipFile = new ZipFile(zipFilePath);
 		String directoryPath = "";
 		//如果为null或空字符串则默认解压缩到跟zip包同目录跟zip包同名的文件夹下
-		if (StringUtil.isEmpty(targetPath)) 
+		if (StringUtils.isEmpty(targetPath)) 
 			directoryPath = zipFilePath.substring(0,zipFilePath.lastIndexOf("."));
 		else 
 			directoryPath = targetPath;
