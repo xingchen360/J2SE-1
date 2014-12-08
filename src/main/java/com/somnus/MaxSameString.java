@@ -1,6 +1,15 @@
 package com.somnus;
 
 public class MaxSameString {
+	/**
+	 * 求两个字符拥有最长相同并且相连字符串
+	 * @param str1
+	 * 					例 ：abcdefg
+	 * @param str2
+	 * 					例 ：xxxabxxxxcdexxx
+	 * @return   
+	 * 					返回 ab
+	 */
 	public String  getResualt(String str1,String str2) 
 	{
 		String max = "";

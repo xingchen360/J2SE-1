@@ -37,7 +37,7 @@ public class PropertiesTest
 		{
 			InputStream in = new BufferedInputStream(new FileInputStream(new File(filePath)));
 			props.load(in);
-			Enumeration en = props.propertyNames();
+			Enumeration<?> en = props.propertyNames();
 			while (en.hasMoreElements())
 			{
 				String key = (String) en.nextElement();
