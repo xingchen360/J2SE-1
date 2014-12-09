@@ -13,7 +13,6 @@ import org.apache.commons.lang.time.DateUtils;
 
 public class CommonsLang {
 	public static void main(String[] args) throws Exception {
-		//********************************ArrayUtils***************************************
 		// 将两个数组合并为一个数组
 		String[] s1 = new String[] { "1", "2", "3" };
 		String[] s2 = new String[] { "a", "b", "c" };
@@ -24,25 +23,28 @@ public class CommonsLang {
 		String str = ArrayUtils.toString(s);
 		str = str.substring(1, str.length() - 1);
 		System.out.println(str + ">>" + str.length());
-		//********************************StringUtils***************************************
-		// 截取从from开始字符串
-		StringUtils.substringAfter("SELECT * FROM PERSON ", "from");
-		// 判断该字符串是不是为数字(0~9)组成，如果是，返回true 但该方法不识别有小数点和请注意
-		StringUtils.isNumeric("454534"); // 返回true
+		System.out.println("********************************ArrayUtils***************************************");
 		// 取得类名
 		System.out.println(ClassUtils.getShortClassName(CommonsLang.class));
 		// 取得其包名
 		System.out.println(ClassUtils.getPackageName(CommonsLang.class));
 		// 五位的随机字母和数字 
 		System.out.println(RandomStringUtils.randomAlphanumeric(5));
-		// StringEscapeUtils
+		System.out.println("********************************ClassUtils***************************************");
 		System.out.println(StringEscapeUtils.escapeHtml("<html>"));
 		// 输出结果为&lt;html&gt;
 		System.out.println(StringEscapeUtils.escapeJava("String"));
+		System.out.println("********************************StringEscapeUtils***************************************");
+		// 截取从from开始字符串
+		System.out.println(StringUtils.substringAfter("SELECT * FROM PERSON " , "FROM"));
+		// 判断该字符串是不是为数字(0~9)组成，如果是，返回true 但该方法不识别有小数点和请注意
+		System.out.println(StringUtils.isNumeric("454534"));// 返回true
 		// StringUtils,判断是否是空格字符
 		System.out.println(StringUtils.isBlank("   "));
+		// StringUtils,判断是否是null 或""
+		System.out.println(StringUtils.isNotEmpty(""));
 		// 将数组中的内容以,分隔
-		System.out.println(StringUtils.join(s1, ","));
+		System.out.println(StringUtils.join(new String[] { "1", "2", "3" }, ","));
 		// 在右边加下字符,使之总长度为6
 		System.out.println(StringUtils.rightPad("abc", 6, 'T'));
 		// 首字母大写 
@@ -53,7 +55,7 @@ public class CommonsLang {
 		System.out.println(StringUtils.contains("abc", "ba"));
 		// 表示左边两个字符 
 		System.out.println(StringUtils.left("abc", 2));
-		//********************************DateFormatUtils***************************************
+		System.out.println("********************************StringUtils***************************************");
 		System.out.println(DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		//直接将日期格式化为内置的固定格式
 		System.out.println(DateFormatUtils.ISO_DATE_FORMAT.format(new Date()));
@@ -65,5 +67,6 @@ public class CommonsLang {
 		System.out.println(DateUtils.isSameDay(new Date(), new Date()));
 		//加天数
 		System.out.println(DateUtils.addDays(new Date(), 10));
+		System.out.println("********************************DateUtils***************************************");
 	}
 }
