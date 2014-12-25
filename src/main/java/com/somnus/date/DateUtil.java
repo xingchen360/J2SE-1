@@ -185,14 +185,6 @@ public class DateUtil
 		return calendar.get(Calendar.YEAR);
 	}
 	/**
-	 * 返回当前年份
-	 */
-	public static int getTodayYear()
-	{
-		return getYear(new Date());
-	}
-	
-	/**
 	 * 返回日期的月份，1-12
 	 */
 	public static int getMonth(Date date)
@@ -203,14 +195,6 @@ public class DateUtil
 	}
 	
 	/**
-	 * 返回当前月份
-	 */
-	public static int getTodayMonth()
-	{
-		return getMonth(new Date());
-	}
-
-	/**
 	 * 返回日期的日1-31
 	 */
 	public static int getDay(Date date)
@@ -218,13 +202,6 @@ public class DateUtil
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return calendar.get(Calendar.DATE);
-	}
-	/**
-	 * 返回当前日期的日
-	 */
-	public static int getTodayday()
-	{
-		return getDay(new Date());
 	}
 	/**
 	 * 返回日期的时
@@ -344,27 +321,6 @@ public class DateUtil
 	{
 		return dateToString(new Date(), format);
 	}
-	/**
-	 * 判断日期是否有效,包括闰年的情况
-	 * 
-	 * @param date
-	 *            YYYY-mm-dd
-	 * @return
-	 */
-	public static boolean isDate(String date)
-	{
-		StringBuffer reg = new StringBuffer(
-				"^((\\d{2}(([02468][048])|([13579][26]))-?((((0?");
-		reg.append("[13578])|(1[02]))-?((0?[1-9])|([1-2][0-9])|(3[01])))");
-		reg.append("|(((0?[469])|(11))-?((0?[1-9])|([1-2][0-9])|(30)))|");
-		reg.append("(0?2-?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][12");
-		reg.append("35679])|([13579][01345789]))-?((((0?[13578])|(1[02]))");
-		reg.append("-?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))");
-		reg.append("-?((0?[1-9])|([1-2][0-9])|(30)))|(0?2-?((0?[");
-		reg.append("1-9])|(1[0-9])|(2[0-8]))))))");
-		Pattern p = Pattern.compile(reg.toString());
-		return p.matcher(date).matches();
-	}
 
 	public static void main(String[] args)
 	{
@@ -399,8 +355,5 @@ public class DateUtil
 		
 		System.out.println("两个日期的年差："+DateUtil.yearDiff("2013-01-01", "2014-01-01"));
 		System.out.println("指定日期与当前日期的差："+DateUtil.yearDiffCurr("2013-01-01"));
-		
-		System.out.println("日期是否有效："+DateUtil.isDate("2014-02-30"));
-		
 	}
 }
