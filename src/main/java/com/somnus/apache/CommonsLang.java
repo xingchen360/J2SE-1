@@ -40,9 +40,22 @@ public class CommonsLang {
 		// 判断该字符串是不是为数字(0~9)组成，如果是，返回true 但该方法不识别有小数点和请注意
 		System.out.println(StringUtils.isNumeric("454534"));// 返回true
 		// StringUtils,判断是否是空格字符
+		/**
+		 * StringUtils.isBlank(null)      = true
+		 * StringUtils.isBlank("")        = true
+		 * StringUtils.isBlank(" ")       = true
+		 * StringUtils.isBlank("bob")     = false
+		 * StringUtils.isBlank("  bob  ") = false
+		 */
 		System.out.println(StringUtils.isBlank("   "));
-		// StringUtils,判断是否是null 或""
-		System.out.println(StringUtils.isNotEmpty(""));
+		/**
+		 * StringUtils.isEmpty(null)      = true
+		 * StringUtils.isEmpty("")        = true
+		 * StringUtils.isEmpty(" ")       = false
+		 * StringUtils.isEmpty("bob")     = false
+		 * StringUtils.isEmpty("  bob  ") = false
+		 */
+		System.out.println(StringUtils.isEmpty("   "));
 		// 将数组中的内容以,分隔
 		System.out.println(StringUtils.join(new String[] { "1", "2", "3" }, ","));
 		// 在右边加下字符,使之总长度为6
