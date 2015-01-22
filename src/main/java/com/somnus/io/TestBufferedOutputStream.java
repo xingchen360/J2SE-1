@@ -8,7 +8,7 @@ public class TestBufferedOutputStream
 {
 	public static void main(String[] args) throws Exception
 	{
-		OutputStream os = new FileOutputStream("config/test.txt");
+		OutputStream os = new FileOutputStream("src/main/resources/test.txt");
 		
 		BufferedOutputStream  bos = new BufferedOutputStream(os);
 		

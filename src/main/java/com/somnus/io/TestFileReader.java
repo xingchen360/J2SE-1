@@ -10,7 +10,7 @@ public class TestFileReader {
 		FileReader fr=null;
 		int c=0;
 		try {
-			fr=new FileReader("config/user.xml");
+			fr=new FileReader("src/main/resources/user.xml");
 			while((c=fr.read())!=-1){
 				System.out.print((char)c);
 			}

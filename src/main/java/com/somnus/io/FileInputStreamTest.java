@@ -9,7 +9,7 @@ public class FileInputStreamTest {
 	public static void main(String[] args) {
 		try {
 			/*String fileName = "D:"+File.separator+"hello.txt";*/
-			String fileName ="config/build.xml";
+			String fileName ="src/main/resources/build.xml";
 			File f = new File(fileName);
 
 			InputStream in = new FileInputStream(f);

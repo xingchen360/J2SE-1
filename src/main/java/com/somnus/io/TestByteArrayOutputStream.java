@@ -30,7 +30,7 @@ public class TestByteArrayOutputStream {
 		}
 		
 		//A
-		OutputStream os = new FileOutputStream("config/test.txt");
+		OutputStream os = new FileOutputStream("src/main/resources/test.txt");
 		bos.writeTo(os);
 		
 		//B

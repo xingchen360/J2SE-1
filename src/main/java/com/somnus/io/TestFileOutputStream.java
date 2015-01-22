@@ -46,7 +46,7 @@ public class TestFileOutputStream {
 	{
 		try
 		{
-			OutputStream os = new FileOutputStream(new File("config\\","test.txt"));
+			OutputStream os = new FileOutputStream(new File("src/main/resources/","test.txt"));
 			BufferedOutputStream  bos = new BufferedOutputStream(os);
 			
 			InputStream is = new FileInputStream(new File(filePath , fileName));
@@ -104,6 +104,6 @@ public class TestFileOutputStream {
 	public static void main(String[] args) throws IOException
 	{
 		TestFileOutputStream test = new TestFileOutputStream();
-		test.getFileFromFile("config", "user.xml");
+		test.getFileFromFile("src/main/resources/", "user.xml");
 	}
 }

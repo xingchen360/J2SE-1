@@ -10,7 +10,7 @@ import java.io.IOException;
 public class BinaryReadWrite {
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
-	private String s_FilePath = "config\\bin.dat";
+	private String s_FilePath = "src/main/resources/bin.dat";
 	private byte[] buff = "{\"name\":\"alen\"}".getBytes();
 
 	public BinaryReadWrite() 

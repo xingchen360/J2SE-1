@@ -6,7 +6,7 @@ public class FileList {
 
 	public static void main(String[] args) {
 		/*File file = new File("E:/STUDY");*/
-		File file = new File("config");
+		File file = new File("src/main/resources/");
 		String[] names = file.list();
 		for(String data:names)
 		{
