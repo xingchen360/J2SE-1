@@ -78,7 +78,7 @@ public class ListAllFile
 	public static void main(String[] args)
 	{
 		/*File file = new File("d:\\software");*/
-		File file = new File("src/com");
+		File file = new File("src/main/java");
 		
 		deepList(file);
 
