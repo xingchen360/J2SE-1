@@ -78,8 +78,8 @@ public class PropertiesTest
 
 	public static void main(String[] args)
 	{
-		readValue("config\\info.properties", "username");
-		writeProperties("config\\info.properties", "age", "21");
-		readAllProperties("config\\info.properties");
+		readValue("src/main/resources/info.properties", "username");
+		writeProperties("src/main/resources/info.properties", "age", "21");
+		readAllProperties("src/main/resources/info.properties");
 	}
 }
