@@ -8,7 +8,7 @@ public class MaxSameString {
 	 * @param str2
 	 * 					例 ：xxxabxxxxcdexxx
 	 * @return   
-	 * 					返回 ab
+	 * 					返回 cde
 	 */
 	public String  getResualt(String str1,String str2) 
 	{
