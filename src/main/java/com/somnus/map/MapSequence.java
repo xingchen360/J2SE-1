@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
-/*
+/**
  * Hashtable.keySet()           降序
- * TreeMap.keySet()            升序
- * HashMap.keySet()           乱序
- * LinkedHashMap.keySet()  原序
+ * TreeMap.keySet()             升序
+ * HashMap.keySet()             乱序
+ * LinkedHashMap.keySet()       原序
 */
 public class MapSequence {
 	public static void main(String[] args) {
