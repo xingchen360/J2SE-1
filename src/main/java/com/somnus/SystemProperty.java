@@ -48,5 +48,4 @@ public class SystemProperty
 		System.out.println("行分隔符（在 UNIX 系统中是“/n”）-line_separator: "+ System.getProperty("line.separator"));
 
 	}
-
 }
