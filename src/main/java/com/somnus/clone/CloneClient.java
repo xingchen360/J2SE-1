@@ -12,11 +12,14 @@ public class CloneClient {
 		student.setTeacher(teacher);
 		
 		Student student2 = (Student) student.clone();
+		student2.setName("tom");
+		student2.getTeacher().setName("marry");
+		
+		System.out.println(student.getName());
+		System.out.println(student.getTeacher().getName());
 		
 		System.out.println(student2.getName());
 		System.out.println(student2.getTeacher().getName());
-		System.out.println(student == student2);
-		System.out.println(student.getClass()==student2.getClass());
 	}
 
 }
@@ -42,8 +45,14 @@ class Student implements Cloneable{
 	}
 	@Override
 	public Object clone() throws CloneNotSupportedException{
+	    /*//浅拷贝
 		Object object = super.clone();
-		return object;
+		return object;*/
+	    // 改为深拷贝：
+        Student student = (Student) super.clone();
+        // 本来是浅拷贝，现在将Teacher对象复制一份并重新set进来
+        student.setTeacher((Teacher) student.getTeacher().clone());
+        return student;
 	}
 }
 class Teacher implements Cloneable{
