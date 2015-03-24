@@ -13,7 +13,7 @@ public class Reflect02
 		Class<?> demo3=null;
 		try 
 		{
-			demo1=Class.forName("com.reflect.Demo");
+			demo1=Class.forName("com.somnus.reflect.Demo");
 		} 
 		catch (ClassNotFoundException e) 
 		{

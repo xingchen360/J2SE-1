@@ -8,7 +8,7 @@ import java.net.Socket;
 
 /** 
  * @description: TODO 
- * @author yh.liu
+ * @author Somnus
  * date 2015年3月23日 下午1:53:04  
  */
 public class Server {

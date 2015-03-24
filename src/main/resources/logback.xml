@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>  
+<configuration>  
+    <property name="pattern"  value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{sessionId}] %-5level [%thread] %logger{80} :%msg%n" />
+    <!--定义一个名为STDOUT的appender，并将其关联到ch.qos.logback.core.ConsoleAppender-->  
+    <appender name="console"  class="ch.qos.logback.core.ConsoleAppender">  
+        <!-- encoders 作用是将logger事件转换成字节数组，并将字节数组写入到输出流-->  
+        <encoder>  
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->  
+            <pattern>${pattern}</pattern>  
+        </encoder>  
+    </appender>  
+    <root level="debug">    <!-- root logger，定义级别为debug-->  
+        <appender-ref ref="console" />    <!--将名为STDOUT的appender添加到root logger下-->  
+    </root>  
+</configuration>

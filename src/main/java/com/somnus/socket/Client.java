@@ -8,7 +8,8 @@ import java.net.UnknownHostException;
 
 /**
  * @description: TODO
- * @author yh.liu date 2015年3月23日 下午1:53:14
+ * @author Somnus 
+ * date 2015年3月23日 下午1:53:14
  */
 public class Client {
 
