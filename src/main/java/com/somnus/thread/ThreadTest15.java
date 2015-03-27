@@ -1,11 +1,17 @@
 package com.somnus.thread;
-
-public class ThreadTest15
-{
-	public static void main(String[] args)
-	{
+/**
+ * wait与notify方法都是定义在Object类中，而且是final的，因此会被所有的Java类所继承并且无法重写。
+ * 这两个方法要求在调用时线程应该已经获得了对象的锁，因此对这两个方法的调用需要放在synchronized方法或块当中。
+ * 当线程执行了wait方法时，它会释放掉对象的锁。
+ * 
+ * 另一个会导致线程暂停的方法就是Thread类的sleep方法，它会导致线程睡眠指定的毫秒数，
+ * 但线程在睡眠的过程中是不会释放掉对象的锁的。
+ *
+ */
+public class ThreadTest15{
+	public static void main(String[] args){
 		final Math math = new Math();
-		for(int i=0;i<2;i++)
+		for(int i=0;i<3;i++)
 		{
 			new Thread(new Runnable(){
 				public void run()
@@ -30,13 +36,11 @@ public class ThreadTest15
 	}
 }
 
-class Math
-{
+class Math{
 	private int num;
 
-	public synchronized void increase()
-	{
-		if(num != 0)
+	public synchronized void increase(){
+		if(num != 0)//while(num != 0)
 		{
 			try
 			{
@@ -51,9 +55,8 @@ class Math
 		System.out.println(Thread.currentThread().getName() + "[" + num+"]");
 		notify();
 	}
-	public synchronized void decrease()
-	{
-		if(num == 0)//如果用if此线程唤醒后，讲继续往下执行
+	public synchronized void decrease(){
+		if(num == 0)//while(num == 0)
 		{
 			try
 			{
