@@ -15,7 +15,7 @@ public class MongoDemo {
 	@Test
 	public void createCollection()
 	{
-		MongoDbUtil.getCurrentDb("demo").createCollection("xx", new BasicDBObject());
+		MongoDbUtil.getCurrentDb("somnus").createCollection("xx", new BasicDBObject());
 	}
 	
 	@Test

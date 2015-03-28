@@ -29,7 +29,7 @@ public class MongoDbUtil {
 	
 	public static DBCollection getDBCollection(String collectionName)
 	{
-		return MongoDbUtil.getCurrentDb("demo").getCollection(collectionName);
+		return MongoDbUtil.getCurrentDb("somnus").getCollection(collectionName);
 	}
 	
 }
