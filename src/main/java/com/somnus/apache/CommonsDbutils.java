@@ -14,10 +14,10 @@ public class CommonsDbutils {
 
 	public static void main(String[] args) {
 		Connection conn = null;
-		String url = "jdbc:mysql://localhost:3306/ptest";
+		String url = "jdbc:mysql://localhost:3306/demo";
 		String jdbcDriver = "com.mysql.jdbc.Driver";
 		String user = "root";
-		String password = "ptest";
+		String password = "password";
 
 		DbUtils.loadDriver(jdbcDriver);
 		//****************************转换成list  ************************************

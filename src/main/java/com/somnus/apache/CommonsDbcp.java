@@ -16,14 +16,14 @@ public class CommonsDbcp {
 	public static void main(String[] args) {
 		System.out.println("加载jdbc驱动");
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		System.out.println("Done.");
 		//
 		System.out.println("设置数据源");
-		DataSource dataSource = setupDataSource("jdbc:oracle:thin:@localhost:1521:test");
+		DataSource dataSource = setupDataSource("jdbc:mysql://localhost:3306/demo");
 		System.out.println("Done.");
 
 		//
