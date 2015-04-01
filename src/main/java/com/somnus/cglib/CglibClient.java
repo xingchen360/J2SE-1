@@ -7,9 +7,9 @@ package com.somnus.cglib;
  */
 public class CglibClient {
 	public static void main(String[] args) {
-		ProxyObject obj = new ProxyObject();
-		CglibProxy cglib = new CglibProxy();
-		ProxyObject proxy = (ProxyObject)cglib.getProxy(obj);
+	    CglibProxy cglib = new CglibProxy();
+	    
+		ProxyObject proxy = (ProxyObject)cglib.getProxy(new ProxyObject());
 		proxy.doSomething();
 		
 		
