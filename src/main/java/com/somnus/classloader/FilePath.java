@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /** 
- * @description: TODO 
+ * @description: 获取文件在服务器（本地编译好的项目）中的路劲 
  * @author Somnus
  * date 2015年4月1日 下午5:56:46  
  */
-public class Demo {
+public class FilePath {
     public  void print(){
         String url = getClass().getClassLoader().getResource("logback.xml").getPath();
         System.out.println(url);
@@ -25,7 +25,7 @@ public class Demo {
         }
     }
     public static void main(String[] args) {
-        Demo demo = new Demo();
+        FilePath demo = new FilePath();
         demo.print();
     }
 }
