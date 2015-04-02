@@ -16,7 +16,7 @@ public class Client {
     public static void main(String[] args) {
         Socket socket = null;
         try {
-            socket = new Socket("localhost", 8888);
+            socket = new Socket("127.0.0.1", 8888);
             // 获取输出流，用于客户端向服务器端发送数据
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             // 获取输入流，用于接收服务器端发送来的数据
