@@ -12,18 +12,17 @@ public class Thread3Test
 		thread22.start();
 	}
 }
-class Thread33 implements Runnable
-{
+class Thread33 implements Runnable{
 	int i ;
 	public void run()
 	{
-//		int i = 0;
+	    /*int i = 0;*/
 		while(true)
 		{
 			System.out.println("number: "+i++);
 			try
 			{
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException e)
 			{

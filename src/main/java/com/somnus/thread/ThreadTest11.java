@@ -34,6 +34,11 @@ class Outputter{
 		for (int i = 0; i < name.length(); i++)
 		{
 			System.out.print(name.charAt(i));
+			try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } 
 		}
 	}
 

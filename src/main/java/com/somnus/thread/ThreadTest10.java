@@ -1,7 +1,6 @@
 package com.somnus.thread;
 
-public class ThreadTest10
-{
+public class ThreadTest10{
 	public static void main(String[] args)
 	{
 		final Count count = new Count();
@@ -17,8 +16,7 @@ public class ThreadTest10
 	}
 }
 
-class Count
-{
+class Count{
 	private int num;
 
 	public void count()
