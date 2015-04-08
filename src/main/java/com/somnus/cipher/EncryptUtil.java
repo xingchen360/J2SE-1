@@ -69,7 +69,7 @@ public class EncryptUtil {
         return encryptText;  
     }  
   
-    // 返回十六进制字符串  
+    // 从字节数组到十六进制字符串转换 
     private static String byte2hex(byte[] arr) {  
         StringBuffer sb = new StringBuffer();  
         for (int i = 0; i < arr.length; ++i) {
@@ -78,7 +78,7 @@ public class EncryptUtil {
         return sb.toString();  
     }
     
-    // 返回十六进制字符串  
+    // 从字节数组到十六进制字符串转换 
     @SuppressWarnings("unused")
     private static String byte2hex2(byte[] arr) {  
         StringBuffer sb = new StringBuffer();  
