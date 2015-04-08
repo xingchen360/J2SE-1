@@ -1,18 +1,12 @@
 package com.somnus.designPatterns.singleton;
 
-public class Singletion
-{
+public class Singletion{
 	private static Singletion singletion ;
 	
-	private Singletion()
-	{
-		
-	}
+	private Singletion(){}
 	
-	public static Singletion getInstance()
-	{
-		if(singletion == null)
-		{
+	public static Singletion getInstance(){
+		if(singletion == null){
 			singletion = new Singletion();
 		}
 		return singletion;
