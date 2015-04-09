@@ -81,7 +81,7 @@ public class DESUtil {
     public static String encrypt(String data, String key) throws Exception {
         Key deskey = keyGenerator(key);
         // 实例化Cipher对象，它用于完成实际的加密操作
-        Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         SecureRandom random = new SecureRandom();
         // 初始化Cipher对象，设置为加密模式
         cipher.init(Cipher.ENCRYPT_MODE, deskey, random);
@@ -103,7 +103,7 @@ public class DESUtil {
      */
     public static String decrypt(String data, String key) throws Exception {
         Key deskey = keyGenerator(key);
-        Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         //初始化Cipher对象，设置为解密模式
         cipher.init(Cipher.DECRYPT_MODE, deskey);
         // 执行解密操作
@@ -113,7 +113,7 @@ public class DESUtil {
     public static void main(String[] args) throws Exception {
         String source = "Somnus";
         System.out.println("原文: " + source);
-        String key = "SOMEHAND";
+        String key = "handsome";
         String encryptData = encrypt(source, key);
         System.out.println("加密后: " + encryptData);
         String decryptData = decrypt(encryptData, key);
