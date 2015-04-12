@@ -1,15 +1,20 @@
 package com.somnus.designPatterns.adapter;
-
-import com.somnus.designPatterns.adapter.adapter.DatabaseLogAdapter;
-import com.somnus.designPatterns.adapter.adapter.FileLogAdapter;
-
+/**
+ * 相当于笔记本
+ * @author Smile
+ *
+ */
 public class Client {
+	public void test(Target target){
+		target.handleReq();
+	}
 	public static void main(String[] args) {
-		ILogTarget dbLog = new DatabaseLogAdapter();
-        dbLog.write("Logging Database...");
-        
- 
-        ILogTarget fileLog = new FileLogAdapter();
-        fileLog.write("Logging File...");
+		Client client = new Client();
+		
+		/*Adpatee adpatee = new Adpatee();*/
+		
+		Target target = new Adpater();
+		
+		client.test(target);
 	}
 }
