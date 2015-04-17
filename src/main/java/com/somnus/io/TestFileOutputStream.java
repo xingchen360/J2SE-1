@@ -13,23 +13,17 @@ public class TestFileOutputStream {
 	 * 知道某个byte数组
 	 * 往指定的目录生成文件
 	 */
-	public  void getFileFromBytes(byte[] bfile, String filePath, String fileName) 
-	{
+	public  void getFileFromBytes(byte[] bfile, String filePath, String fileName) {
 		try {
 			File dir = new File(filePath);
 			// 判断文件目录是否存在
-			if (!dir.exists()) 
-			{
+			if (!dir.exists()){
 				dir.mkdirs();
 			}
 			
 			OutputStream os = new FileOutputStream(new File(filePath , fileName));
 			
-			BufferedOutputStream bos = new BufferedOutputStream(os);
-			
-			bos.write(bfile);
-			
-			bos.close();
+			os.write(bfile);
 			
 			os.close();
 		} catch (Exception e) {
@@ -42,24 +36,21 @@ public class TestFileOutputStream {
 	 * 从中读书byte数据
 	 * 并且往另一目录文件写入相同的文件
 	 */
-	public  void getFileFromFile(String filePath, String fileName)
-	{
-		try
-		{
+	public  void getFileFromFile(String filePath, String fileName){
+		try{
 			OutputStream os = new FileOutputStream(new File("src/main/resources/","test.txt"));
 			BufferedOutputStream  bos = new BufferedOutputStream(os);
 			
 			InputStream is = new FileInputStream(new File(filePath , fileName));
 			
-			byte[] buffer = new byte[200];
+			byte[] buffer = new byte[256];
 			
 			int len = 0;
 			/*
 			 * 从FileInputStream输入流中不断的读取byte数组
 			 * 并且往被BufferedOutputStream包装的缓冲区写硬盘
 			 */
-			while((len = is.read(buffer)) > 0)
-			{
+			while((len = is.read(buffer)) > 0){
 				bos.write(buffer,0,len);
 				System.out.println(new String(buffer,0,len));
 			}
@@ -95,14 +86,12 @@ public class TestFileOutputStream {
 			bos.close();
 			os.close();
 		}
-		catch (Exception e)
-		{
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public static void main(String[] args) throws IOException
-	{
+	public static void main(String[] args) throws IOException{
 		TestFileOutputStream test = new TestFileOutputStream();
 		test.getFileFromFile("src/main/resources/", "user.xml");
 	}

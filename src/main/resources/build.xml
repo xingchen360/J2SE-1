@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="ant" basedir="." default="second" >
+<project name="ant" basedir="." default="second">
 	
-	<property name="dist" value="dist" />
-	<property name="compile" value="compile" />
+	<property name="dist" value="dist"/>
+	<property name="compile" value="compile"/>
 	
 	<target name="init" description="hello world">
 		<mkdir dir="dream"/>
@@ -18,7 +18,7 @@
 	</target>
 	
 	<target name="three" depends="init">
-		<javac srcdir="src" destdir="${compile}"></javac>
+		<javac srcdir="src" destdir="${compile}">好好学习,天天向上</javac>
 	</target>
 	
 	<target name="four" depends="three">

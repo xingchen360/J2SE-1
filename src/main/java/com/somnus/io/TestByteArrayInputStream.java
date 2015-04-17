@@ -2,7 +2,7 @@ package com.somnus.io;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-public class ByteArrayInputStreamTest
+public class TestByteArrayInputStream
 {
 
 	/**
