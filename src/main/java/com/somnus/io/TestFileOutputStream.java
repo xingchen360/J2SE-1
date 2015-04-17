@@ -95,4 +95,5 @@ public class TestFileOutputStream {
 		TestFileOutputStream test = new TestFileOutputStream();
 		test.getFileFromFile("src/main/resources/", "user.xml");
 	}
+	
 }

@@ -24,8 +24,7 @@ public class TestByteArrayOutputStream {
 		//可以把ByteArrayOutputStream输出流变成byte数组
 		byte[] result =bos.toByteArray();
 
-		for (int i = 0; i < result.length; i++) 
-		{
+		for (int i = 0; i < result.length; i++) {
 			System.out.println((char) result[i]);
 		}
 		
@@ -50,11 +49,9 @@ public class TestByteArrayOutputStream {
 	 * 根据指定目录文件
 	 * 获得指定文件的byte数组
 	 */
-	public static byte[] getBytesFromFile(String filePath, String fileName) 
-	{
+	public static byte[] getBytesFromFile(String filePath, String fileName){
 		byte[] buffer = null;
-		try 
-		{
+		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			
 			InputStream is = new FileInputStream(new File(filePath , fileName));
@@ -67,8 +64,7 @@ public class TestByteArrayOutputStream {
 			 * 读取FileInputStream的输入流到ByteArrayOutputStream中
 			 * 是为了得到byte数组
 			 */
-			while ((len = is.read(b,0,1000)) != -1) 
-			{
+			while ((len = is.read(b,0,1000)) != -1) {
 				/*
 				 * ByteArrayOutputStream的write方法只是把byte数组组织进去
 				 * 不会往硬盘执行写

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class TestBufferedOutputStream {
+	
 	public static void main(String[] args) throws Exception {
 		OutputStream os = new FileOutputStream("src/main/resources/test.txt");
 
@@ -15,4 +16,5 @@ public class TestBufferedOutputStream {
 		bos.close();
 		os.close();
 	}
+	
 }
