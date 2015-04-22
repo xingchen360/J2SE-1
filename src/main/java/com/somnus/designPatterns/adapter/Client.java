@@ -1,20 +1,13 @@
 package com.somnus.designPatterns.adapter;
-/**
- * 相当于笔记本
- * @author Smile
- *
- */
+
 public class Client {
-	public void test(Target target){
-		target.handleReq();
-	}
-	public static void main(String[] args) {
-		Client client = new Client();
-		
-		/*Adpatee adpatee = new Adpatee();*/
-		
-		Target target = new Adpater();
-		
-		client.test(target);
-	}
+    public static void main(String[] args) {
+        // 使用普通功能类
+        Target concreteTarget = new ConcreteTarget();
+        concreteTarget.request();
+
+        // 使用特殊功能类，即适配类
+        Target adapter = new Adapter();
+        adapter.request();
+    }
 }
