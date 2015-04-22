@@ -1,6 +1,7 @@
 package com.somnus.designPatterns.composite;
 
 public class Client {
+    
 	public static void main(String[] args) {
 		AbstractFile f2,f3,f4,f5;
 		Folder f1 = new Folder("我的收藏");
@@ -18,7 +19,6 @@ public class Client {
 		f1.add(f11);
 		
 		f1.killVirus();
-		
-		
 	}
+	
 }
