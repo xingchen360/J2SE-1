@@ -8,6 +8,7 @@ public class Grammar {
 	public static void main(String[] args) {
 		double num1 = 0d,num2 = 0;
 		float f1 = 0f;
+		//小数默认都是double型
 		//精度double 大于 float ，所以不能double向下转型 float ，但float可以向上转型double
 		System.out.println(num1 == num2);
 		System.out.println(num1+"|"+num2+"|"+f1);

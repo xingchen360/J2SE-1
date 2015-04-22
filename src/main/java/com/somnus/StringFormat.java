@@ -23,6 +23,7 @@ public class StringFormat {
 	    System.out.println(String.format("100的一半是：%d%n", 100/2));
 	    System.out.println(String.format("50元的书打8.5折扣是：%f元%n", 50*0.85));
 	    System.out.println(String.format("上面的折扣是%d%% %n", 85));
+	    System.out.println(String.format("%08d%n", 5));
 	}
 	/*
 	2、常见日期时间格式化
