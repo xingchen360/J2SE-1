@@ -1,6 +1,6 @@
 package com.somnus.thread;
 
-public class ThreadTest
+public class Thread1Test
 {
 	public static void main(String[] args)
 	{
