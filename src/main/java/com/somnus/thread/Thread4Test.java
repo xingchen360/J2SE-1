@@ -1,8 +1,14 @@
 package com.somnus.thread;
 
 /**
- * @description: TODO
- * @author Somnus date 2015年4月3日 下午12:46:04
+ * 
+ * @Title: Thread4Test.java 
+ * @Package com.somnus.thread 
+ * @Description: 多线程环境下，所有的线程共享一个对象，那么这个对象的成员变量，就会被不同的线程所改变，
+ * 				Servlet就是这个道理，所以我们不能给其弄出成员变量来，它必须是线程安全的才行
+ * @author Somnus
+ * @date 2015年4月26日 下午9:43:12 
+ * @version V1.0
  */
 public class Thread4Test {
     public static void main(String[] args) {
@@ -12,20 +18,20 @@ public class Thread4Test {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Counter.inc();
+                    Counter.getInstance().inc();
                 }
             }).start();
         }
         // 这里每次运行的值都有可能不同,可能为1000
-        System.out.println("运行结果:Counter.count=" + Counter.count);
+        System.out.println("运行结果:Counter.count=" + Counter.getInstance().count);
     }
 }
 
 class Counter {
     
-    public static int count = 0;
+    public	int count = 0;
 
-    public static void inc() {
+    public  void inc() {
         // 这里延迟1毫秒，使得结果明显
         try {
             Thread.sleep(1);
@@ -33,4 +39,15 @@ class Counter {
         }
         count++;
     }
+    
+    private static Counter counter ;
+    
+    private Counter(){}
+	
+	public static Counter getInstance(){
+		if(counter == null){
+			counter = new Counter();
+		}
+		return counter;
+	}
 }
