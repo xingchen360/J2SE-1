@@ -46,6 +46,12 @@ public class Test {
         for(GenderEnum gender : GenderEnum.values()){
             System.out.println(gender.value);
         }
+        String value = GenderEnum.MAN.getValue();
+        GenderEnum genum = GenderEnum.getByCode(value);
+        
+        if(genum.getValue().equals(GenderEnum.MAN.getValue())){
+            System.out.println("true");
+        }
        
       //************************************************************************************************************
         System.out.println("===========");
