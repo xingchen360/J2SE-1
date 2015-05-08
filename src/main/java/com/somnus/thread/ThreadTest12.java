@@ -3,13 +3,10 @@ package com.somnus.thread;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThreadTest12
-{
-	public static void main(String args[])
-	{
+public class ThreadTest12{
+	public static void main(String args[]){
 		final Plate plate = new Plate();
-		for (int i = 0; i < 10; i++)
-		{
+		for (int i = 0; i < 10; i++){
 			new Thread(new Runnable(){
 				private Object egg = new Object();
 				public void run()
@@ -19,8 +16,7 @@ public class ThreadTest12
 			}).start();
 			
 			new Thread(new Runnable(){
-				public void run()
-				{
+				public void run(){
 					plate.getEgg();
 				}
 			}).start();
@@ -28,22 +24,17 @@ public class ThreadTest12
 	}
 }
 
-class Plate
-{
+class Plate{
 	/** 装鸡蛋的盘子 */
 	List<Object> eggs = new ArrayList<Object>();
 	
 	/** 放鸡蛋 */
-	public synchronized void putEgg(Object egg)
-	{
-		while (eggs.size() > 0)
-		{
-			try
-			{
+	public synchronized void putEgg(Object egg){
+		while (eggs.size() > 0){
+			try{
 				wait();
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 		}
@@ -53,16 +44,12 @@ class Plate
 	}
 
 	/** 取鸡蛋 */
-	public synchronized Object getEgg()
-	{
-		while (eggs.size() == 0)
-		{
-			try
-			{
+	public synchronized Object getEgg(){
+		while (eggs.size() == 0){
+			try{
 				wait();
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 		}

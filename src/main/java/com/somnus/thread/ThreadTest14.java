@@ -4,21 +4,16 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ThreadTest14
-{
-	public static void main(String[] args)
-	{
+public class ThreadTest14{
+	public static void main(String[] args){
 		Timer timer = new Timer();
 		timer.schedule(new MyTimerTask2(), 2000);
-		while (true)
-		{
+		while (true){
 			System.out.println(Calendar.SECOND);
-			try
-			{
+			try{
 				Thread.sleep(1000);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 		}
@@ -26,19 +21,15 @@ public class ThreadTest14
 	}
 }
 
-class MyTimerTask1 extends TimerTask
-{
-	public void run()
-	{
+class MyTimerTask1 extends TimerTask{
+	public void run(){
 		System.out.println("爆炸！！！");
 		new Timer().schedule(new MyTimerTask2(), 2000);
 	}
 }
 
-class MyTimerTask2 extends TimerTask
-{
-	public void run()
-	{
+class MyTimerTask2 extends TimerTask{
+	public void run(){
 		System.out.println("爆炸！！！");
 		new Timer().schedule(new MyTimerTask1(), 4000);
 	}

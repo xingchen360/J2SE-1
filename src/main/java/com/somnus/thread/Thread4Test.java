@@ -14,13 +14,18 @@ public class Thread4Test {
     public static void main(String[] args) {
 
         // 同时启动1000个线程，去进行i++计算，看看实际结果
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     Counter.getInstance().inc();
                 }
             }).start();
+        }
+        //如果还有子线程在运行，主线程就让出cpu资源
+        //直到所有子线程都运行完了，主线程再继续往下执行
+        while(Thread.activeCount()>1){
+            Thread.yield();
         }
         // 这里每次运行的值都有可能不同,可能为1000
         System.out.println("运行结果:Counter.count=" + Counter.getInstance().count);
@@ -32,9 +37,9 @@ class Counter {
     public	int count = 0;
 
     public  void inc() {
-        // 这里延迟1毫秒，使得结果明显
+        // 这里延迟100毫秒，使得结果明显
         try {
-            Thread.sleep(1);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
         count++;

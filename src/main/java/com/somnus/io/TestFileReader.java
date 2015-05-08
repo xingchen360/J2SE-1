@@ -1,25 +1,41 @@
 package com.somnus.io;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class TestFileReader {
 
-	public static void main(String[] args) {
-		FileReader fr=null;
-		int c=0;
-		try {
-			fr=new FileReader("src/main/resources/user.xml");
-			while((c=fr.read())!=-1){
-				System.out.print((char)c);
-			}
-			fr.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
+    /**
+     * 读取txt文件的内容
+     * 
+     * @param file
+     *            想要读取的文件对象
+     * @return 返回文件内容
+     */
+    public static String txt2String(String fileName) {
+        String result = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));// 构造一个BufferedReader类来读取文件
+            String s = null;
+            while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行
+                result = result + "\n" + s;
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String result = txt2String("src/main/resources/user.xml");
+        System.out.println(result);
+        String[] arr = result.split("\n");
+        for(String str:arr){
+            System.out.println(str);
+        }
+        System.out.println(arr.length);
+                
+    }
+
 }

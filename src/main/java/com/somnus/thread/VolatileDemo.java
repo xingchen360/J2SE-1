@@ -6,12 +6,28 @@ public class VolatileDemo {
 		return this.number;
 	}
 	public void increase(){
-		this.number++;
+	    try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } 
+	    this.number++;
 	}
+	
+	public void increase2(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        synchronized(this){
+            this.number++;
+        }
+    }
 
 	public static void main(String[] args) {
 		final VolatileDemo demo = new VolatileDemo();
-		for(int i = 0;i<500;i++){
+		for(int i = 0;i<10000;i++){
 			new Thread(new Runnable(){
 				@Override
 				public void run() {

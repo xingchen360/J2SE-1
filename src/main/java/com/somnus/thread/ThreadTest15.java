@@ -11,23 +11,18 @@ package com.somnus.thread;
 public class ThreadTest15{
 	public static void main(String[] args){
 		final Math math = new Math();
-		for(int i=0;i<3;i++)
-		{
+		for(int i=0;i<3;i++){
 			new Thread(new Runnable(){
-				public void run()
-				{
-					for(int i=0;i<10;i++)
-					{
+				public void run(){
+					for(int i=0;i<10;i++){
 						math.increase();
 					}
 				}
 			}).start();
 			
 			new Thread(new Runnable(){
-				public void run()
-				{
-					for(int i=0;i<10;i++)
-					{
+				public void run(){
+					for(int i=0;i<10;i++){
 						math.decrease();
 					}
 				}
@@ -40,14 +35,11 @@ class Math{
 	private int num;
 
 	public synchronized void increase(){
-		if(num != 0)//while(num != 0)
-		{
-			try
-			{
+		if(num != 0){//while(num != 0)
+			try{
 				wait();
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 		}
@@ -56,14 +48,11 @@ class Math{
 		notify();
 	}
 	public synchronized void decrease(){
-		if(num == 0)//while(num == 0)
-		{
-			try
-			{
+		if(num == 0){//while(num == 0)
+			try{
 				wait();
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 		}

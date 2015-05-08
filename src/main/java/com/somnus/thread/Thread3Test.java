@@ -7,6 +7,8 @@ package com.somnus.thread;
  * 				① 当i为成员变量的时候，那么多个线程对同一个对象的成员变量进行操作时，他们对该成员变量是彼此影响的
  * 					（也就是说一个线程对成员变量的改变会影响到另一个线程）
  * 				②当i为局部变量的时候，那么每个线程都会有一个该局部变量的拷贝，一个线程对该局部变量的改变不会影响到其它线程
+ *              
+ *              ps:在开启的线程不算太多（比如不到万级）每个线程基本都会立即得到执行，而且得到执行的概率都是基本差不多
  * @author Somnus
  * @date 2015年4月26日 下午9:18:39 
  * @version V1.0
@@ -14,21 +16,23 @@ package com.somnus.thread;
 public class Thread3Test{
 
 	public static void main(String[] args){
-		Thread33 thread33 = new Thread33();
-		Thread thread11 = new Thread(thread33);
-		Thread thread22 = new Thread(thread33);
-		thread11.start();
-		thread22.start();
+	    Runner runner = new Runner();
+		Thread thread1 = new Thread(runner);
+		Thread thread2 = new Thread(runner);
+		Thread thread3 = new Thread(runner);
+		thread1.start();
+		thread2.start();
+		thread3.start();
 	}
 }
-class Thread33 implements Runnable{
+class Runner implements Runnable{
 	int i ;
 	public void run(){
 	    /*int i = 0;*/
 		while(true){
-			System.out.println("number: "+i++);
+			System.out.println(Thread.currentThread().getName() + "|number: "+i++);
 			try{
-				Thread.sleep(100);
+				Thread.sleep(500);
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();

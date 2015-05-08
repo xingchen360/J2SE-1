@@ -4,30 +4,21 @@ import java.util.Random;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ReadWriteLockTest
-{
-	public static void main(String[] args)
-	{
+public class ReadWriteLockTest{
+	public static void main(String[] args){
 		final Data data = new Data();
-		for (int i = 0; i < 3; i++)
-		{
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
-					for (int j = 0; j < 5; j++)
-					{
+		for (int i = 0; i < 3; i++){
+			new Thread(new Runnable(){
+				public void run(){
+					for (int j = 0; j < 5; j++){
 						data.set(new Random().nextInt(30));
 					}
 				}
 			}).start();
 		}
-		for (int i = 0; i < 3; i++)
-		{
-			new Thread(new Runnable()
-			{
-				public void run()
-				{
+		for (int i = 0; i < 3; i++){
+			new Thread(new Runnable(){
+				public void run(){
 					for (int j = 0; j < 5; j++)
 					{
 						data.get();
@@ -39,52 +30,41 @@ public class ReadWriteLockTest
 
 }
 
-class Data
-{
+class Data{
 	private int data;// 共享数据
 	private ReadWriteLock rwl = new ReentrantReadWriteLock();     
 
-	public void set(int data)
-	{
+	public void set(int data){
 		rwl.writeLock().lock();// 取到写锁  
-		try
-		{
+		try{
 			System.out.println(Thread.currentThread().getName() + "准备写入数据");
-			try
-			{
+			try{
 				Thread.sleep(20);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 			this.data = data;
 			System.out.println(Thread.currentThread().getName() + "写入" + this.data);
 		}
-		finally
-		{
+		finally{
 			rwl.writeLock().unlock();// 释放写锁  
 		}
 	}
 
-	public void get()
-	{
+	public void get(){
 		rwl.writeLock().lock();// 取到写锁  
-		try
-		{
+		try{
 			System.out.println(Thread.currentThread().getName() + "准备读取数据");
-			try
-			{
+			try{
 				Thread.sleep(20);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 			System.out.println(Thread.currentThread().getName() + "读取" + this.data);
 		}
-		finally
-		{
+		finally{
 			rwl.writeLock().unlock();// 释放写锁  
 		}
 	}

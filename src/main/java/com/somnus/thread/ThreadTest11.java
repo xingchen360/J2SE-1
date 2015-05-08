@@ -13,15 +13,13 @@ public class ThreadTest11{
 		final Outputter output = new Outputter();
 
 		new Thread(){
-			public void run()
-			{
+			public void run(){
 				output.output("abcdefghijklmnopqrstuvwxyz");
 			};
 		}.start();
 
 		new Thread(){
-			public void run()
-			{
+			public void run(){
 				output.output("0123456789");
 			};
 		}.start();
@@ -31,8 +29,7 @@ public class ThreadTest11{
 class Outputter{
 	public void output(String name){
 		// TODO 为了保证对name的输出不是一个原子操作，这里逐个输出name的每个字符
-		for (int i = 0; i < name.length(); i++)
-		{
+		for (int i = 0; i < name.length(); i++){
 			System.out.print(name.charAt(i));
 			try {
                 Thread.sleep(100);
@@ -43,10 +40,8 @@ class Outputter{
 	}
 
 	public void output2(String name){
-		synchronized (this)
-		{
-			for (int i = 0; i < name.length(); i++)
-			{
+		synchronized (this){
+			for (int i = 0; i < name.length(); i++){
 				System.out.print(name.charAt(i));
 			}
 		}
@@ -54,8 +49,7 @@ class Outputter{
 	
 	public synchronized void output3(String name){
 		// TODO 为了保证对name的输出不是一个原子操作，这里逐个输出name的每个字符
-		for (int i = 0; i < name.length(); i++)
-		{
+		for (int i = 0; i < name.length(); i++){
 			System.out.print(name.charAt(i));
 		}
 	}
