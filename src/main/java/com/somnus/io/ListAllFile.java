@@ -68,7 +68,6 @@ public class ListAllFile {
 		File file = new File("src/main/java");
 
 		deepList(file);
-
 	}
 
 }
