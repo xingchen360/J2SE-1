@@ -10,54 +10,44 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-public class PropertiesTest
-{
+public class PropertiesTest{
 	// 根据key读取value
-	public static void readValue(String filePath, String key)
-	{
+	public static void readValue(String filePath, String key){
 		Properties properties = new Properties();
-		try
-		{
+		try{
 			InputStream in = new BufferedInputStream(new FileInputStream(new File(filePath)));
 			properties.load(in);
 			String value = properties.getProperty(key);
-			System.out.println(key +" = "+ value);
+			System.out.println(key +"="+ value);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
 
 	// 读取properties的全部信息
-	public static void readAllProperties(String filePath)
-	{
+	public static void readAllProperties(String filePath){
 		Properties props = new Properties();
-		try
-		{
+		try{
 			InputStream in = new BufferedInputStream(new FileInputStream(new File(filePath)));
 			props.load(in);
 			Enumeration<?> en = props.propertyNames();
-			while (en.hasMoreElements())
-			{
+			while (en.hasMoreElements()){
 				String key = (String) en.nextElement();
 				String Property = props.getProperty(key);
-				System.out.println(key  +" = "+  Property);
+				System.out.println(key  +"="+  Property);
 			}
 		}
-		catch (Exception e)
-		{
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
 
 	// 写入properties信息
 	public static void writeProperties(String filePath, String parameterName,
-			String parameterValue)
-	{
+			String parameterValue){
 		Properties properties = new Properties();
-		try
-		{
+		try{
 			InputStream is = new FileInputStream(filePath);
 			// 从输入流中读取属性列表（键和元素对）
 			properties.load(is);
@@ -69,15 +59,13 @@ public class PropertiesTest
 			// 将此 Properties 表中的属性列表（键和元素对）写入输出流
 			properties.store(os, "Update '" + parameterName + "' value");
 		}
-		catch (IOException e)
-		{
+		catch (IOException e){
 			System.err.println("Visit " + filePath + " for updating "
 					+ parameterName + " value error");
 		}
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		readValue("src/main/resources/info.properties", "username");
 		writeProperties("src/main/resources/info.properties", "age", "21");
 		readAllProperties("src/main/resources/info.properties");

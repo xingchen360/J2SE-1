@@ -1,5 +1,7 @@
 package com.somnus.apache;
 
+import java.util.Iterator;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -13,11 +15,19 @@ public class CommonsConfiguration {
             String url = getClass().getClassLoader().getResource("info.properties").getPath();
             System.out.println(url);
             PropertiesConfiguration config = new PropertiesConfiguration(url);
-            config.setProperty("age", "25");
+            config.setProperty("age", "22");
             config.save();
 
-            Integer integer = config.getInt("age");
-            System.out.println(integer);
+            Integer age = config.getInt("age");
+            String password = config.getString("username");
+            System.out.println(age);
+            System.out.println(password);
+            
+            for(Iterator<String> it = config.getKeys();it.hasNext();){
+                String key = (String)it.next();
+                String value = config.getString(key);
+                System.out.println(key +"="+value);
+            }
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
