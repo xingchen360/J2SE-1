@@ -80,16 +80,46 @@ public class EncryptUtil {
     
     // 从字节数组到十六进制字符串转换 
     @SuppressWarnings("unused")
-    private static String byte2hex2(byte[] arr) {  
-        StringBuffer sb = new StringBuffer();  
-        for (int i = 0; i < arr.length; ++i) 
-        {
+    private static String byte2hex2(byte[] arr) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < arr.length; ++i) {
             final String HEX = "0123456789abcdef"; 
             // 取出这个字节的高4位，然后与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
-            sb.append(HEX.charAt((arr[i] >> 4) & 0x0f));  
+            sb.append(HEX.charAt((arr[i] >> 4) & 0x0f));
             // 取出这个字节的低位，与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
-            sb.append(HEX.charAt(arr[i] & 0x0f));  
-        }  
-        return sb.toString();  
-    }  
+            sb.append(HEX.charAt(arr[i] & 0x0f));
+        }
+        return sb.toString();
+    }
+    
+    /**
+     * b[i] & 0xFF运算后得出的仍然是个int,那么为何要和 0xFF进行与运算呢?
+     * 直接 Integer.toHexString(b[i]);,将byte强转为int不行吗?
+     * 答案是不行的.
+     * 
+     * 其原因在于:
+     * 1.byte的大小为8bits而int的大小为32bits
+     * 2.java的二进制采用的是补码形式
+     * byte是一个字节保存的，有8个位，即8个0、1。
+     * 8位的第一个位是符号位
+     * 也就是说0000 0001代表的是数字1 
+     *      1000 0000代表的就是-1 
+     * 所以正数最大为0111 1111，也就是数字127 
+     *    负数最大为1111 1111，也就是数字-128
+     *    
+     * @see http://blog.csdn.net/zzycgfans/article/details/6782989
+     * @return
+     */
+    @SuppressWarnings("unused")
+    private static String byte2hex3(byte[] arr) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < arr.length; i++) {
+            String hex = Integer.toHexString(arr[i] & 0xFF);
+            if (hex.length() == 1) {
+                sb.append("0");
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
+    }
 }

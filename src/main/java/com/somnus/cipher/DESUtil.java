@@ -61,8 +61,7 @@ public class DESUtil {
     // 从字节数组到十六进制字符串转换 
     private static String byte2hex(byte[] arr) {  
         StringBuffer sb = new StringBuffer();  
-        for (int i = 0; i < arr.length; ++i) 
-        {
+        for (int i = 0; i < arr.length; ++i){
             final String HEX = "0123456789abcdef"; 
             // 取出这个字节的高4位，然后与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
             sb.append(HEX.charAt((arr[i] >> 4) & 0x0f));  
