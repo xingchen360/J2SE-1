@@ -1,4 +1,5 @@
 package com.somnus.classloader;
+
 class Singletion{
 	private static Singletion singletion = new Singletion();
 	/* 1、类的加载：查找并加载类的二进制数据
@@ -15,24 +16,20 @@ class Singletion{
 	
 	public int counter3 = 0;//该属性在类的初始化不会有任何动作,类实例化后开始赋值
 	
-	private Singletion()
-	{
+	private Singletion(){
 		counter1++;
 		counter2++;
 		counter3++;
 	}
-	public static Singletion getInstance()
-	{
+	public static Singletion getInstance(){
 		return singletion;
 	}
 }
-public class Test{
-	public static void main(String[] args)
-	{
+public class JVMStaticTest{
+	public static void main(String[] args){
 		Singletion singletion = Singletion.getInstance();
 		System.out.println(singletion.counter1);
 		System.out.println(singletion.counter2);
 		System.out.println(singletion.counter3);
 	}	
-	
 }
