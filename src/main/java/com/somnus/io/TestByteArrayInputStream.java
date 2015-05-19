@@ -6,18 +6,17 @@ public class TestByteArrayInputStream{
 
 	public static void main(String[] args){
 		try{
-			byte[] buff = new byte[] { 0, 1, 2,127,-1,-2, -128,'0','1','2','3','a','b','A','B'};
+			byte[] buff = "中国abc123".getBytes(/*"UTF-8"*/);
 
 			InputStream in = new ByteArrayInputStream(buff, 0, buff.length);
 			int data = 0;
 			while ((data = in.read()) != -1){
-				System.out.println(data + " ");
+				System.out.println(data +"|"+Integer.toHexString(data)+ " ");
 			}
 			in.close();
 
 		}
-		catch (Exception e)
-		{
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
