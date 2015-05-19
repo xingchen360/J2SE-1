@@ -10,6 +10,11 @@ public class TestByteArrayInputStream{
 
 			InputStream in = new ByteArrayInputStream(buff, 0, buff.length);
 			int data = 0;
+			/*
+			 * public synchronized int read() {
+             *   return (pos < count) ? (buf[pos++] & 0xff) : -1;
+             * }
+			 */
 			while ((data = in.read()) != -1){
 				System.out.println(data +"|"+Integer.toHexString(data)+ " ");
 			}
