@@ -55,12 +55,12 @@ public class BinaryReadWrite {
 			dos.writeInt(buff.length);
 			dos.write(buff);
 
-			dos.write("中".getBytes(/*"UTF-8"*/));
+			dos.write("中国".getBytes(/*"UTF-8"*/));
 
-			dos.write("国".getBytes("GB2312"));
+			dos.write("中国".getBytes("GB2312"));
 			
-			dos.writeBytes("abcd1234");
-
+			dos.writeBytes("abc123;");
+			
 			dos.flush();
 			dos.close();
 		}
@@ -69,7 +69,6 @@ public class BinaryReadWrite {
 	public void readBinaryStream() throws IOException {
 		if (dis != null) {
 			while (dis.available() > 0) {
-				System.out.println(dis.available());
 				System.out.println(dis.readBoolean());
 				System.out.println((char) dis.readChar());
 				System.out.println(dis.readDouble());
@@ -77,21 +76,35 @@ public class BinaryReadWrite {
 				System.out.println(dis.readInt());
 				System.out.println(dis.readLong());
 				System.out.println(dis.readShort());
-
+				
+				System.out.println("*******************************");
+				
 				int len = dis.readInt();
 				byte[] buffer = new byte[len];
 				dis.read(buffer, 0, buffer.length);
 				System.out.println(new String(buffer));
+				
+				System.out.println("*******************************");
 
-				byte[] buffer2 = new byte[3];
+				byte[] buffer2 = new byte[6];
 				dis.read(buffer2, 0, buffer2.length);
+				for(byte b:buffer2){
+                    System.out.print(Integer.toHexString(b & 0xff )+" ");
+                }
 				System.out.println(new String(buffer2/*, "UTF-8"*/));
-
-				byte[] buffer3 = new byte[2];
+				
+				System.out.println("*******************************");
+				
+				byte[] buffer3 = new byte[4];
 				dis.read(buffer3, 0, buffer3.length);
+				for(byte b:buffer3){
+                    System.out.print(Integer.toHexString(b & 0xff )+" ");
+                }
 				System.out.println(new String(buffer3, "GB2312"));
 				
-				byte[] buffer4 = new byte[8];
+				System.out.println("*******************************");
+				
+				byte[] buffer4 = new byte[7];
 				dis.read(buffer4, 0, buffer4.length);
 				for(byte b:buffer4){
 					System.out.println("#"+b);
@@ -105,7 +118,7 @@ public class BinaryReadWrite {
 		BinaryReadWrite bin = new BinaryReadWrite();
 		bin.writeBinaryStream();
 		bin.readBinaryStream();
-		
+		System.out.println("*******************************");
 		String str = "abcd<好好学习";
 		System.out.println(str.length());
 		System.out.println(str.getBytes(/*"UTF-8"*/).length);
