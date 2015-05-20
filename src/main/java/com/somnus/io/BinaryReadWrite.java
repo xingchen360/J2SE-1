@@ -89,7 +89,7 @@ public class BinaryReadWrite {
 				byte[] buffer2 = new byte[6];
 				dis.read(buffer2, 0, buffer2.length);
 				for(byte b:buffer2){
-                    System.out.print(b+"|"+(b & 0xff)+"|"+Integer.toHexString(b & 0xff)+"   ");
+				    System.out.print(b+"|"+(b & 0xff)+"|"+Integer.toBinaryString(b & 0xff)+"|"+Integer.toHexString(b & 0xff)+"   ");
                 }
 				System.out.println(new String(buffer2/*, "UTF-8"*/));
 				
@@ -98,7 +98,7 @@ public class BinaryReadWrite {
 				byte[] buffer3 = new byte[4];
 				dis.read(buffer3, 0, buffer3.length);
 				for(byte b:buffer3){
-				    System.out.print(b+"|"+(b & 0xff)+"|"+Integer.toHexString(b & 0xff)+"   ");
+				    System.out.print(b+"|"+(b & 0xff)+"|"+Integer.toBinaryString(b & 0xff)+"|"+Integer.toHexString(b & 0xff)+"   ");
                 }
 				System.out.println(new String(buffer3, "GB2312"));
 				

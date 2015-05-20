@@ -19,11 +19,11 @@ public class ReadNetImage {
 
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-			byte[] buffer = new byte[400];
+			byte[] buffer = new byte[128];
 
 			int len = 0;
 
-			while ((len = is.read(buffer, 0, 400)) != -1) {
+			while ((len = is.read(buffer, 0, buffer.length)) != -1) {
 				bos.write(buffer, 0, len);
 			}
 

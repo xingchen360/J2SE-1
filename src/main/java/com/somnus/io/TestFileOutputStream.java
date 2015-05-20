@@ -43,16 +43,17 @@ public class TestFileOutputStream {
 			
 			InputStream is = new FileInputStream(new File(filePath , fileName));
 			
-			byte[] buffer = new byte[256];
+			byte[] buff = new byte[128];
 			
 			int len = 0;
 			/*
 			 * 从FileInputStream输入流中不断的读取byte数组
 			 * 并且往被BufferedOutputStream包装的缓冲区写硬盘
 			 */
-			while((len = is.read(buffer)) > 0){
-				bos.write(buffer,0,len);
-				System.out.println(new String(buffer,0,len));
+			while((len = is.read(buff,0,buff.length)) > 0){
+				bos.write(buff,0,len);
+				System.out.print(new String(buff,0,len));
+				System.out.print("【读取到的长度："+len+"】");
 			}
 			/*
 			byte[] b = new byte[(int)new File(filePath , fileName).length()];
@@ -93,7 +94,7 @@ public class TestFileOutputStream {
 	
 	public static void main(String[] args) throws IOException{
 		TestFileOutputStream test = new TestFileOutputStream();
-		test.getFileFromFile("src/main/resources/", "user.xml");
+		test.getFileFromFile("src/main/resources/", "build.xml");
 	}
 	
 }

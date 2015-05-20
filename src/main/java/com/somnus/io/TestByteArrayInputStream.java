@@ -16,7 +16,8 @@ public class TestByteArrayInputStream{
              * }
 			 */
 			while ((data = in.read()) != -1){
-				System.out.println(data +"|"+Integer.toHexString(data)+ " ");
+				System.out.println(data +"|"+(byte)data+"|"
+				        +Integer.toBinaryString(data)+"|"+Integer.toHexString(data)+ " ");
 			}
 			in.close();
 

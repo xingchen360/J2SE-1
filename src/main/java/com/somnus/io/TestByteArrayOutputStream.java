@@ -56,7 +56,7 @@ public class TestByteArrayOutputStream {
 			
 			InputStream is = new FileInputStream(new File(filePath , fileName));
 			
-			byte[] b = new byte[1000];
+			byte[] buff = new byte[128];
 			
 			int len = 0;;
 			
@@ -64,12 +64,12 @@ public class TestByteArrayOutputStream {
 			 * 读取FileInputStream的输入流到ByteArrayOutputStream中
 			 * 是为了得到byte数组
 			 */
-			while ((len = is.read(b,0,1000)) != -1) {
+			while ((len = is.read(buff,0,buff.length)) != -1) {
 				/*
 				 * ByteArrayOutputStream的write方法只是把byte数组组织进去
 				 * 不会往硬盘执行写
 				 */
-				bos.write(b, 0, len);
+				bos.write(buff, 0, len);
 			}
 			
 			buffer = bos.toByteArray();

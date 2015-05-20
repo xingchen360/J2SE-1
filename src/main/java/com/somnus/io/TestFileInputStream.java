@@ -12,18 +12,20 @@ public class TestFileInputStream {
 			File f = new File(fileName);
 			InputStream in = new FileInputStream(f);
 			
-			//一次性全部读出来
 			byte[] b = new byte[(int)f.length()];
-			System.out.println(b.length);
-			int len = in.read(b,0,b.length);
+			System.out.println("字节长度："+b.length);
+			
+			//一次性全部读出来
+			/*int len = in.read(b,0,b.length);
 			System.out.println("读入长度为："+len);
-			System.out.println(new String(b));
+			System.out.println(new String(b));*/
 			
 			//或者一个一个读
-			/*for (int i = 0; i < b.length; i++){
+			for (int i = 0; i < b.length; i++){
 	            b[i]=(byte)in.read();
+	            System.out.println(b[i]);
 	        }
-	        System.out.println(new String(b));*/
+	        System.out.println(new String(b));
 	        
 			//或者分批读
 			/*byte[] buff = new byte[128];
