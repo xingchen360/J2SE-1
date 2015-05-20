@@ -1,16 +1,12 @@
 package com.somnus.thread.bankQueue;
 
-public class NumberMachine
-{
+public class NumberMachine{
 
-	private NumberMachine()
-	{
-	}
+	private NumberMachine(){}
 
 	private static NumberMachine instance = new NumberMachine();
 
-	public static NumberMachine getInstance()
-	{
+	public static NumberMachine getInstance(){
 		return instance;
 	}
 
@@ -18,18 +14,15 @@ public class NumberMachine
 	private NumberManager expressManager = new NumberManager();
 	private NumberManager vipManager = new NumberManager();
 
-	public NumberManager getCommonManager()
-	{
+	public NumberManager getCommonManager(){
 		return commonManager;
 	}
 
-	public NumberManager getExpressManager()
-	{
+	public NumberManager getExpressManager(){
 		return expressManager;
 	}
 
-	public NumberManager getVipManager()
-	{
+	public NumberManager getVipManager(){
 		return vipManager;
 	}
 

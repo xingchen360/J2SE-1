@@ -15,7 +15,6 @@ package com.somnus.thread.traffic;
  * @author 张孝祥 www.it315.org
  *
  */
-/**/
 
 public enum Lamp {
 	/*每个枚举元素各表示一个方向的控制灯*/	

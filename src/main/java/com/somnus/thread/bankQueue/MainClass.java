@@ -2,13 +2,9 @@ package com.somnus.thread.bankQueue;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class MainClass {
 	
-	private static Logger logger = Logger.getLogger("cn.itcast.bankqueue");
-	
-
 	public static void main(String[] args) {
 		//产生4个普通窗口
 		for(int i=1;i<5;i++){

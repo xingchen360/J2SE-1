@@ -5,38 +5,29 @@ import java.util.concurrent.Executors;
 
 /**
  * 没有把VIP窗口和快速窗口做成子类，是因为实际业务中的普通窗口可以随时被设置为VIP窗口和快速窗口。
- * */
-public class ServiceWindow
-{
+ */
+public class ServiceWindow{
 	private CustomerType type = CustomerType.COMMON;
 	private int number = 1;
 
-	public CustomerType getType()
-	{
+	public CustomerType getType(){
 		return type;
 	}
 
-	public void setType(CustomerType type)
-	{
+	public void setType(CustomerType type){
 		this.type = type;
 	}
 
-	public void setNumber(int number)
-	{
+	public void setNumber(int number){
 		this.number = number;
 	}
 
-	public void start()
-	{
-		Executors.newSingleThreadExecutor().execute(new Runnable()
-		{
-			public void run()
-			{
+	public void start(){
+		Executors.newSingleThreadExecutor().execute(new Runnable(){
+			public void run(){
 				// 下面这种写法的运行效率低，最好是把while放在case下面
-				while (true)
-				{
-					switch (type)
-					{
+				while (true){
+					switch (type){
 					case COMMON:
 						commonService();
 						break;
@@ -52,98 +43,73 @@ public class ServiceWindow
 		});
 	}
 
-	private void commonService()
-	{
+	private void commonService(){
 		String windowName = "第" + number + "号" + type + "窗口";
 		System.out.println(windowName + "开始获取普通任务!");
-		Integer serviceNumber = NumberMachine.getInstance().getCommonManager()
-				.fetchNumber();
-		if (serviceNumber != null)
-		{
+		Integer serviceNumber = NumberMachine.getInstance().getCommonManager().fetchNumber();
+		if (serviceNumber != null){
 			System.out.println(windowName + "开始为第" + serviceNumber + "号普通客户服务");
-			int maxRandom = Constants.MAX_SERVICE_TIME
-					- Constants.MIN_SERVICE_TIME;
-			int serviceTime = new Random().nextInt(maxRandom) + 1
-					+ Constants.MIN_SERVICE_TIME;
+			int maxRandom = Constants.MAX_SERVICE_TIME - Constants.MIN_SERVICE_TIME;
+			int serviceTime = new Random().nextInt(maxRandom) + 1 + Constants.MIN_SERVICE_TIME;
 
-			try
-			{
+			try{
 				Thread.sleep(serviceTime);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-			System.out.println(windowName + "完成为第" + serviceNumber
-					+ "号普通客户服务，总共耗时" + serviceTime / 1000 + "秒");
+			System.out.println(windowName + "完成为第" + serviceNumber+ "号普通客户服务，总共耗时" + serviceTime / 1000 + "秒");
 		}
-		else
-		{
+		else{
 			System.out.println(windowName + "没有取到普通任务，正在空闲一秒");
-			try
-			{
+			try{
 				Thread.sleep(1000);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void expressService()
-	{
+	private void expressService(){
 		Integer serviceNumber = NumberMachine.getInstance().getExpressManager()
 				.fetchNumber();
 		String windowName = "第" + number + "号" + type + "窗口";
 		System.out.println(windowName + "开始获取快速任务!");
-		if (serviceNumber != null)
-		{
+		if (serviceNumber != null){
 			System.out.println(windowName + "开始为第" + serviceNumber + "号快速客户服务");
 			int serviceTime = Constants.MIN_SERVICE_TIME;
-			try
-			{
+			try{
 				Thread.sleep(serviceTime);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e){
 				e.printStackTrace();
 			}
 			System.out.println(windowName + "完成为第" + serviceNumber
 					+ "号快速客户服务，总共耗时" + serviceTime / 1000 + "秒");
 		}
-		else
-		{
+		else{
 			System.out.println(windowName + "没有取到快速任务！");
 			commonService();
 		}
 	}
 
-	private void vipService()
-	{
-
-		Integer serviceNumber = NumberMachine.getInstance().getVipManager()
-				.fetchNumber();
+	private void vipService(){
+		Integer serviceNumber = NumberMachine.getInstance().getVipManager().fetchNumber();
 		String windowName = "第" + number + "号" + type + "窗口";
 		System.out.println(windowName + "开始获取VIP任务!");
-		if (serviceNumber != null)
-		{
-			System.out
-					.println(windowName + "开始为第" + serviceNumber + "号VIP客户服务");
-			int maxRandom = Constants.MAX_SERVICE_TIME
-					- Constants.MIN_SERVICE_TIME;
-			int serviceTime = new Random().nextInt(maxRandom) + 1
-					+ Constants.MIN_SERVICE_TIME;
-			try
-			{
+		if (serviceNumber != null){
+			System.out.println(windowName + "开始为第" + serviceNumber + "号VIP客户服务");
+			int maxRandom = Constants.MAX_SERVICE_TIME - Constants.MIN_SERVICE_TIME;
+			int serviceTime = new Random().nextInt(maxRandom) + 1 + Constants.MIN_SERVICE_TIME;
+			try{
 				Thread.sleep(serviceTime);
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
-			System.out.println(windowName + "完成为第" + serviceNumber
-					+ "号VIP客户服务，总共耗时" + serviceTime / 1000 + "秒");
+			System.out.println(windowName + "完成为第" + serviceNumber + "号VIP客户服务，总共耗时" + serviceTime / 1000 + "秒");
 		}
 		else
 		{

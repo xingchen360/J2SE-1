@@ -1,13 +1,10 @@
 package com.somnus.thread.bankQueue;
 
-public enum CustomerType
-{
+public enum CustomerType{
 	COMMON, EXPRESS, VIP;
-	public String toString()
-	{
+	public String toString(){
 		String name = null;
-		switch (this)
-		{
+		switch (this){
 		case COMMON:
 			name = "普通";
 			break;
