@@ -5,11 +5,14 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
 
 /** 
  * @description: TODO 
@@ -41,13 +44,13 @@ public class DESUtil {
         return securekey;
     }
 
-    private static int parse(char c) {
+    /*private static int parse(char c) {
         if (c >= 'a') return (c - 'a' + 10) & 0x0f;
         if (c >= 'A') return (c - 'A' + 10) & 0x0f;
         return (c - '0') & 0x0f;
     }
 
-    // 从十六进制字符串到字节数组转换 
+    // 从十六进制字符串到字节数组转换 byte input[] = Hex.decodeHex(keyStr.toCharArray());
     public static byte[] HexString2Bytes(String hexstr) {
         byte[] b = new byte[hexstr.length() / 2];
         int j = 0;
@@ -57,19 +60,7 @@ public class DESUtil {
             b[i] = (byte) ((parse(c0) << 4) | parse(c1));
         }
         return b;
-    }
-    // 从字节数组到十六进制字符串转换 
-    private static String byte2hex(byte[] arr) {  
-        StringBuffer sb = new StringBuffer();  
-        for (int i = 0; i < arr.length; ++i){
-            final String HEX = "0123456789abcdef"; 
-            // 取出这个字节的高4位，然后与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
-            sb.append(HEX.charAt((arr[i] >> 4) & 0x0f));  
-            // 取出这个字节的低位，与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
-            sb.append(HEX.charAt(arr[i] & 0x0f));  
-        }  
-        return sb.toString();  
-    }
+    }*/
 
     /** 
      * 加密数据
@@ -84,14 +75,11 @@ public class DESUtil {
         SecureRandom random = new SecureRandom();
         // 初始化Cipher对象，设置为加密模式
         cipher.init(Cipher.ENCRYPT_MODE, deskey, random);
-        byte[] results = cipher.doFinal(data.getBytes());
+        byte[] buff = cipher.doFinal(data.getBytes());
         // 该部分是为了与加解密在线测试网站（http://tripledes.online-domain-tools.com/）的十六进制结果进行核对
-        /*for (int i = 0; i < results.length; i++) {
-            System.out.print(results[i] + " ");
-        }
-        System.out.println();*/
+        System.out.println(Arrays.toString(buff));
         // 执行加密操作。加密后的结果通常都会用Base64编码进行传输 
-        return byte2hex(results);
+        return Hex.encodeHexString(buff);
     }
 
     /** 
@@ -106,11 +94,13 @@ public class DESUtil {
         //初始化Cipher对象，设置为解密模式
         cipher.init(Cipher.DECRYPT_MODE, deskey);
         // 执行解密操作
-        return new String(cipher.doFinal(HexString2Bytes(data)));
+        byte[] buff = cipher.doFinal(Hex.decodeHex(data.toCharArray()));
+        System.out.println(Arrays.toString(buff));
+        return new String(buff);
     }
 
     public static void main(String[] args) throws Exception {
-        String source = "Somnus";
+        String source = "Somnusss";
         System.out.println("原文: " + source);
         String key = "handsome";
         String encryptData = encrypt(source, key);

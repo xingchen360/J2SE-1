@@ -11,6 +11,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
+import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /** 
@@ -57,20 +58,20 @@ public class ThreeDESUtil {
      * @throws Exception 
      */
     private static Key keyGenerator(String keyStr) throws Exception {
-        byte input[] = HexString2Bytes(keyStr);
+        byte input[] = Hex.decodeHex(keyStr.toCharArray());
         DESedeKeySpec KeySpec = new DESedeKeySpec(input);
         SecretKeyFactory KeyFactory = SecretKeyFactory.getInstance(KEY_ALGORITHM);
         return ((Key) (KeyFactory.generateSecret(((java.security.spec.KeySpec) (KeySpec)))));
     }
 
-    private static int parse(char c) {
+    /*private static int parse(char c) {
         if (c >= 'a') return (c - 'a' + 10) & 0x0f;
         if (c >= 'A') return (c - 'A' + 10) & 0x0f;
         return (c - '0') & 0x0f;
-    }
+    }*/
  
-    // 从十六进制字符串到字节数组转换 
-    public static byte[] HexString2Bytes(String hexstr) {
+    // 从十六进制字符串到字节数组转换 byte input[] = Hex.decodeHex(keyStr.toCharArray());
+    /*public static byte[] HexString2Bytes(String hexstr) {
         byte[] b = new byte[hexstr.length() / 2];
         int j = 0;
         for (int i = 0; i < b.length; i++) {
@@ -79,7 +80,7 @@ public class ThreeDESUtil {
             b[i] = (byte) ((parse(c0) << 4) | parse(c1));
         }
         return b;
-    }
+    }*/
 
     /** 
      * CBC解密 
@@ -101,7 +102,7 @@ public class ThreeDESUtil {
     public static void main(String[] args) throws Exception {
         byte[] key = "6C4E60E55552386C759569836DC0F83869836DC0F838C0F7".getBytes();
         byte[] keyiv = { 1, 2, 3, 4, 5, 6, 7, 8 };
-        byte[] data = "Somnusss".getBytes("UTF-8");
+        byte[] data = "Somnusss".getBytes(/*"UTF-8"*/);
         System.out.println("data.length=" + data.length);
         System.out.println("CBC加密解密");
         byte[] str5 = des3EncodeCBC(key, keyiv, data);
