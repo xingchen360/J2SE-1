@@ -4,8 +4,7 @@ public class Tests {
 	char[] ch = {'h','e','l','l','o'};
 	int num = 9;
 	String str = "love";
-	void change(int num,char[] ch,String str)
-	{
+	void change(int num,char[] ch,String str){
 		num = 10;
 		ch[2] = 'm';
 		ch = new char[]{'w','o','r','l','d'};

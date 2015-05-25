@@ -1,14 +1,14 @@
 package com.somnus.array;
 
-public class ArrayDefined
-{
+import java.util.Arrays;
+
+public class ArrayDefined{
 
 	/**
 	 * 定义数组的三种方式
 	 * 数组的长度一旦确定就无法更改 public final int
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		byte[] array1 = new byte[10];
 		
 		byte array2[] = new byte[10];
@@ -18,12 +18,7 @@ public class ArrayDefined
 		
 		byte[] array3 = new byte[]{1,2,3,4};
 		
-		for(byte i=0;i<array3.length;i++)
-		{
-			System.out.println(array3[i]);
-		}
-		
-
+		System.out.println(Arrays.toString(array3));
 	}
 
 }

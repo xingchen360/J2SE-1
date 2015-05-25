@@ -1,7 +1,6 @@
 package com.somnus.accessModifier;
 
-public class Test
-{
+public class Test{
 	private static int num = 10;
 	public static int add(int num)
 	{

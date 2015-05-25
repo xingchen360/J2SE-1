@@ -6,8 +6,7 @@ public class StaticTest {
 		Animal a = new Dog();
 	}
 }
-class Animal
-{
+class Animal{
 	static{
 		System.out.println("Animal static");
 	}
@@ -16,8 +15,7 @@ class Animal
 		System.out.println("动物");
 	}
 }
-class Dog extends Animal
-{
+class Dog extends Animal{
 	static{
 		System.out.println("Dog static");
 	}

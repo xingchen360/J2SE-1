@@ -1,6 +1,5 @@
 package com.somnus.array;
-public class DoubleArray
-{
+public class DoubleArray{
 	/*
 	 * 							               {{11 , 6 ,   1}				           (0,0) -->(0,2)		(1,0) --> (0,1)	 (2,0)-->(0,0)
 	 * {{1,  2,  3, 4,  5}				    {12 , 7 ,   2}				           (0,1) -->(1,2)		(1,1) --> (1,1)  (2,1)-->(1,0)
@@ -11,12 +10,10 @@ public class DoubleArray
 	 * 
 	 * 							                {15 , 10 , 5}}
 	 */
-	public static int[][]  createArray()
-	{
+	public static int[][]  createArray(){
 		int[][] array = new int[3][5];
 		
-		for(int i=0;i<3;i++)
-		{
+		for(int i=0;i<3;i++){
 			int k = 1;
 			for(int j=0;j<5;j++)
 			{
@@ -35,8 +32,7 @@ public class DoubleArray
 		return array;
 	}
 	
-	public static int[][] replace(int[][] array)
-	{
+	public static int[][] replace(int[][] array){
 		int lengthX = array.length;
 		
 		int[] array_= array[0];
@@ -45,15 +41,12 @@ public class DoubleArray
 		
 		int[][] temp = new int[lengthY][lengthX];
 		
-		for(int i=0;i<lengthY;i++)
-		{
+		for(int i=0;i<lengthY;i++){
 			int k = 1;
-			for(int j=0;j<lengthX;j++)
-			{
+			for(int j=0;j<lengthX;j++){
 				temp[i][j] = array[lengthX-j-1][i];
 				
-				if(k==temp[i].length)
-				{
+				if(k==temp[i].length){
 					System.out.print(temp[i][j]);
 					System.out.println("");
 				}else{
@@ -65,11 +58,8 @@ public class DoubleArray
 		return temp;
 	}
 	
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args){
 		replace(createArray());
 	}
-	
-
 
 }

@@ -4,7 +4,6 @@ public @interface AnnotationDefined {
 	String value() default "hello";
 	EnumExample value2();
 }
-enum EnumExample
-{
+enum EnumExample{
 	hello, world, wellcome;
 }

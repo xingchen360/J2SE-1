@@ -1,7 +1,6 @@
 package com.somnus.accessModifier;
 
-public class Modifier
-{
+public class Modifier{
 	/**1
 	 * private(私有的)
 	 * 被private所修饰的属性和方法
