@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
@@ -18,6 +19,7 @@ public class Dom4jXpathDemo {
     public void parserXml(String fileName){
         SAXReader reader = new SAXReader();
         try {
+            /*Document receiveDoc = DocumentHelper.parseText(result);*/
             Document document = reader.read(new File(fileName));
             /*System.out.println("name:"+document.selectSingleNode("/user/Account/name").getText());*/
             List<Element> list = document.selectNodes("/user/Account");
