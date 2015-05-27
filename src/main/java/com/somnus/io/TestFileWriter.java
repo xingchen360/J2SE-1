@@ -5,17 +5,16 @@ import java.io.IOException;
 
 public class TestFileWriter {
 
-	public static void main(String[] args) {
-		FileWriter fw=null;
+	public static void main(String[] args) throws IOException {
+		FileWriter fw = null;
 		try {
 			fw =new FileWriter("src/main/resources/filewriter.txt");
 			fw.write("hello");
-			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.exit(-1);
+		} finally{
+		    fw.close();
 		}
-		System.out.println("写入正常");
 	}
 	
 }
