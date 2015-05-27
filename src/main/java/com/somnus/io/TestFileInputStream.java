@@ -8,34 +8,30 @@ public class TestFileInputStream {
 
 	public static void main(String[] args) {
 		try {
-			String fileName ="src/main/resources/build.xml";
-			File f = new File(fileName);
-			InputStream in = new FileInputStream(f);
-			
+			File f = new File("src/main/resources/build.xml");
+			InputStream is = new FileInputStream(new File("src/main/resources/build.xml"));
 			byte[] b = new byte[(int)f.length()];
 			System.out.println("字节长度："+b.length);
 			
 			//一次性全部读出来
-			/*int len = in.read(b,0,b.length);
+			/*int len = is.read(b,0,b.length);
 			System.out.println("读入长度为："+len);
 			System.out.println(new String(b));*/
 			
 			//或者一个一个读
-			for (int i = 0; i < b.length; i++){
-	            b[i]=(byte)in.read();
+			/*for (int i = 0; i < b.length; i++){
+	            b[i]=(byte)is.read();
 	            System.out.println(b[i]);
 	        }
-	        System.out.println(new String(b));
+	        System.out.println(new String(b));*/
 	        
 			//或者分批读
-			/*byte[] buff = new byte[128];
+			byte[] buff = new byte[128];
 			int length = 0;
-			while((length = in.read(buff,0,buff.length))!=-1){
+			while((length = is.read(buff,0,buff.length))!=-1){
 				System.out.println(new String(buff,0,length));
-			}*/
-
-			in.close();
-
+			}
+			is.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

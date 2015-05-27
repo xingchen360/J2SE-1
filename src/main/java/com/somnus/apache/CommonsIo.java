@@ -1,42 +1,152 @@
 package com.somnus.apache;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileSystemUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-
+/**
+ * @Title: CommonsIo.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年5月27日 下午3:06:39 
+ * @version V1.0
+ */
 public class CommonsIo {
 	public static void main(String[] args) throws Exception {
-		// 1．读取Stream
-		// 标准代码：
-		InputStream in = new URL("http://jakarta.apache.org").openStream();
-		InputStreamReader inR = new InputStreamReader(in);
-		BufferedReader buf = new BufferedReader(inR);
-		String line;
-		while ((line = buf.readLine()) != null) {
-			System.out.println(line);
-		}
-		in.close();
 		
-		// 使用IOUtils
-		InputStream in2 = new URL("http://jakarta.apache.org").openStream();
-		try {
-			System.out.println(IOUtils.toString(in2));
-		} finally {
-			IOUtils.closeQuietly(in);
+		InputStream is1 = new URL("https://www.baidu.com/").openStream();
+		/**
+		 * readLines(InputStream input)
+		 * readLines(InputStream input, String encoding)
+		 * readLines(Reader input)
+		 */
+		List<String> lines = IOUtils.readLines(is1);
+		for(String line:lines){
+		    System.out.println(line);
 		}
-
-		// 2．读取文件
-		File file = new File("/commons/io/project.properties");
-		List lines = FileUtils.readLines(file, "UTF-8");
-
-		// 3．察看剩余空间
-		long freeSpace = FileSystemUtils.freeSpace("C:/");
+		
+		System.out.println("******************************************************************************************");
+		InputStream is2 = new URL("https://www.baidu.com/").openStream();
+        try {
+            /**
+             * toString(InputStream input)
+             * toString(InputStream input, String encoding)
+             * toString(Reader input)
+             * [toString(byte[] input)]
+             * [toString(byte[] input, String encoding)]
+             */
+            System.out.println(IOUtils.toString(is2));
+        } finally {
+            IOUtils.closeQuietly(is2);
+        }
+        
+        System.out.println("******************************************************************************************");
+        File file = new File("src/main/resources/build.xml");
+        List<String> lines2 = FileUtils.readLines(file/*, "UTF-8"*/);
+        for(String line:lines2){
+            System.out.println(line);
+        }
+        
+        System.out.println("******************************************************************************************");
+        String result = FileUtils.readFileToString(file/*, "UTF-8"*/);
+        System.out.println(result);
+        
+        System.out.println("******************************************************************************************");
+        File srcFile = new File("src/main/resources/build.xml");
+        File destFile = new File("target/classes/test.txt");
+        /**
+         * copyFile(File srcFile, File destFile)
+         * copyFile(File srcFile, File destFile,boolean preserveFileDate)
+         */
+        FileUtils.copyFile(srcFile, destFile);
+        
+        System.out.println("******************************************************************************************");
+        InputStream is4 = new URL("https://www.baidu.com/").openStream();
+        OutputStream os4 = new FileOutputStream(new File("target/classes/test.txt"));
+        try {
+            /**
+             * copy(InputStream input, OutputStream output)
+             * copy(InputStream input, Writer output)
+             * copy(InputStream input, Writer output, String encoding)
+             * copy(Reader input, Writer output)
+             * copy(Reader input, OutputStream output)
+             * copy(Reader input, OutputStream output, String encoding)
+             * copyLarge(Reader input, Writer output)
+             * copyLarge(InputStream input, OutputStream output)
+             */
+            IOUtils.copy(is4, os4);
+        } finally{
+            IOUtils.closeQuietly(is4);
+            IOUtils.closeQuietly(os4);
+        }
+        System.out.println("******************************************************************************************");
+        InputStream is5 = new URL("https://www.baidu.com/").openStream();
+        try {
+            /**
+             * toByteArray(InputStream input)
+             * toByteArray(Reader input)
+             * toByteArray(Reader input, String encoding)
+             * [toByteArray(String input)]
+             */
+            byte[] buff5 = IOUtils.toByteArray(is5);
+            System.out.println(Hex.encodeHexString(buff5));
+        } finally{
+            IOUtils.closeQuietly(is5);
+        }
+        System.out.println("******************************************************************************************");
+        InputStream is6 = new URL("https://www.baidu.com/").openStream();
+        try {
+            /**
+             * toCharArray(InputStream is)
+             * toCharArray(InputStream is, String encoding)
+             * toCharArray(Reader input)
+             */
+            char[] buff6 = IOUtils.toCharArray(is6);
+            System.out.println(Arrays.toString(buff6));
+        } finally{
+            IOUtils.closeQuietly(is6);
+        }
+        System.out.println("******************************************************************************************");
+        /**
+         * toInputStream(String input)
+         * toInputStream(String input, String encoding)
+         * toInputStream(CharSequence input)
+         * toInputStream(CharSequence input, String encoding)
+         */
+        InputStream is7 = IOUtils.toInputStream("https://www.baidu.com/");
+        System.out.println("******************************************************************************************");
+        OutputStream os7 = new FileOutputStream(new File("target/classes/test.txt"));
+        try {
+            /**
+             * write(byte[] data, OutputStream output)
+             * write(byte[] data, Writer output)
+             * write(byte[] data, Writer output, String encoding)
+             * write(char[] data, Writer output)
+             * write(char[] data, OutputStream output)
+             * write(char[] data, OutputStream output, String encoding)
+             * write(CharSequence data, Writer output)
+             * write(CharSequence data, OutputStream output)
+             * write(CharSequence data, OutputStream output, String encoding)
+             * write(String data, Writer output)
+             * write(String data, OutputStream output)
+             * write(String data, OutputStream output, String encoding)
+             * 
+             */
+            IOUtils.write("https://www.baidu.com/", os7);
+        } finally{
+            IOUtils.closeQuietly(os7);
+        }
+        //察看剩余空间
+        long freeSpace = FileSystemUtils.freeSpace("C:/");
+        System.out.println(freeSpace);
 	}
 }

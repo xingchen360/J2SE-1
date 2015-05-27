@@ -1,6 +1,5 @@
 package com.somnus.io;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,19 +12,11 @@ public class TestFileOutputStream {
 	 * 知道某个byte数组
 	 * 往指定的目录生成文件
 	 */
-	public  void getFileFromBytes(byte[] bfile, String filePath, String fileName) {
+	public void getFileFromBytes(byte[] bfile, String filePath, String fileName) {
 		try {
-			File dir = new File(filePath);
-			// 判断文件目录是否存在
-			if (!dir.exists()){
-				dir.mkdirs();
-			}
-			
 			OutputStream os = new FileOutputStream(new File(filePath , fileName));
-			
 			os.write(bfile);
-			
-			os.close();
+			 os.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,34 +27,24 @@ public class TestFileOutputStream {
 	 * 从中读书byte数据
 	 * 并且往另一目录文件写入相同的文件
 	 */
-	public  void getFileFromFile(String filePath, String fileName){
+	public void getFileFromFile(String filePath, String fileName){
 		try{
-			OutputStream os = new FileOutputStream(new File("src/main/resources/","test.txt"));
-			BufferedOutputStream  bos = new BufferedOutputStream(os);
-			
+			OutputStream os = new FileOutputStream(new File("target/classes/test.txt"));
 			InputStream is = new FileInputStream(new File(filePath , fileName));
 			
 			byte[] buff = new byte[128];
-			
 			int len = 0;
-			/*
-			 * 从FileInputStream输入流中不断的读取byte数组
-			 * 并且往被BufferedOutputStream包装的缓冲区写硬盘
-			 */
 			while((len = is.read(buff,0,buff.length)) > 0){
-				bos.write(buff,0,len);
+			    os.write(buff,0,len);
 				System.out.print(new String(buff,0,len));
 				System.out.print("【读取到的长度："+len+"】");
 			}
+			
 			/*
 			byte[] b = new byte[(int)new File(filePath , fileName).length()];
-
 		    int count = 0;
-
 		    int temp = 0;
-
-		    while((temp = is.read())!=(-1))
-		    {
+		    while((temp = is.read())!=(-1)){
 		          b[count++] = (byte)temp;
 		          System.out.println((char)temp);
 		    }
@@ -84,7 +65,6 @@ public class TestFileOutputStream {
 			*/
 			
 			is.close();
-			bos.close();
 			os.close();
 		}
 		catch (Exception e){

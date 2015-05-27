@@ -61,7 +61,6 @@ public class TestFileReader {
             System.out.println(str);
         }
         System.out.println(arr.length);
-                
     }
 
 }
