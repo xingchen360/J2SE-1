@@ -9,7 +9,7 @@ public class TestByteArrayInputStream{
 	    byte[] buff = "中国abc123".getBytes(/*"UTF-8"*/);
         InputStream is = null;
         try {
-            is = new ByteArrayInputStream(buff, 0, buff.length);
+            is = new ByteArrayInputStream(buff);
             int data = 0;
             /*
              * public synchronized int read() {

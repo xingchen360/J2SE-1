@@ -32,7 +32,7 @@ public class TestFileInputStream {
             //或者分批读
             byte[] buff = new byte[128];
             int length = 0;
-            while((length = is.read(buff,0,buff.length))!=-1){
+            while((length = is.read(buff))!=-1){
                 System.out.println(new String(buff,0,length));
             }
         } catch (FileNotFoundException e) {

@@ -44,7 +44,7 @@ public class TestFileOutputStream {
             
             byte[] buff = new byte[128];
             int len = 0;
-            while((len = is.read(buff,0,buff.length)) > 0){
+            while((len = is.read(buff)) > 0){
                 os.write(buff,0,len);
                 System.out.print(new String(buff,0,len));
                 System.out.print("【读取到的长度："+len+"】");
