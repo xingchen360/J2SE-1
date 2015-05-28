@@ -64,7 +64,8 @@ public class TestFileInputStream {
             /*byte[] b = new byte[is.available()];
             for (int i = 0; i < b.length; i++){
                 b[i]=(byte)is.read();
-                System.out.println(b[i]);
+                System.out.println(b[i] +"|"+(byte)b[i]+"|"
+                        +Integer.toBinaryString(b[i])+"|"+Integer.toHexString(b[i])+ " ");
             }
             System.out.println(new String(b));*/
             
