@@ -10,7 +10,7 @@ public class TestBufferedOutputStream {
 		OutputStream os = null;
         BufferedOutputStream bos = null;
         try {
-            os = new FileOutputStream("target/classes/test.txt");
+            os = new FileOutputStream("target/classes/TestBufferedOutputStream.txt");
             bos = new BufferedOutputStream(os);
             bos.write("http://google.com/".getBytes(/*"UTF-8"*/));
         } catch (Exception e) {

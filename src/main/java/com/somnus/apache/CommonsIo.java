@@ -62,7 +62,7 @@ public class CommonsIo {
         
         System.out.println("******************************************************************************************");
         File srcFile = new File("src/main/resources/build.xml");
-        File destFile = new File("target/classes/test.txt");
+        File destFile = new File("target/classes/build.txt");
         /**
          * copyFile(File srcFile, File destFile)
          * copyFile(File srcFile, File destFile,boolean preserveFileDate)
@@ -71,7 +71,7 @@ public class CommonsIo {
         
         System.out.println("******************************************************************************************");
         InputStream is4 = new URL("https://www.baidu.com/").openStream();
-        OutputStream os4 = new FileOutputStream(new File("target/classes/test.txt"));
+        OutputStream os4 = new FileOutputStream(new File("target/classes/baidu.txt"));
         try {
             /**
              * copy(InputStream input, OutputStream output)
@@ -124,7 +124,7 @@ public class CommonsIo {
          */
         InputStream is7 = IOUtils.toInputStream("https://www.baidu.com/");
         System.out.println("******************************************************************************************");
-        OutputStream os7 = new FileOutputStream(new File("target/classes/test.txt"));
+        OutputStream os7 = new FileOutputStream(new File("target/classes/Somnus.txt"));
         try {
             /**
              * write(byte[] data, OutputStream output)
@@ -141,7 +141,7 @@ public class CommonsIo {
              * write(String data, OutputStream output, String encoding)
              * 
              */
-            IOUtils.write("https://www.baidu.com/", os7);
+            IOUtils.write("Somnus罂粟花", os7);
         } finally{
             IOUtils.closeQuietly(os7);
         }

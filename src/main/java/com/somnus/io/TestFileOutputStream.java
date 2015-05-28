@@ -7,23 +7,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 
 public class TestFileOutputStream {
 	/**
-	 * 知道某个byte数组
-	 * 往指定的目录生成文件
+	 * @知道某个byte数组
+	 * @往指定的目录生成文件
+	 *             文件输出流直接write
 	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public void getFileFromBytes(byte[] bfile, String filePath, String fileName) throws IOException{
+	public static void bytes2file() throws IOException{
 	    OutputStream os = null;
         try {
-            os = new FileOutputStream(new File(filePath , fileName));
-            os.write(bfile);
+            os = new FileOutputStream(new File("target/classes/TestFileOutputStream1.txt"));
+            os.write("Somnus罂粟花".getBytes(/*"UTF-8"*/));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         os.close();
@@ -35,13 +36,14 @@ public class TestFileOutputStream {
 	 * 并且往另一目录文件写入相同的文件
 	 * @throws IOException 
 	 */
-	public void getFileFromFile(String filePath, String fileName) throws IOException{
+	public static void file2file() throws IOException{
 	    OutputStream os = null;
         InputStream is = null;
         try {
-            os = new FileOutputStream(new File("target/classes/test.txt"));
-            is = new FileInputStream(new File(filePath , fileName));
+            os = new FileOutputStream(new File("target/classes/TestFileOutputStream2.txt"));
+            is = new URL("https://www.baidu.com/").openStream();
             
+            /*分批读，分批写*/
             byte[] buff = new byte[128];
             int len = 0;
             while((len = is.read(buff)) > 0){
@@ -50,29 +52,35 @@ public class TestFileOutputStream {
                 System.out.print("【读取到的长度："+len+"】");
             }
             
-            /*
-            byte[] b = new byte[(int)new File(filePath , fileName).length()];
+            /*①一个个读出来赋值到数组中，最后一起写入*/
+            /*byte[] buff = new byte[is.available()];
             int count = 0;
-            int temp = 0;
-            while((temp = is.read())!=(-1)){
-                  b[count++] = (byte)temp;
-                  System.out.println((char)temp);
+            int data = 0;
+            while((data = is.read())!=(-1)){
+                buff[count++] = (byte)data;
+                  System.out.println(data +"|"+(byte)data+"|"
+                          +Integer.toBinaryString(data)+"|"+Integer.toHexString(data)+ " ");
             }
-            System.out.println(new String(b));
-            os.write(b);
-            */
+            System.out.println(new String(buff));
+            os.write(buff);*/
             
-            /*
-            byte[] b = new byte[(int)new File(filePath , fileName).length()];
-
-            for (int i = 0; i < b.length; i++) 
-            {
-                b[i] = (byte)is.read();
-                System.out.println((char)b[i]);
+            /*②一个个读出来赋值到数组中，最后一起写入*/
+            /*byte[] buff = new byte[is.available()];
+            for (int i = 0; i < buff.length; i++){
+                buff[i] = (byte)is.read();
+                System.out.println(buff[i] +"|"+(byte)buff[i]+"|"
+                        +Integer.toBinaryString(buff[i])+"|"+Integer.toHexString(buff[i])+ " ");
             }
-            System.out.println(new String(b));
-            os.write(b);
-            */
+            System.out.println(new String(buff));
+            os.write(buff);*/
+            
+            /*一次性全部读到数组中并且写入*/
+            /*byte[] buff = new byte[is.available()];
+            int len = is.read(buff,0,buff.length);
+            System.out.println("读入长度为："+len);
+            System.out.println(new String(buff));
+            os.write(buff);*/
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -84,8 +92,8 @@ public class TestFileOutputStream {
 	}
 	
 	public static void main(String[] args) throws IOException{
-		TestFileOutputStream test = new TestFileOutputStream();
-		test.getFileFromFile("src/main/resources/", "build.xml");
+	    file2file();
+	    bytes2file();
 	}
 	
 }
