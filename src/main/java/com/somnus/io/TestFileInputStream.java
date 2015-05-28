@@ -30,7 +30,7 @@ public class TestFileInputStream {
              * 读取FileInputStream的输入流到ByteArrayOutputStream中
              * 是为了得到byte数组
              */
-            while ((len = is.read(buff)) != -1) {
+            while ((len = is.read(buff/*,0,buff.length*/)) != -1) {
                 bos.write(buff, 0, len);
             }
             buffer = bos.toByteArray();
@@ -54,13 +54,13 @@ public class TestFileInputStream {
         try {
             is = new URL("https://www.baidu.com/").openStream();
             
-            //一次性全部读出来
+            /**一次性全部读出来*/
             /*byte[] b = new byte[is.available()];
             int len = is.read(b,0,b.length);
             System.out.println("读入长度为："+len);
             System.out.println(new String(b));*/
             
-            //或者一个一个读
+            /**或者一个一个读*/
             /*byte[] b = new byte[is.available()];
             for (int i = 0; i < b.length; i++){
                 b[i]=(byte)is.read();
@@ -68,10 +68,10 @@ public class TestFileInputStream {
             }
             System.out.println(new String(b));*/
             
-            //或者分批读
+            /**或者分批读*/
             byte[] buff = new byte[128];
             int len = 0;
-            while((len = is.read(buff))!=-1){
+            while((len = is.read(buff/*,0,buff.length*/))!=-1){
                 System.out.print(new String(buff,0,len));
                 System.out.print("【读取到的长度："+len+"】");
             }

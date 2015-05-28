@@ -1,7 +1,6 @@
 package com.somnus.io;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,16 +42,16 @@ public class TestFileOutputStream {
             os = new FileOutputStream(new File("target/classes/TestFileOutputStream2.txt"));
             is = new URL("https://www.baidu.com/").openStream();
             
-            /*分批读，分批写*/
+            /**分批读，分批写*/
             byte[] buff = new byte[128];
             int len = 0;
-            while((len = is.read(buff)) > 0){
+            while((len = is.read(buff/*,0,buff.length*/)) > 0){
                 os.write(buff,0,len);
                 System.out.print(new String(buff,0,len));
                 System.out.print("【读取到的长度："+len+"】");
             }
             
-            /*①一个个读出来赋值到数组中，最后一起写入*/
+            /**①一个个读出来赋值到数组中，最后一起写入*/
             /*byte[] buff = new byte[is.available()];
             int count = 0;
             int data = 0;
@@ -64,7 +63,7 @@ public class TestFileOutputStream {
             System.out.println(new String(buff));
             os.write(buff);*/
             
-            /*②一个个读出来赋值到数组中，最后一起写入*/
+            /**②一个个读出来赋值到数组中，最后一起写入*/
             /*byte[] buff = new byte[is.available()];
             for (int i = 0; i < buff.length; i++){
                 buff[i] = (byte)is.read();
@@ -74,7 +73,7 @@ public class TestFileOutputStream {
             System.out.println(new String(buff));
             os.write(buff);*/
             
-            /*一次性全部读到数组中并且写入*/
+            /**一次性全部读到数组中并且写入*/
             /*byte[] buff = new byte[is.available()];
             int len = is.read(buff,0,buff.length);
             System.out.println("读入长度为："+len);
