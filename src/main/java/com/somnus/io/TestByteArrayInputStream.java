@@ -34,7 +34,7 @@ public class TestByteArrayInputStream{
             int len = 0;
             while((len = is.read(buff))!=-1){
                 System.out.print(new String(buff,0,len));
-                System.out.print("【读取到的长度："+len+"】");
+                System.out.print("[读取到的长度："+len+"]");
             }*/
         } catch (IOException e) {
             e.printStackTrace();
