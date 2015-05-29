@@ -9,7 +9,11 @@ package com.somnus.io;
  * @version V1.0 
  */
 public class NagativeThinking {
-
+    /**
+     * @see http://blog.csdn.net/zzycgfans/article/details/6782989
+     * @see http://www.linuxidc.com/Linux/2015-02/113863.htm
+     * @param args
+     */
     public static void main(String[] args) {
         /* Demo     7          -7               -7
          * 原码          00000111    1 0000111     1 000000000000000000000000000111
@@ -23,13 +27,14 @@ public class NagativeThinking {
         //111111111111111111111111 11111001 都要以补码的形式参与计算
         //  &
         //000000000000000000000000 11111111 都要以补码的形式参与计算（正数的补码是自身）
-        //10000111
-        System.out.println(Integer.toBinaryString(b & 0xff/*249*/));//1 1111001
-        System.out.println(Integer.toHexString(b & 0xff/*249*/));//f9
+        //000000000000000000000000 11111001
+        System.out.println(Integer.toBinaryString(b & 0xff/*255*/));//1 1111001
+        System.out.println(Integer.toHexString(b & 0xff/*255*/));//f9
+        
+        System.out.println("*******************************************************");
         
         int c = 7;
         byte d = 7;
-        
         System.out.println(Integer.toBinaryString(c));//0 0000000000000000000000000000111
         System.out.println(Integer.toBinaryString(d));//0 0000111
         System.out.println(Integer.toHexString(d));//7
