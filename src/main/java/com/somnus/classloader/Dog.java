@@ -1,9 +1,7 @@
 package com.somnus.classloader;
 
-public class Dog
-{
-	public Dog()
-	{
+public class Dog{
+	public Dog(){
 		System.out.println("Dog is loaded by:"+this.getClass().getClassLoader());
 	}
 }

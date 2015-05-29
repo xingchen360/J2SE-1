@@ -5,47 +5,38 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class MyClassLoader extends ClassLoader
-{
+public class MyClassLoader extends ClassLoader{
 	private String name;
 	private String path = "E:\\";
 	private final String fileType = ".class";
 	
-	public MyClassLoader(String name)
-	{
+	public MyClassLoader(String name){
 		super();
 		this.name = name;
 	}
-	public MyClassLoader(ClassLoader parent,String name)
-	{
+	public MyClassLoader(ClassLoader parent,String name){
 		super(parent);
 		this.name = name;
 	}
-	public String toString()
-	{
+	public String toString(){
 		return this.name;
 	}
-	public String getPath()
-	{
+	public String getPath(){
 		return path;
 	}
-	public void setPath(String path)
-	{
+	public void setPath(String path){
 		this.path = path;
 	}
-	public Class<?> findClass(String name) throws ClassNotFoundException
-	{
+	public Class<?> findClass(String name) throws ClassNotFoundException{
 		byte[] data = this.loadClassData(name);
 		
 		return this.defineClass(name, data, 0, data.length);
 	}
-	private byte[] loadClassData(String name)
-	{
+	private byte[] loadClassData(String name){
 		InputStream is = null;
 		byte[] data = null;
 		ByteArrayOutputStream baos = null;
-		try
-		{
+		try{
 			this.name = this.name.replace(".", "\\");
 			is = new FileInputStream(new File(path+name+fileType));
 			baos = new ByteArrayOutputStream();
@@ -56,26 +47,21 @@ public class MyClassLoader extends ClassLoader
 			}
 			data = baos.toByteArray();
 		}
-		catch(Exception e)
-		{
+		catch(Exception e){
 			e.printStackTrace();
 		}
-		finally
-		{
-			try
-			{
+		finally{
+			try{
 				is.close();
 				baos.close();
 			}
-			catch(Exception e)
-			{
+			catch(Exception e){
 				e.printStackTrace();
 			}
 		}
 		return data;
 	}
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception{
 		MyClassLoader loader1 = new MyClassLoader("loader1");
 		loader1.setPath("e:\\myapp\\serverlib\\");
 		
@@ -88,8 +74,7 @@ public class MyClassLoader extends ClassLoader
 		test(loader2);
 		test(loader3);
 	}
-	public static void test(ClassLoader loader) throws Exception
-	{
+	public static void test(ClassLoader loader) throws Exception{
 		Class clazz = loader.loadClass("com.classloader.Sample");
 		Object object = clazz.newInstance();
 	}

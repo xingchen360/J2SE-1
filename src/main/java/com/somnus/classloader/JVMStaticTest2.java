@@ -17,24 +17,20 @@ class Singletion2{
 	
 	public int counter3 = 0;//该属性在类的初始化不会有任何动作,类实例化后开始赋值
 	
-	private Singletion2()
-	{
+	private Singletion2(){
 		counter1++;
 		counter2++;
 		counter3++;
 	}
-	public static Singletion2 getInstance()
-	{
+	public static Singletion2 getInstance(){
 		return singletion;
 	}
 }
 public class JVMStaticTest2{
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		Singletion2 singletion = Singletion2.getInstance();
 		System.out.println(singletion.counter1);
 		System.out.println(singletion.counter2);
 		System.out.println(singletion.counter3);
 	}	
-	
 }
