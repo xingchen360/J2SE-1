@@ -11,7 +11,10 @@ public class CglibClient {
 	    
 		ProxyObject proxy = (ProxyObject)cglib.getProxy(new ProxyObject());
 		proxy.doSomething();
+		/**-->>com.somnus.cglib.ProxyObject$$EnhancerByCGLIB$$1166e3aa@404de8d8*/
+		/*System.out.println("-->>"+proxy);*/
 		
+		System.out.println("*****************************************************************");
 		
 		ProxyObject proxy2 = (ProxyObject)cglib.getProxy(ProxyObject.class);
 		proxy2.doSomething();
