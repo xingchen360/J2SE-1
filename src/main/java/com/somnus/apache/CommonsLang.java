@@ -3,13 +3,13 @@ package com.somnus.apache;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ClassUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 public class CommonsLang {
 	public static void main(String[] args) throws Exception {
@@ -31,7 +31,7 @@ public class CommonsLang {
 		// 五位的随机字母和数字 
 		System.out.println(RandomStringUtils.randomAlphanumeric(5));
 		System.out.println("********************************ClassUtils***************************************");
-		System.out.println(StringEscapeUtils.escapeHtml("<html>"));
+		System.out.println(StringEscapeUtils.escapeHtml3("<html>"));
 		// 输出结果为&lt;html&gt;
 		System.out.println(StringEscapeUtils.escapeJava("String"));
 		System.out.println("********************************StringEscapeUtils***************************************");
