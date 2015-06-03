@@ -7,54 +7,44 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DbUtil
-{
+public class DbUtil{
 
 	// 获取connection连接
-	public Connection getConnection()
-	{
+	public Connection getConnection(){
 		Connection conn = DbConnection.getConn();
 		return conn;
 	}
 
 	// 获取statement连接
-	public Statement getStatement()
-	{
+	public Statement getStatement(){
 		Connection conn = getConnection();
 		
 		Statement stat = null;
-		try
-		{
+		try{
 			stat = conn.createStatement();
 		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
+		catch (SQLException e){
+		    throw new RuntimeException(e.getMessage(), e);
 		}
 		return stat;
 	}
 
 	// 获取preparedStatment连接
-	public PreparedStatement getPreparedStatement(String sql,Object[] parameters)
-	{
+	public PreparedStatement getPreparedStatement(String sql,Object[] parameters){
 		Connection conn = getConnection();
 		
 		PreparedStatement pstat = null;
-		try
-		{
+		try{
 			pstat = conn.prepareStatement(sql);
-			if (parameters != null && parameters.length > 0)
-			{
+			if (parameters != null && parameters.length > 0){
 				pstat = conn.prepareStatement(sql);
-				for (int i = 0; i < parameters.length; i++)
-				{
+				for (int i = 0; i < parameters.length; i++){
 					pstat.setObject(i + 1, parameters[i]);
 				}
 			}
 		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
+		catch (SQLException e){
+		    throw new RuntimeException(e.getMessage(), e);
 		}
 		return pstat;
 	}
@@ -68,30 +58,23 @@ public class DbUtil
 	 * 			执行语句
 	 * @return
 	 */
-	public ResultSet getResultSet(Statement stat, String sql)
-	{
+	public ResultSet getResultSet(Statement stat, String sql){
 		ResultSet rset = null;
-		if (stat instanceof PreparedStatement)
-		{
+		if (stat instanceof PreparedStatement){
 			PreparedStatement pstat = (PreparedStatement) stat;
-			try
-			{
+			try{
 				rset = pstat.executeQuery();
 			}
-			catch (SQLException e)
-			{
+			catch (SQLException e){
 				throw new RuntimeException(e.getMessage(),e);
 			}
 		}
-		else
-		{
-			try
-			{
+		else{
+			try{
 				rset = stat.executeQuery(sql);
 			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
+			catch (SQLException e){
+			    throw new RuntimeException(e.getMessage(), e);
 			}
 		}
 		return rset;
@@ -107,20 +90,16 @@ public class DbUtil
 	 *            参数
 	 * @return 返回信息总数
 	 */
-	public int getTotalCount(String sqlStr, Object[] temp)
-	{
-		Connection conn = getConnection();
+	public int getTotalCount(String sqlStr, Object[] temp){
 		int count = 0;
 		sqlStr = sqlStr.toUpperCase();
 		sqlStr = sqlStr.replace(sqlStr.substring(6, sqlStr.indexOf("FROM")),
 				" COUNT(*) ");
 		String sql = sqlStr.substring(0, sqlStr.lastIndexOf("WHERE"));
 		Object[] parameters = null;
-		if (temp != null && temp.length > 2)
-		{
+		if (temp != null && temp.length > 2){
 			parameters = new Object[temp.length - 2];
-			for (int i = 0; i < parameters.length; i++)
-			{
+			for (int i = 0; i < parameters.length; i++){
 				parameters[i] = temp[i];
 			}
 		}
@@ -129,20 +108,17 @@ public class DbUtil
 		
 		ResultSet rs = getResultSet(pstat, sql);
 		
-		try
-		{
-			if (rs.next())
-			{
+		try{
+			if (rs.next()){
 				count = rs.getInt(1);
 			}
 		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
+		catch (SQLException e){
+		    throw new RuntimeException(e.getMessage(), e);
 		}
-		finally
-		{
-			close(conn,pstat,rs);
+		finally{
+		    DbConnection.closeConnection();
+			close(pstat,rs);
 		}
 		return count;
 	}
@@ -156,90 +132,70 @@ public class DbUtil
 	 *            执行语句
 	 * @return
 	 */
-	public boolean doInsertOrUpdateOrDelete(Statement stat,String sql)
-	{
+	public boolean doInsertOrUpdateOrDelete(Statement stat,String sql){
 		boolean flag = false;
 		
 		int rowCount = 0;
 		
-		if (stat instanceof PreparedStatement)
-		{
+		if (stat instanceof PreparedStatement){
 			PreparedStatement pstat = (PreparedStatement) stat;
-			try
-			{
+			try{
 				rowCount = pstat.executeUpdate();
 			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
+			catch (SQLException e){
+			    throw new RuntimeException(e.getMessage(), e);
 			}
 		}
-		else
-		{
-			try
-			{
+		else{
+			try{
 				rowCount = stat.executeUpdate(sql);
 			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
+			catch (SQLException e){
+			    throw new RuntimeException(e.getMessage(), e);
 			}
 		}
-		if (rowCount > 0)
-		{
+		if (rowCount > 0){
 			flag = true;
 		}
 		return flag;
 	}
-	public CallableStatement gerCall(String sql,Object[] inparamerters,Integer[] outparamerters)
-	{
+	public CallableStatement gerCall(String sql,Object[] inparamerters,Integer[] outparamerters){
 		Connection conn = getConnection();
 		CallableStatement call = null;
-		try
-		{
+		try{
 			call = conn.prepareCall(sql);
 			
-			if(inparamerters!=null)
-			{
-				for (int i = 0; i < inparamerters.length; i++)
-				{
+			if(inparamerters!=null){
+				for (int i = 0; i < inparamerters.length; i++){
 					call.setObject(i + 1, inparamerters[i]);
 				}
 			}
-			if(outparamerters!=null)
-			{
-				for (int i = 0; i < outparamerters.length; i++)
-				{
+			if(outparamerters!=null){
+				for (int i = 0; i < outparamerters.length; i++){
 					call.registerOutParameter(inparamerters.length+1+i, outparamerters[i]);
 				}
 			}
 		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
+		catch (SQLException e){
+		    throw new RuntimeException(e.getMessage(), e);
 		}
 		return call;
 	}
-	public void crudCall(String sql,Object[] paramerters)
-	{
+	public void crudCall(String sql,Object[] paramerters){
 		Connection conn = getConnection();
-		try
-		{
+		try{
 			CallableStatement call = conn.prepareCall(sql);
 			
-			if(paramerters!=null)
-			{
-				for (int i = 0; i < paramerters.length; i++)
-				{
+			if(paramerters!=null){
+				for (int i = 0; i < paramerters.length; i++){
 					call.setObject(i + 1, paramerters[i]);
 				}
 			}
 			
 			call.execute();
 		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
+		catch (SQLException e){
+		    throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 	/**
@@ -248,24 +204,18 @@ public class DbUtil
 	 * @param st
 	 * @param rs
 	 */
-	public void close(Connection conn, Statement st,ResultSet rs) {
+	public void close(Statement st,ResultSet rs) {
 		try{
 			if(rs!=null)
 				rs.close();
 		}catch(Exception e){
-			e.printStackTrace();
+		    throw new RuntimeException(e.getMessage(), e);
 		}
 		try{
 			if(st!=null)
 				st.close();
 		}catch(Exception e){
-			e.printStackTrace();
-		}
-		try{
-			if(conn!=null)
-				conn.close();
-		}catch(Exception e){
-			e.printStackTrace();
+		    throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.somnus.cglib;
+package com.somnus.proxy.cglib;
 
 /** 
  * @description: TODO 
@@ -9,14 +9,14 @@ public class CglibClient {
 	public static void main(String[] args) {
 	    CglibProxy cglib = new CglibProxy();
 	    
-		ProxyObject proxy = (ProxyObject)cglib.getProxy(new ProxyObject());
-		proxy.doSomething();
+	    HelloImpl proxy = (HelloImpl)cglib.getProxy(new HelloImpl());
+		proxy.say("Somnus");
 		/**-->>com.somnus.cglib.ProxyObject$$EnhancerByCGLIB$$1166e3aa@404de8d8*/
 		/*System.out.println("-->>"+proxy);*/
 		
 		System.out.println("*****************************************************************");
 		
-		ProxyObject proxy2 = (ProxyObject)cglib.getProxy(ProxyObject.class);
-		proxy2.doSomething();
+		HelloImpl proxy2 = (HelloImpl)cglib.getProxy(HelloImpl.class);
+		proxy2.say("Somnus");
 	}
 }

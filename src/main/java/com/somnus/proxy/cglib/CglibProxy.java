@@ -1,4 +1,4 @@
-package com.somnus.cglib;
+package com.somnus.proxy.cglib;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
