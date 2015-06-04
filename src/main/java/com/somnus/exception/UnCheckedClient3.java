@@ -1,5 +1,8 @@
 package com.somnus.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,29 +16,50 @@ import org.slf4j.LoggerFactory;
  */
 public class UnCheckedClient3 {
     
+	private transient Logger log = LoggerFactory.getLogger(this.getClass());
+    
+    public void defined(String parameter){
+        if(!"A".equals(parameter)){
+            log.error("字母:{}",parameter);
+            throw new BizException("只接收字母A");
+        }
+        System.out.println("&&&&&&&&&&&&&&&&&&&&");
+    }
     /**
-     * 通过数组下标获得指定位置数字
-     * ArrayIndexOutOfBoundsException也是一个unchecked异常，
-     * 这里开发者并没有显示的new出一个RuntimeException来，但是传参不当还是会发生unchecked异常的
-     * 虽然可能会出现异常，但还是不需要声明抛出，也不要在方法中try catch捕获它，更不需要在调用者的方法中去捕获它
-     * 原因同UnCheckedClient2中的说明一样
-     * @param index
-     * @return
+     * 当然还可以不去捕获异常信息进行打印
+     * 我们都交给顶层方法
      */
-    public int getNumFromArray(int index){
-        int[] array = new int[]{1,2,3,4};
-        int result = array[index];
-        return result;
+    public void defined2(String parameter){
+    	System.out.println("********************");
+		defined(parameter);
+		System.out.println("====================");
+    }
+    
+    /**
+     * 顶层方法
+     */
+    public Map<String,Object> response(){
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	try {
+			defined2("B");
+			System.out.println("********************");
+		} catch (BizException e) {
+			log.error(e.getMessage(),e);
+			map.put("BUSINESS_ERROR", e.getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(),ex);
+			map.put("EXCEPTION_ERROR", ex.getMessage());
+		}
+    	return map;
     }
 
     /**
      * @param args
      */
     public static void main(String[] args) {
-        UnCheckedClient3 client = new UnCheckedClient3();
-        /** 会抛出异常 ArrayIndexOutOfBoundsException*/
-        System.out.println(client.getNumFromArray(5));
-        System.out.println("********************");
+    	UnCheckedClient3 client = new UnCheckedClient3();
+    	Map<String,Object> map = client.response();
+    	System.out.println(map.get("BUSINESS_ERROR"));
     }
 
 }
