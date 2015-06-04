@@ -16,6 +16,10 @@ public class CheckedClient3 {
     
     /**
      * 如果你不想处理就抛出去，交给调用你的方法去处理它
+     * 但此处有个值得注意的地方，这里要本着【设计隔离原则】
+     * 不能随意污染上层调用代码，什么样的异常不该在哪一层出现，这得开发人员自己把握
+     * 比如dao层中的代码发生的异常，就不应该把异常传递到上层biz中，SQLException 会污染上层代码
+     * 如果随意的，就不需要考虑这一点
      * @param name
      * @return
      * @throws ClassNotFoundException

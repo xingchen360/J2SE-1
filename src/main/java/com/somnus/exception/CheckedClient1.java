@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @version V1.0 
  */
 public class CheckedClient1 {
-    private transient Logger log = LoggerFactory.getLogger(this.getClass());
+    private static final Logger log = LoggerFactory.getLogger(CheckedClient1.class);
     
     /**
      * Exception 异常
@@ -24,16 +24,16 @@ public class CheckedClient1 {
      * @param name
      * @return
      */
-    public String getClassSimpleName(String name){
+    public String getClassSimpleName(String name) /*throws Exception*/{
         Class<?> demo = null;
         try {
             demo = Class.forName(name);
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);
             /* 把异常信息封装成一个新的RuntimeException传递给它的调用者
-             * 实际项目中 可能会碰到throw e这种情况
-             * 如果自己处理完后你想被调用者继续处理该异常，或者需要把该种异常传播到最终调用者，就使用throw e，当然方法上还需要声明
-             * 如果自己处理完后，并不需要被调用者处理，直接中断，那么就使用throw new RuntimeException(e)
+             * 实际项目中 可能还会碰到【throw e】这种情况
+             * ①如果自己处理完后你想被调用者继续处理该异常，或者需要把该种异常传播到最终调用者，就使用throw e，当然方法上还需要声明
+             * ②如果自己处理完后，并不需要被调用者处理，直接中断，那么就使用【throw new RuntimeException(e)】
              */
             throw new RuntimeException(e);/*throw e;*/
         }
@@ -50,5 +50,4 @@ public class CheckedClient1 {
         client.getClassSimpleName("com.somnus.exception.BizExceptio");
         System.out.println("********************");
     }
-
 }
