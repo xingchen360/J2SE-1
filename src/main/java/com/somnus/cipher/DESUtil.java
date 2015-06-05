@@ -8,20 +8,43 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
-/** 
+/**对称加密算法DES&AES
  * @description: TODO 
  * @author Somnus
  * date 2015年4月8日 下午2:10:44  
  */
 public class DESUtil {
-    //算法名称 
-    public static final String KEY_ALGORITHM = "DES";
+    /** 
+     * ALGORITHM 算法 <br> 
+     * 可替换为以下任意一种算法，同时key值的size相应改变。 
+     *  
+     * <pre> 
+     * DES                  key size must be equal to 56 
+     * DESede(TripleDES)    key size must be equal to 112 or 168 
+     * AES                  key size must be equal to 128, 192 or 256,but 192 and 256 bits may not be available 
+     * Blowfish             key size must be multiple of 8, and can only range from 32 to 448 (inclusive) 
+     * RC2                  key size must be between 40 and 1024 bits 
+     * RC4(ARCFOUR)         key size must be between 40 and 1024 bits 
+     * </pre> 
+     *  
+     * 在Key keyGenerator(byte[] key)方法中使用下述代码 
+     * <code>SecretKey secretKey = new SecretKeySpec(key, ALGORITHM);</code> 替换 
+     * <code> 
+     * DESKeySpec desKey = new DESKeySpec(key); 
+     * SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM); 
+     * SecretKey secretKey = keyFactory.generateSecret(desKey); 
+     * </code> 
+     */
+    public static final String ALGORITHM = "DES";
     //算法名称/加密模式/填充方式 
     //DES共有四种工作模式-->>ECB：电子密码本模式、CBC：加密分组链接模式、CFB：加密反馈模式、OFB：输出反馈模式
     public static final String CIPHER_ALGORITHM = "DES/ECB/NoPadding";
@@ -36,31 +59,16 @@ public class DESUtil {
      * @throws InvalidKeySpecException   
      * @throws Exception 
      */
-    private static SecretKey keyGenerator(String keyStr) throws Exception {
-        DESKeySpec desKey = new DESKeySpec(keyStr.getBytes());
+    private static SecretKey keyGenerator(byte[] key) throws Exception {
+        DESKeySpec desKey = new DESKeySpec(key);
         //创建一个密匙工厂，然后用它把DESKeySpec转换成
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM);
         SecretKey securekey = keyFactory.generateSecret(desKey);
+        
+        /*当使用其他对称加密算法时，如AES、Blowfish等算法时，用下述代码替换上述三行代码 */
+        /*SecretKey secretKey = new SecretKeySpec(keyStr.getBytes(),KEY_ALGORITHM);*/  
         return securekey;
     }
-
-    /*private static int parse(char c) {
-        if (c >= 'a') return (c - 'a' + 10) & 0x0f;
-        if (c >= 'A') return (c - 'A' + 10) & 0x0f;
-        return (c - '0') & 0x0f;
-    }
-
-    // 从十六进制字符串到字节数组转换 byte input[] = Hex.decodeHex(keyStr.toCharArray());
-    public static byte[] HexString2Bytes(String hexstr) {
-        byte[] b = new byte[hexstr.length() / 2];
-        int j = 0;
-        for (int i = 0; i < b.length; i++) {
-            char c0 = hexstr.charAt(j++);
-            char c1 = hexstr.charAt(j++);
-            b[i] = (byte) ((parse(c0) << 4) | parse(c1));
-        }
-        return b;
-    }*/
 
     /** 
      * 加密数据
@@ -68,8 +76,8 @@ public class DESUtil {
      * @param key 密钥
      * @return 加密后的数据 
      */
-    public static String encrypt(String data, String key) throws Exception {
-        Key deskey = keyGenerator(key);
+    public static String encrypt(String data, String keyStr) throws Exception {
+        Key deskey = keyGenerator(Base64.decodeBase64(keyStr));
         // 实例化Cipher对象，它用于完成实际的加密操作
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         SecureRandom random = new SecureRandom();
@@ -88,8 +96,8 @@ public class DESUtil {
      * @param key 密钥 
      * @return 解密后的数据 
      */
-    public static String decrypt(String data, String key) throws Exception {
-        Key deskey = keyGenerator(key);
+    public static String decrypt(String data, String keyStr) throws Exception {
+        Key deskey = keyGenerator(Base64.decodeBase64(keyStr));
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         //初始化Cipher对象，设置为解密模式
         cipher.init(Cipher.DECRYPT_MODE, deskey);
@@ -98,11 +106,38 @@ public class DESUtil {
         System.out.println(Arrays.toString(buff));
         return new String(buff);
     }
-
+    /** 
+     * 生成密钥 
+     * @return 
+     * @throws Exception 
+     */  
+    public static String initKey() throws Exception {  
+        return initKey(null);  
+    }  
+    /** 
+    * 生成密钥 
+    * @param seed 
+    * @return 
+    * @throws Exception 
+    */  
+   public static String initKey(String seed) throws Exception {  
+       SecureRandom secureRandom = null;  
+       if (seed != null) {  
+           secureRandom = new SecureRandom(Base64.decodeBase64(seed));  
+       } else {  
+           secureRandom = new SecureRandom();  
+       }  
+       KeyGenerator kg = KeyGenerator.getInstance(ALGORITHM);  
+       kg.init(secureRandom);  
+       SecretKey secretKey = kg.generateKey();  
+       return Base64.encodeBase64String(secretKey.getEncoded()); 
+   }
     public static void main(String[] args) throws Exception {
+        String key = initKey();
+        System.out.println(key+"size:"+Base64.decodeBase64(key).length);
+        
         String source = "Somnusss";
         System.out.println("原文: " + source);
-        String key = "handsome";
         String encryptData = encrypt(source, key);
         System.out.println("加密后: " + encryptData);
         String decryptData = decrypt(encryptData, key);

@@ -1,25 +1,37 @@
 package com.somnus.cipher;
 
-import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/** 
+import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+
+/** 单向加密算法MD5&SHA&MAC
  * @description: TODO 
  * @author Somnus
  * date 2015年4月3日 下午4:17:51  
  */
 public class EncryptUtil {
-    public static void main(String[] args) {  
-        //md5加密测试  
-        String md5_1 = md5("Somnus");  
-        System.out.println(md5_1);  
-        System.out.println("md5 length: " + md5_1.length());  
-        //sha加密测试  
-        String sha_1 = sha("Somnus");  
-        System.out.println(sha_1);  
-        System.out.println("sha length: " + sha_1.length());  
-    }  
+    public static final String KEY_MD5 = "MD5";
+    public static final String KEY_SHA = "SHA";
+    /** 
+     * MAC算法可选以下多种算法 
+     *  
+     * <pre> 
+     * HmacMD5  
+     * HmacSHA1  
+     * HmacSHA256  
+     * HmacSHA384  
+     * HmacSHA512 
+     * </pre> 
+     */  
+    public static final String KEY_MAC = "HmacMD5";
   
     /**
      * md5加密  
@@ -27,7 +39,7 @@ public class EncryptUtil {
      * @return
      */
     public static String md5(String str) {  
-        return encrypt(str, "md5");  
+        return encrypt(str, KEY_MD5);  
     }  
   
     /**
@@ -36,7 +48,7 @@ public class EncryptUtil {
      * @return
      */
     public static String sha(String str) {  
-        return encrypt(str, "sha-1");  
+        return encrypt(str, KEY_SHA);  
     }  
   
     /** 
@@ -58,68 +70,73 @@ public class EncryptUtil {
         String encryptText = null;  
         try {  
             MessageDigest m = MessageDigest.getInstance(algorithmName);  
-            m.update(str.getBytes("UTF8"));  
+            m.update(str.getBytes(/*"UTF8"*/));  
             byte s[] = m.digest();  
-            return byte2hex(s);  
+            return Hex.encodeHexString(s);
         } catch (NoSuchAlgorithmException e) {  
             e.printStackTrace();  
-        } catch (UnsupportedEncodingException e) {  
-            e.printStackTrace();
         }  
         return encryptText;  
+    }
+    
+    /** 
+     * 初始化HMAC密钥 
+     *  
+     * @return 
+     * @throws Exception 
+     */  
+    public static String initMacKey(){  
+        try {
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_MAC);  
+            SecretKey secretKey = keyGenerator.generateKey();  
+            return Base64.encodeBase64String(secretKey.getEncoded());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;  
     }  
   
-    // 从字节数组到十六进制字符串转换 
-    private static String byte2hex(byte[] arr) {  
-        StringBuffer sb = new StringBuffer();  
-        for (int i = 0; i < arr.length; ++i) {
-            sb.append(Integer.toHexString((arr[i] & 0xFF) | 0x100).substring(1,3));  
-        }  
-        return sb.toString();  
-    }
-    
-    // 从字节数组到十六进制字符串转换 
-    @SuppressWarnings("unused")
-    private static String byte2hex2(byte[] arr) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < arr.length; ++i) {
-            final String HEX = "0123456789abcdef"; 
-            // 取出这个字节的高4位，然后与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
-            sb.append(HEX.charAt((arr[i] >> 4) & 0x0f));
-            // 取出这个字节的低位，与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数  
-            sb.append(HEX.charAt(arr[i] & 0x0f));
+    /** 
+     * HMAC加密 
+     *  
+     * @param data 
+     * @param key 
+     * @return 
+     * @throws Exception 
+     */  
+    public static String encryptHMAC(byte[] data, String key){  
+        SecretKey secretKey = new SecretKeySpec(Base64.decodeBase64(key), KEY_MAC); 
+        String encryptText = null;
+        try {
+            Mac mac = Mac.getInstance(secretKey.getAlgorithm());  
+            mac.init(secretKey);
+            byte s[] = mac.doFinal(data);  
+            return Hex.encodeHexString(s);
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
-        return sb.toString();
+        return encryptText;
     }
-    
-    /**
-     * b[i] & 0xFF运算后得出的仍然是个int,那么为何要和 0xFF进行与运算呢?
-     * 直接 Integer.toHexString(b[i]);,将byte强转为int不行吗?
-     * 答案是不行的.
-     * 
-     * 其原因在于:
-     * 1.byte的大小为8bits而int的大小为32bits
-     * 2.java的二进制采用的是补码形式
-     * byte是一个字节保存的，有8个位，即8个0、1。
-     * 8位的第一个位是符号位
-     * 也就是说0000 0001代表的是数字1 
-     *      1000 0000代表的就是-1 
-     * 所以正数最大为0111 1111，也就是数字127 
-     *    负数最大为1111 1111，也就是数字-128
-     *    
-     * @see http://blog.csdn.net/zzycgfans/article/details/6782989
-     * @return
-     */
-    @SuppressWarnings("unused")
-    private static String byte2hex3(byte[] arr) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < arr.length; i++) {
-            String hex = Integer.toHexString(arr[i] & 0xFF);
-            if (hex.length() == 1) {
-                sb.append("0");
-            }
-            sb.append(hex);
-        }
-        return sb.toString();
+  
+    public static void main(String[] args) {  
+        //md5加密测试  
+        String md5_1 = md5("Somnus");  
+        System.out.println(md5_1);  
+        System.out.println("md5 length: " + md5_1.length());  
+        //sha加密测试  
+        String sha_1 = sha("Somnus");  
+        System.out.println(sha_1);  
+        System.out.println("sha length: " + sha_1.length());
+        //HMAC加密 测试
+        String key = initMacKey();  
+        System.err.println("Mac密钥:" + key);
+        
+        String hmac = encryptHMAC("Somnus".getBytes(),key);
+        System.out.println(hmac);  
+        System.out.println("hmac length: " + hmac.length());
     }
 }
