@@ -1,7 +1,7 @@
 package com.somnus.cipher;
 
 /** 
- * @Title: Coder.java 
+ * @Title: Base64Helper.java 
  * @Package com.somnus.cipher 
  * @Description: TODO
  * @author Somnus

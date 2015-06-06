@@ -79,12 +79,10 @@ public class DESUtil {
     public static String encrypt(String data, String keyStr) throws Exception {
         Key deskey = keyGenerator(Base64.decodeBase64(keyStr));
         // 实例化Cipher对象，它用于完成实际的加密操作
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        SecureRandom random = new SecureRandom();
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
         // 初始化Cipher对象，设置为加密模式
-        cipher.init(Cipher.ENCRYPT_MODE, deskey, random);
+        cipher.init(Cipher.ENCRYPT_MODE, deskey);
         byte[] buff = cipher.doFinal(data.getBytes());
-        // 该部分是为了与加解密在线测试网站（http://tripledes.online-domain-tools.com/）的十六进制结果进行核对
         System.out.println(Arrays.toString(buff));
         // 执行加密操作。加密后的结果通常都会用Base64编码进行传输 
         return Hex.encodeHexString(buff);
@@ -98,7 +96,8 @@ public class DESUtil {
      */
     public static String decrypt(String data, String keyStr) throws Exception {
         Key deskey = keyGenerator(Base64.decodeBase64(keyStr));
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        // 实例化Cipher对象，它用于完成实际的解密操作
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
         //初始化Cipher对象，设置为解密模式
         cipher.init(Cipher.DECRYPT_MODE, deskey);
         // 执行解密操作
@@ -136,10 +135,12 @@ public class DESUtil {
         String key = initKey();
         System.out.println(key+"size:"+Base64.decodeBase64(key).length);
         
-        String source = "Somnusss";
+        String source = "Somnus";
         System.out.println("原文: " + source);
+        
         String encryptData = encrypt(source, key);
         System.out.println("加密后: " + encryptData);
+        
         String decryptData = decrypt(encryptData, key);
         System.out.println("解密后: " + decryptData);
     }

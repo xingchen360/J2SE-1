@@ -17,7 +17,7 @@ import org.apache.commons.codec.binary.Hex;
  * @author Somnus
  * date 2015年4月3日 下午4:17:51  
  */
-public class EncryptUtil {
+public class MD5Util {
     public static final String KEY_MD5 = "MD5";
     public static final String KEY_SHA = "SHA";
     /** 
@@ -37,8 +37,9 @@ public class EncryptUtil {
      * md5加密  
      * @param str
      * @return
+     * @throws NoSuchAlgorithmException 
      */
-    public static String md5(String str) {  
+    public static String md5(String str) throws Exception {  
         return encrypt(str, KEY_MD5);  
     }  
   
@@ -46,8 +47,9 @@ public class EncryptUtil {
      * sha加密  
      * @param str
      * @return
+     * @throws NoSuchAlgorithmException 
      */
-    public static String sha(String str) {  
+    public static String sha(String str) throws Exception {  
         return encrypt(str, KEY_SHA);  
     }  
   
@@ -59,24 +61,13 @@ public class EncryptUtil {
      * @param algorithmName 
      *            加密算法名称：md5或者sha-1，不区分大小写 
      * @return 
+     * @throws NoSuchAlgorithmException 
      */  
-    private static String encrypt(String str, String algorithmName) {  
-        if (str == null || "".equals(str.trim())) {  
-            throw new IllegalArgumentException("请输入要加密的内容");  
-        }  
-        if (algorithmName == null || "".equals(algorithmName.trim())) {  
-            algorithmName = "md5";  
-        }  
-        String encryptText = null;  
-        try {  
-            MessageDigest m = MessageDigest.getInstance(algorithmName);  
-            m.update(str.getBytes(/*"UTF8"*/));  
-            byte s[] = m.digest();  
-            return Hex.encodeHexString(s);
-        } catch (NoSuchAlgorithmException e) {  
-            e.printStackTrace();  
-        }  
-        return encryptText;  
+    private static String encrypt(String str, String algorithmName) throws Exception {  
+        MessageDigest m = MessageDigest.getInstance(algorithmName);  
+        m.update(str.getBytes(/*"UTF8"*/));  
+        byte s[] = m.digest();  
+        return Hex.encodeHexString(s);  
     }
     
     /** 
@@ -102,27 +93,19 @@ public class EncryptUtil {
      * @param data 
      * @param key 
      * @return 
+     * @throws NoSuchAlgorithmException 
+     * @throws InvalidKeyException 
      * @throws Exception 
      */  
-    public static String encryptHMAC(byte[] data, String key){  
+    public static String encryptHMAC(byte[] data, String key) throws Exception{  
         SecretKey secretKey = new SecretKeySpec(Base64.decodeBase64(key), KEY_MAC); 
-        String encryptText = null;
-        try {
-            Mac mac = Mac.getInstance(secretKey.getAlgorithm());  
-            mac.init(secretKey);
-            byte s[] = mac.doFinal(data);  
-            return Hex.encodeHexString(s);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-        return encryptText;
+        Mac mac = Mac.getInstance(secretKey.getAlgorithm());  
+        mac.init(secretKey);
+        byte s[] = mac.doFinal(data);  
+        return Hex.encodeHexString(s);
     }
   
-    public static void main(String[] args) {  
+    public static void main(String[] args) throws Exception {  
         //md5加密测试  
         String md5_1 = md5("Somnus");  
         System.out.println(md5_1);  

@@ -13,25 +13,23 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
 
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.codec.binary.Hex;
 
-/** 
+/** 非对称加密算法RSA
  * @Title: RsaEncrypt.java 
- * @Package com.ips.bmps.module.report.bankconnect.util 
  * @Description: TODO
  * @author Somnus
  * @date 2015年6月5日 下午2:02:44 
  * @version V1.0 
  */
-public class RsaUtil {
-    private static final Logger LOG = LoggerFactory.getLogger(RsaUtil.class);
+public class RSAUtil {
     public static final String ALGORITHM = "RSA";  
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";  
   
@@ -43,8 +41,12 @@ public class RsaUtil {
     
     private static Map<String, Object> keymap;
     static{
-        RsaUtil rutil = new RsaUtil();
-        keymap = rutil.initKey();
+        RSAUtil rutil = new RSAUtil();
+        try {
+			keymap = rutil.initKey();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     /** 
      * 用私钥对信息生成数字签名 
@@ -56,8 +58,7 @@ public class RsaUtil {
      * @return 
      * @throws Exception 
      */  
-    public static String sign(byte[] data) throws Exception { 
-        
+    public static String sign(String data) throws Exception { 
         // 解密由base64编码的私钥  
         byte[] keyBytes = Base64.decodeBase64(getPrivateKey());
         // 构造PKCS8EncodedKeySpec对象  
@@ -69,7 +70,7 @@ public class RsaUtil {
         // 用私钥对信息生成数字签名  
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);  
         signature.initSign(priKey);  
-        signature.update(data);  
+        signature.update(Hex.decodeHex(data.toCharArray()));  
         return Base64.encodeBase64String(signature.sign());
     }  
   
@@ -87,7 +88,7 @@ public class RsaUtil {
      * @throws Exception 
      *  
      */  
-    public static boolean verify(byte[] data,String sign)throws Exception {  
+    public static boolean verify(String data,String sign)throws Exception {  
         // 解密由base64编码的公钥  
         byte[] keyBytes = Base64.decodeBase64(getPublicKey());
         // 构造X509EncodedKeySpec对象  
@@ -98,7 +99,7 @@ public class RsaUtil {
         PublicKey pubKey = keyFactory.generatePublic(keySpec);  
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);  
         signature.initVerify(pubKey);  
-        signature.update(data);  
+        signature.update(Hex.decodeHex(data.toCharArray()));  
         // 验证签名是否正常  
         return signature.verify(Base64.decodeBase64(sign));  
     }  
@@ -108,21 +109,23 @@ public class RsaUtil {
      * 用私钥解密 
      *  
      * @param data 
-     * @param key 
      * @return 
      * @throws Exception 
      */  
-    public static byte[] decryptByPrivateKey(byte[] data)throws Exception {  
+    public static String decryptByPrivateKey(String data)throws Exception {  
         // 对密钥解密  
         byte[] keyBytes = Base64.decodeBase64(getPrivateKey());
         // 取得私钥  
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);  
         KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);  
         Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);  
-        // 对数据解密  
+        //初始化Cipher对象，设置为解密模式
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());  
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);  
-        return cipher.doFinal(data);  
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        // 执行解密操作
+        byte[] buff = cipher.doFinal(Hex.decodeHex(data.toCharArray()));
+        System.out.println(Arrays.toString(buff));
+        return new String(buff);
     }  
   
     /** 
@@ -130,21 +133,23 @@ public class RsaUtil {
      * 用公钥解密 
      *  
      * @param data 
-     * @param key 
      * @return 
      * @throws Exception 
      */  
-    public static byte[] decryptByPublicKey(byte[] data)throws Exception {  
+    public static String decryptByPublicKey(String data)throws Exception {  
         // 对密钥解密  
         byte[] keyBytes = Base64.decodeBase64(getPublicKey()); 
         // 取得公钥  
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);  
         KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);  
         Key publicKey = keyFactory.generatePublic(x509KeySpec);  
-        // 对数据解密  
+        //初始化Cipher对象，设置为解密模式
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());  
         cipher.init(Cipher.DECRYPT_MODE, publicKey);  
-        return cipher.doFinal(data);  
+        // 执行解密操作
+        byte[] buff = cipher.doFinal(Hex.decodeHex(data.toCharArray()));
+        System.out.println(Arrays.toString(buff));
+        return new String(buff); 
     }  
   
     /** 
@@ -152,21 +157,23 @@ public class RsaUtil {
      * 用公钥加密 
      *  
      * @param data 
-     * @param key 
      * @return 
      * @throws Exception 
      */  
-    public static byte[] encryptByPublicKey(byte[] data)throws Exception {  
+    public static String encryptByPublicKey(String data)throws Exception {  
         // 对公钥解密  
         byte[] keyBytes = Base64.decodeBase64(getPublicKey());
         // 取得公钥  
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);  
         KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);  
         Key publicKey = keyFactory.generatePublic(x509KeySpec);  
-        // 对数据加密  
+        // 实例化Cipher对象，它用于完成实际的加密操作
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());  
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);  
-        return cipher.doFinal(data);  
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] buff = cipher.doFinal(data.getBytes());
+        System.out.println(Arrays.toString(buff));
+        // 执行加密操作。加密后的结果通常都会用Base64编码进行传输 
+        return Hex.encodeHexString(buff);
     }  
   
     /** 
@@ -174,11 +181,10 @@ public class RsaUtil {
      * 用私钥加密 
      *  
      * @param data 
-     * @param key 
      * @return 
      * @throws Exception 
      */  
-    public static byte[] encryptByPrivateKey(byte[] data) throws Exception {  
+    public static String encryptByPrivateKey(String data) throws Exception {  
         // 对密钥解密  
         byte[] keyBytes = Base64.decodeBase64(getPrivateKey()); 
         // 取得私钥  
@@ -188,7 +194,10 @@ public class RsaUtil {
         // 对数据加密  
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());  
         cipher.init(Cipher.ENCRYPT_MODE, privateKey);  
-        return cipher.doFinal(data);  
+        byte[] buff = cipher.doFinal(data.getBytes());
+        System.out.println(Arrays.toString(buff));
+        // 执行加密操作。加密后的结果通常都会用Base64编码进行传输 
+        return Hex.encodeHexString(buff);
     }  
   
     /** 
@@ -200,7 +209,6 @@ public class RsaUtil {
      */  
     public static String getPrivateKey()throws Exception{  
         Key key = (Key) keymap.get(PRIVATE_KEY); 
-        LOG.info("私钥:{}",Base64.encodeBase64String(key.getEncoded()));
         return Base64.encodeBase64String(key.getEncoded());
     }  
   
@@ -213,7 +221,6 @@ public class RsaUtil {
      */  
     public static String getPublicKey()throws Exception {  
         Key key = (Key) keymap.get(PUBLIC_KEY);
-        LOG.info("公钥:{}",Base64.encodeBase64String(key.getEncoded()));
         return Base64.encodeBase64String(key.getEncoded());
     }  
   
@@ -222,8 +229,9 @@ public class RsaUtil {
      *  
      * @return 
      * @throws Exception 
+     * @throws Exception 
      */  
-    public Map<String, Object> initKey(){
+    public Map<String, Object> initKey() throws Exception{
         InputStream in1 = getClass().getClassLoader().getResourceAsStream(PUBLIC_KEY_PATH);
         InputStream in2 = getClass().getClassLoader().getResourceAsStream(PRIVATE_KEY_PATH);
         try {
@@ -244,16 +252,11 @@ public class RsaUtil {
             keyMap.put(PRIVATE_KEY, privateKey); 
             return keyMap;
         } catch(Exception e){
-            LOG.error(e.getMessage(), e);
-            throw new RuntimeException();
-        }
-        finally {
-            try {
-                in2.close();
-                in2.close();
-            } catch (IOException e) {
-                LOG.error(e.getMessage(), e);
-            }
+            e.printStackTrace();
+            throw e;
+        } finally {
+            in1.close();
+            in2.close();
         }
     }
     /** 
@@ -276,28 +279,32 @@ public class RsaUtil {
     }  
     
     public static void main(String[] args) throws Exception {
+        String publicKey = getPublicKey();  
+        String privateKey = getPrivateKey();  
+        System.out.println("公钥:\r" + publicKey);  
+        System.out.println("私钥:\r" + privateKey); 
+        
         System.out.println("公钥加密————————————————————私钥解密");  
-        String inputStr = "abc";  
-        byte[] data = "abc".getBytes();  
-        byte[] encodedData = RsaUtil.encryptByPublicKey(data);  
-        byte[] decodedData = RsaUtil.decryptByPrivateKey(encodedData);  
-        String outputStr = new String(decodedData);  
-        System.out.println("加密前: " + inputStr + "\n\r" + "解密后: " + outputStr);
+        String data = "Somnus"; 
+        System.out.println("原文: " + data);
+        String encryptData = encryptByPublicKey(data);
+        System.out.println("加密后: " + encryptData);
+        String decryptData = decryptByPrivateKey(encryptData); 
+        System.out.println("解密后: " + decryptData);
         
+        System.out.println("私钥加密————————————————————公钥解密");   
+        System.out.println("原文: " + data);
+        String encryptData2 = encryptByPrivateKey(data);
+        System.out.println("加密后: " + encryptData2);
+        String decryptData2 = decryptByPublicKey(encryptData2); 
+        System.out.println("解密后: " + decryptData2);
         
-        System.out.println("私钥加密————————————————————公钥解密");  
-        String inputStr2 = "sign";  
-        byte[] data2 = inputStr2.getBytes();  
-        byte[] encodedData2 = RsaUtil.encryptByPrivateKey(data2);  
-        byte[] decodedData2 = RsaUtil.decryptByPublicKey(encodedData2);  
-        String outputStr2 = new String(decodedData2);  
-        System.out.println("加密前: " + inputStr2 + "\n\r" + "解密后: " + outputStr2);  
         System.out.println("私钥签名——公钥验证签名");  
         // 产生签名  
-        String sign = RsaUtil.sign(encodedData2);  
+        String sign = sign(encryptData2);  
         System.out.println("签名:\r" + sign);  
         // 验证签名  
-        boolean status = RsaUtil.verify(encodedData2,sign);  
-        System.out.println("状态:\r" + status);  
+        boolean status = verify(encryptData2,sign);  
+        System.out.println("状态:" + status);  
     }
 }
