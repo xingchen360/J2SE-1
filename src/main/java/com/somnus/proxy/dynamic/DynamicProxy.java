@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  * @date 2015年6月3日 下午1:31:37 
  * @version V1.0 
  */
-public class DynamicProxy  implements InvocationHandler {
+public class DynamicProxy implements InvocationHandler {
  
     private Object target;
  
