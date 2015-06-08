@@ -1,10 +1,17 @@
 package com.somnus;
 
-public class SystemProperty
-{
+/**
+ * 
+ * @Title: SystemProperty.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:37:38 
+ * @version V1.0
+ */
+public class SystemProperty{
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		System.out.println("Java 运行时环境供应商-java_vendor: "+ System.getProperty("java.vendor"));
 
 		System.out.println("Java 供应商的 URL-java_vendor_url: "+ System.getProperty("java.vendor.url"));

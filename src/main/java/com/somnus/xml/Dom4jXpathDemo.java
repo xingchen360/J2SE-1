@@ -9,10 +9,14 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-/** 
- * @description: TODO 
+/**
+ * 
+ * @Title: Dom4jXpathDemo.java 
+ * @Package com.somnus.xml 
+ * @Description: TODO
  * @author Somnus
- * date 2015年3月30日 下午4:01:43  
+ * @date 2015年6月8日 上午11:32:19 
+ * @version V1.0
  */
 public class Dom4jXpathDemo {
     @SuppressWarnings("unchecked")

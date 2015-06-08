@@ -2,7 +2,17 @@ package com.somnus;
 
 import java.util.Random;
 
+/**
+ * 
+ * @Title: RandomUtil.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:35:23 
+ * @version V1.0
+ */
 public class RandomUtil {
+    
 	static int[] num = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	/**
 	 * 1+5=6  2+5=7  3+5=8  4+5=9  5+5=10
@@ -11,14 +21,12 @@ public class RandomUtil {
 	 * @param max 最大值
 	 * @return
 	 */
-	public static int generate(int min,int max)
-	{
+	public static int generate(int min,int max){
 		Random random = new Random();
         return random.nextInt(max)%(max-min+1) + min;
 	}
 	
-	public static long generate2(int min,int max)
-	{
+	public static long generate2(int min,int max){
         return Math.round(Math.random()*(max-min)+min);
 	}
 	

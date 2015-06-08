@@ -12,7 +12,17 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-public class JdomDemo  implements XmlDocument{
+/**
+ * 
+ * @Title: JdomDemo.java 
+ * @Package com.somnus.xml 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:32:50 
+ * @version V1.0
+ */
+public class JdomDemo implements XmlDocument{
+    
 	public void parserXml(String fileName) throws Exception{
 		SAXBuilder bulider = new SAXBuilder();
 		
@@ -23,7 +33,7 @@ public class JdomDemo  implements XmlDocument{
 		System.out.println("根元素: "+root.getName());
 		
 		//获得Account元素
-//		Element account = root.getChild("Account");
+	    /*Element account = root.getChild("Account");*/
 		
 		List<Element> accountList = root.getChildren("Account");//特指就传参
 		for(Iterator<Element> iter = accountList.iterator(); iter.hasNext();)

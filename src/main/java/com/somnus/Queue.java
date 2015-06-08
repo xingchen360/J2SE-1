@@ -1,7 +1,15 @@
 package com.somnus;
 
 import java.util.LinkedList;
-
+/**
+ * 
+ * @Title: Queue.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:35:06 
+ * @version V1.0
+ */
 public class Queue<E> {
 	private LinkedList<E> list = new LinkedList<E>();
 	

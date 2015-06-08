@@ -1,5 +1,14 @@
 package com.somnus;
 
+/**
+ * 
+ * @Title: Grammar.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:36:43 
+ * @version V1.0
+ */
 public class Grammar {
 	/*
 	 * 0%2=0 1%2=1 2%2=0
@@ -24,16 +33,12 @@ public class Grammar {
 	 * 当break出现在循环体中，但并不在switch语句体内时，则在执行break后，跳出本层循环体。
 	 * 在循环结构中，应用break语句使流程跳出本层循环体，从而提前结束本层循环
 	 */
-	static void testBreak()
-	{
-		for(int i=0;i<10;i++)
-		{
-			if(i%2==0)
-			{
+	static void testBreak(){
+		for(int i=0;i<10;i++){
+			if(i%2==0){
 				System.out.println("i="+i);
 			}
-			else
-			{
+			else{
 				System.out.println("执行了break语句,跳出当前循环!");
 				break;
 			}
@@ -44,16 +49,12 @@ public class Grammar {
 	 * 注意：执行continue语句并没有使整个循环终止。在while和do-while循环中，continue语句使得流程直接跳到循环控制条件的测试部分 ，然后决定循环是否继续进行。
 	 * 在for 循环中，遇到continue后，跳过循环体中余下的语句，而去对for语句中的“表达式3”求值，然后进行“表达式2”的条件测试，  最后根据“表达式2”的值来决定for循环是否执行。
 	 */
-	static void testContinue()
-	{
-		for(int i=0;i<10;i++)
-		{
-			if(i%2==0)
-			{
+	static void testContinue(){
+		for(int i=0;i<10;i++){
+			if(i%2==0){
 				System.out.println("没有执行continue语句输出i="+i);
 			}
-			else
-			{
+			else{
 				System.out.println("执行了Continue语句,跳出当前循环!i="+i);
 				continue;
 			}
@@ -62,10 +63,8 @@ public class Grammar {
 	}
 
 	@SuppressWarnings("unused")
-	static void testReturn()
-	{
-		for(int i=0;i<10;i++)
-		{
+	static void testReturn(){
+		for(int i=0;i<10;i++){
 			System.out.println("执行了return语句,直接跳出了当前的testReturn方法!");
 			return;
 		}

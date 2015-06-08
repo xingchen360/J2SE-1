@@ -6,7 +6,17 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+/**
+ * 
+ * @Title: Pinyin4j.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:34:20 
+ * @version V1.0
+ */
 public class Pinyin4j {
+    
 	public static void main(String[] args) {
 		/*
 		 * String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray('单');
@@ -19,7 +29,7 @@ public class Pinyin4j {
 		String[] pinyinArray = null;
 		try {
 			pinyinArray = PinyinHelper.toHanyuPinyinStringArray('单', format);
-		} catch (BadHanyuPinyinOutputFormatCombination e) {
+		} catch (BadHanyuPinyinOutputFormatCombination e){
 			e.printStackTrace();
 		}
 		for (int i = 0; i < pinyinArray.length; ++i) {
@@ -39,22 +49,18 @@ public class Pinyin4j {
 class HanYu {
 	private HanyuPinyinOutputFormat format = null;
 	private String[] pinyin;
-	public HanYu()
-	{
+	public HanYu(){
 		format = new HanyuPinyinOutputFormat();
 		format.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
 		format.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
 		pinyin = null;
 	}
 	// 转换单个字符
-	public String getCharacterPinYin(char c)
-	{
-		try
-		{
+	public String getCharacterPinYin(char c){
+		try{
 			pinyin = PinyinHelper.toHanyuPinyinStringArray(c, format);
 		}
-		catch (BadHanyuPinyinOutputFormatCombination e)
-		{
+		catch (BadHanyuPinyinOutputFormatCombination e){
 			e.printStackTrace();
 		}
 		// 如果c不是汉字，toHanyuPinyinStringArray会返回null
@@ -65,20 +71,16 @@ class HanYu {
 	}
 
 	// 转换一个字符串
-	public String getStringPinYin(String str)
-	{
+	public String getStringPinYin(String str){
 		StringBuilder sb = new StringBuilder();
 		String tempPinyin = null;
-		for (int i = 0; i < str.length(); ++i)
-		{
+		for (int i = 0; i < str.length(); ++i){
 			tempPinyin = getCharacterPinYin(str.charAt(i));
-			if (tempPinyin == null)
-			{
+			if (tempPinyin == null){
 				// 如果str.charAt(i)非汉字，则保持原样
 				sb.append(str.charAt(i));
 			}
-			else
-			{
+			else{
 				sb.append(tempPinyin+" ");
 			}
 		}

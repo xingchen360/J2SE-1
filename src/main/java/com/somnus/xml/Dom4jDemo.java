@@ -11,7 +11,17 @@ import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * 
+ * @Title: Dom4jDemo.java 
+ * @Package com.somnus.xml 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:32:03 
+ * @version V1.0
+ */
 public class Dom4jDemo implements XmlDocument{
+    
 	@SuppressWarnings("unchecked")
 	public void parserXml(String fileName) throws Exception{
 		SAXReader reader = new SAXReader();

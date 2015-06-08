@@ -5,6 +5,15 @@ import java.util.Locale;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @Title: StringFormat.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:36:06 
+ * @version V1.0
+ */
 public class StringFormat {
 	/*
 	String.format()用法

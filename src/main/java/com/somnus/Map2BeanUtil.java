@@ -9,6 +9,15 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @Title: Map2BeanUtil.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:33:25 
+ * @version V1.0
+ */
 public class Map2BeanUtil {
 	/**
 	 * 将一个 JavaBean 对象转化为一个 Map

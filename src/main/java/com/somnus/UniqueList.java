@@ -6,6 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 
+ * @Title: UniqueList.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:37:52 
+ * @version V1.0
+ */
 public class UniqueList<T> {
 	/**
 	 * List 去掉重复的值，并保持原先List顺序

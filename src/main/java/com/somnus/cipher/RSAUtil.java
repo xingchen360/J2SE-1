@@ -1,6 +1,5 @@
 package com.somnus.cipher;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -40,6 +39,7 @@ public class RSAUtil {
     private static final String PRIVATE_KEY_PATH = "private.key";
     
     private static Map<String, Object> keymap;
+    
     static{
         RSAUtil rutil = new RSAUtil();
         try {

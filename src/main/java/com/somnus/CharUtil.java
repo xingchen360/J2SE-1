@@ -7,8 +7,7 @@ public class CharUtil {
 		String[] strArr = new String[] { "www.baidu.com",
 				"!@#$%^&*()_+{}[]|\"'?/:;<>,.", "！￥……（）——：；“”‘’《》，。？、", "不要啊",
 				"やめて", "韩佳人", "한가인" };
-		for (String str : strArr) 
-		{
+		for (String str : strArr) {
 			System.out.println("===========> 测试字符串：" + str);
 			System.out.println("正则判断：" + isChineseByREG(str) + " -- "+ isChineseByName(str));
 			System.out.println("Unicode判断结果 ：" + isChinese(str));
@@ -24,8 +23,7 @@ public class CharUtil {
 	}
 
 	// 根据Unicode编码完美的判断中文汉字和符号
-	private static boolean isChinese(char c) 
-	{
+	private static boolean isChinese(char c) {
 		Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
 		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
 				|| ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
@@ -40,11 +38,9 @@ public class CharUtil {
 	}
 
 	// 完整的判断中文汉字和符号
-	public static boolean isChinese(String strName) 
-	{
+	public static boolean isChinese(String strName) {
 		char[] ch = strName.toCharArray();
-		for (int i = 0; i < ch.length; i++) 
-		{
+		for (int i = 0; i < ch.length; i++) {
 			char c = ch[i];
 			if (isChinese(c)) {
 				return true;

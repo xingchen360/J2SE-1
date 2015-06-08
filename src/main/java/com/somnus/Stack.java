@@ -2,8 +2,12 @@ package com.somnus;
 
 /**
  * 使用数组实现堆栈，包括入栈、出栈、获取堆栈长度
- * @author Smile
- *
+ * @Title: Stack.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:35:33 
+ * @version V1.0
  */
 public class Stack {
 	private Object[] data;

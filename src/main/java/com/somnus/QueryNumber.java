@@ -1,5 +1,14 @@
 package com.somnus;
 
+/**
+ * 
+ * @Title: QueryNumber.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:34:43 
+ * @version V1.0
+ */
 public class QueryNumber{
 	/*
 	 * 5*4*3*2*1

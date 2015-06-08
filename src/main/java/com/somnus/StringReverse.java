@@ -1,5 +1,14 @@
 package com.somnus;
 
+/**
+ * 三种方式实现字符串反转
+ * @Title: StringReverse.java 
+ * @Package com.somnus 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:37:00 
+ * @version V1.0
+ */
 public class StringReverse {
 
     /**

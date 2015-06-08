@@ -10,13 +10,17 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.somnus.xml.XmlDocument;
 
 /**
- * 观察者模式
- * @author admin
- *
+ * 
+ * @Title: SaxDemo.java 
+ * @Package com.somnus.xml.sax 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月8日 上午11:31:28 
+ * @version V1.0
  */
 public class SaxDemo implements XmlDocument{
-	public void parserXml(String fileName) throws Exception
-	{
+    
+	public void parserXml(String fileName) throws Exception{
 		//获得SAX解析器工厂实例
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		//获得SAX解析器实例
