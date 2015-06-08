@@ -38,16 +38,6 @@ public class RSAUtil {
     private static final String PUBLIC_KEY_PATH = "public.cer";
     private static final String PRIVATE_KEY_PATH = "private.key";
     
-    private static Map<String, Object> keymap;
-    
-    static{
-        RSAUtil rutil = new RSAUtil();
-        try {
-			keymap = rutil.initKey();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
     /** 
      * 用私钥对信息生成数字签名 
      *  
@@ -208,7 +198,7 @@ public class RSAUtil {
      * @throws Exception 
      */  
     public static String getPrivateKey()throws Exception{  
-        Key key = (Key) keymap.get(PRIVATE_KEY); 
+        Key key = (Key)initKey().get(PRIVATE_KEY); 
         return Base64.encodeBase64String(key.getEncoded());
     }  
   
@@ -220,7 +210,7 @@ public class RSAUtil {
      * @throws Exception 
      */  
     public static String getPublicKey()throws Exception {  
-        Key key = (Key) keymap.get(PUBLIC_KEY);
+        Key key = (Key) initKey().get(PUBLIC_KEY);
         return Base64.encodeBase64String(key.getEncoded());
     }  
   
@@ -231,9 +221,9 @@ public class RSAUtil {
      * @throws Exception 
      * @throws Exception 
      */  
-    public Map<String, Object> initKey() throws Exception{
-        InputStream in1 = getClass().getClassLoader().getResourceAsStream(PUBLIC_KEY_PATH);
-        InputStream in2 = getClass().getClassLoader().getResourceAsStream(PRIVATE_KEY_PATH);
+    public static Map<String, Object> initKey() throws Exception{
+        InputStream in1 = RSAUtil.class.getClassLoader().getResourceAsStream(PUBLIC_KEY_PATH);
+        InputStream in2 = RSAUtil.class.getClassLoader().getResourceAsStream(PRIVATE_KEY_PATH);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
             /*生成公钥*/
