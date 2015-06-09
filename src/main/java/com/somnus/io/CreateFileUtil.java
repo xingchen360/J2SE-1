@@ -3,6 +3,15 @@ package com.somnus.io;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 如何创建目录和文件
+ * @Title: CreateFileUtil.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午4:56:27 
+ * @version V1.0
+ */
 public class CreateFileUtil {
 	/**
 	 * 创建目录

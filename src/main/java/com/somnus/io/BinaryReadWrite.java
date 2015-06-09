@@ -7,6 +7,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * 数据流读和写数据
+ * @Title: BinaryReadWrite.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午4:55:30 
+ * @version V1.0
+ */
 public class BinaryReadWrite {
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;

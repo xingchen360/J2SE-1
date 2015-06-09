@@ -7,7 +7,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * 读取网络图片转换为二进制数据
+ * @Title: ReadNetImage.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午4:58:35 
+ * @version V1.0
+ */
 public class ReadNetImage {
+    /**
+     * 
+     * @param imageUrl
+     *              图片网络地址
+     * @return
+     * @throws IOException
+     */
 	public byte[] getImageUrl(String imageUrl) throws IOException {
 		byte[] fileData = null;
 		InputStream is = null;
@@ -25,10 +41,8 @@ public class ReadNetImage {
             }
             fileData = bos.toByteArray();
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } finally{
             is.close();

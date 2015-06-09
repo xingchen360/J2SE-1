@@ -4,6 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 如何递归遍历目录
+ * @Title: ListAllFile.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午4:58:01 
+ * @version V1.0
+ */
 public class ListAllFile {
 	/** 判断目录或文件所处的层次*/
 	private static int time;// 

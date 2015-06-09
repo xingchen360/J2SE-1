@@ -9,6 +9,15 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
+/**
+ * 
+ * @Title: TestFileInputStream.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午5:00:15 
+ * @version V1.0
+ */
 public class TestFileInputStream {
     
     /**

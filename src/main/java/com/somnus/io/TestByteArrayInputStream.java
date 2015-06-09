@@ -5,6 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+/**
+ * 
+ * @Title: TestByteArrayInputStream.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午5:00:30 
+ * @version V1.0
+ */
 public class TestByteArrayInputStream{
 
 	public static void main(String[] args) throws IOException{

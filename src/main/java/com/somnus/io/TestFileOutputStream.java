@@ -8,6 +8,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+/**
+ * 
+ * @Title: TestFileOutputStream.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午5:00:08 
+ * @version V1.0
+ */
 public class TestFileOutputStream {
 	/**
 	 * @知道某个byte数组

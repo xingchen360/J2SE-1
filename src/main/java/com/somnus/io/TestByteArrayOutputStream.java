@@ -10,6 +10,15 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
+/**
+ * 
+ * @Title: TestByteArrayOutputStream.java 
+ * @Package com.somnus.io 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月9日 下午5:00:22 
+ * @version V1.0
+ */
 public class TestByteArrayOutputStream {
 
 	public static void main(String[] args) throws IOException{
