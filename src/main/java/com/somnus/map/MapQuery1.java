@@ -5,36 +5,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class MapQuery1
-{
+public class MapQuery1{
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		Map<String,Integer> map = new TreeMap<String,Integer>();
 		String str = "GZITCASTADVANCEDTRAININGJAVASEJAVAEEANDROID";
-		for(int i = 0;i<str.length();i++)
-		{
+		for(int i = 0;i<str.length();i++){
 			String chart = str.substring(i,i+1);
 			
-			if(map.get(chart)==null)
-			{
+			if(map.get(chart)==null){
 				map.put(chart, new Integer(1));
 			}
-			else
-			{
+			else{
 				int value = ((Integer)map.get(chart)).intValue();
 				map.put(chart, new Integer(value+1));
 			}
-			
 		}
 		
 		Set<Map.Entry<String,Integer>> set = map.entrySet();
 		
-		for(Iterator<Map.Entry<String,Integer>> it = set.iterator();it.hasNext();)
-		{
+		for(Iterator<Map.Entry<String,Integer>> it = set.iterator();it.hasNext();){
 			Map.Entry<String,Integer> entry = (Map.Entry<String,Integer>)it.next();
 			
 			String key = (String)entry.getKey();
@@ -43,7 +33,6 @@ public class MapQuery1
 			
 			System.out.println(key+":"+value);
 		}
-
 	}
 
 }
