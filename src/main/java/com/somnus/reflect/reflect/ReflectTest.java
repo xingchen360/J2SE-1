@@ -3,15 +3,23 @@ package com.somnus.reflect.reflect;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-
+/**
+ * 
+ * @Title: ReflectTest.java 
+ * @Package com.somnus.reflect.reflect 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月10日 上午9:31:16 
+ * @version V1.0
+ */
 public class ReflectTest {
 	
 	public Object copy(Object object) throws Exception{
 		Class<?> clazz = object.getClass();
 		
 		Object objectCopy = clazz.getConstructor(new Class[]{}).newInstance(new Object[]{});
-//		以上这行代码等于下面
-//		Object objectCopy2 = clazz.newInstance();
+	    /*以上这行代码等于下面*/
+	    /*Object objectCopy2 = clazz.newInstance();*/
 		
 		Field[] fields = clazz.getDeclaredFields();
 		
@@ -55,7 +63,6 @@ class Customer{
 	
 	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Long getId() {
 		return id;

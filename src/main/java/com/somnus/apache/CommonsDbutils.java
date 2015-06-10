@@ -16,13 +16,13 @@ public class CommonsDbutils {
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost:3306/demo";
 		String jdbcDriver = "com.mysql.jdbc.Driver";
-		String user = "root";
+		String username = "root";
 		String password = "password";
 
 		DbUtils.loadDriver(jdbcDriver);
 		//****************************转换成list  ************************************
 		try {
-			conn = DriverManager.getConnection(url, user, password);
+			conn = DriverManager.getConnection(url, username, password);
 			QueryRunner qr = new QueryRunner();
 			List results = (List) qr.query(conn, "select id,name from person",new BeanListHandler(Person.class));
 			for (int i = 0; i < results.size(); i++) {
@@ -36,7 +36,7 @@ public class CommonsDbutils {
 		}
 		//****************************转换成map  ************************************
 		try {
-			conn = DriverManager.getConnection(url, user, password);
+			conn = DriverManager.getConnection(url, username, password);
 			QueryRunner qr = new QueryRunner();
 			List results = (List) qr.query(conn, "select age,name from person",new MapListHandler());
 			for (int i = 0; i < results.size(); i++) {

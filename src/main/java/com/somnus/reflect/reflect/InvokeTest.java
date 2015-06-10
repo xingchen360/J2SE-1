@@ -2,15 +2,22 @@ package com.somnus.reflect.reflect;
 
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * @Title: InvokeTest.java 
+ * @Package com.somnus.reflect.reflect 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月10日 上午9:32:00 
+ * @version V1.0
+ */
 public class InvokeTest {
 	
-	public int add(int param1, int param2)
-	{
+	public int add(int param1, int param2){
 		return param1+param2;
 	}
 	
-	public String echo(String msg)
-	{
+	public String echo(String msg){
 		return "hello:"+msg;
 	}
 	
