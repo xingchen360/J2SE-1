@@ -65,6 +65,13 @@ public class FilePath {
         System.out.println(path);
     }
     
+    @Test
+    public void print7(){
+        /*/E:/github/J2SE/target/classes/META-INF*/
+        String path = getClass().getClassLoader().getResource("META-INF").getPath();
+        System.out.println(path);
+    }
+    
     
     
     @Test

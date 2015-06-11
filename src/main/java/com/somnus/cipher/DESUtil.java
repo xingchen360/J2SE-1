@@ -66,7 +66,7 @@ public class DESUtil {
         SecretKey securekey = keyFactory.generateSecret(desKey);
         
         /*当使用其他对称加密算法时，如AES、Blowfish等算法时，用下述代码替换上述三行代码 */
-        /*SecretKey secretKey = new SecretKeySpec(keyStr.getBytes(),KEY_ALGORITHM);*/  
+        /*SecretKey secretKey = new SecretKeySpec(key,KEY_ALGORITHM);*/  
         return securekey;
     }
 
