@@ -37,7 +37,7 @@ public class CommonsIo {
 		System.out.println("******************************************************************************************");
 		InputStream is2 = new URL("https://www.baidu.com/").openStream();
         try {
-            /**
+            /**读取文件
              * toString(InputStream input)
              * toString(InputStream input, String encoding)
              * toString(Reader input)
@@ -63,7 +63,7 @@ public class CommonsIo {
         System.out.println("******************************************************************************************");
         File srcFile = new File("src/main/resources/build.xml");
         File destFile = new File("target/classes/build.txt");
-        /**
+        /**自动关闭相关流
          * copyFile(File srcFile, File destFile)
          * copyFile(File srcFile, File destFile,boolean preserveFileDate)
          */
@@ -73,7 +73,7 @@ public class CommonsIo {
         InputStream is4 = new URL("https://www.baidu.com/").openStream();
         OutputStream os4 = new FileOutputStream(new File("target/classes/baidu.txt"));
         try {
-            /**
+            /**拷贝流【输入->输出】
              * copy(InputStream input, OutputStream output)
              * copy(InputStream input, Writer output)
              * copy(InputStream input, Writer output, String encoding)
@@ -91,7 +91,7 @@ public class CommonsIo {
         System.out.println("******************************************************************************************");
         InputStream is5 = new URL("https://www.baidu.com/").openStream();
         try {
-            /**
+            /**转换为字节数组
              * toByteArray(InputStream input)
              * toByteArray(Reader input)
              * toByteArray(Reader input, String encoding)
@@ -105,7 +105,7 @@ public class CommonsIo {
         System.out.println("******************************************************************************************");
         InputStream is6 = new URL("https://www.baidu.com/").openStream();
         try {
-            /**
+            /**转换为字符数组
              * toCharArray(InputStream is)
              * toCharArray(InputStream is, String encoding)
              * toCharArray(Reader input)
@@ -116,17 +116,23 @@ public class CommonsIo {
             IOUtils.closeQuietly(is6);
         }
         System.out.println("******************************************************************************************");
-        /**
+        /**转换为输入流
          * toInputStream(String input)
          * toInputStream(String input, String encoding)
          * toInputStream(CharSequence input)
          * toInputStream(CharSequence input, String encoding)
          */
         InputStream is7 = IOUtils.toInputStream("https://www.baidu.com/");
+        byte[] buf = new byte[128];
+        int len = 0;
+        while((len = is7.read(buf))!=-1){
+            System.out.print(new String(buf,0,len));
+            System.out.println("[读取到的长度："+len+"]");
+        }
         System.out.println("******************************************************************************************");
         OutputStream os7 = new FileOutputStream(new File("target/classes/Somnus.txt"));
         try {
-            /**
+            /**写数据
              * write(byte[] data, OutputStream output)
              * write(byte[] data, Writer output)
              * write(byte[] data, Writer output, String encoding)
