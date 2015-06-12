@@ -1,8 +1,10 @@
 package com.somnus.apache;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -11,7 +13,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
+/**
+ * 
+ * @Title: CommonsLang.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月12日 下午5:39:52 
+ * @version V1.0
+ */
 public class CommonsLang {
+    
 	public static void main(String[] args) throws Exception {
 		// 将两个数组合并为一个数组
 		String[] s1 = new String[] { "1", "2", "3" };
@@ -81,5 +93,11 @@ public class CommonsLang {
 		//加天数
 		System.out.println(DateUtils.addDays(new Date(), 10));
 		System.out.println("********************************DateUtils***************************************");
+		//validate
+		File sourceFile = new File(CommonsLang.class.getClassLoader().getResource("").getPath());
+        Validate.notNull(sourceFile, "source file is required.");
+        Validate.isTrue(sourceFile.isFile(), "source file [%s] is not a valid file.", sourceFile);
+        String string = "";
+        Validate.notEmpty(string, "string is not empty");
 	}
 }

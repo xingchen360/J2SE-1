@@ -5,11 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
+/**
+ * 
+ * @Title: CommonsDbutils.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月12日 下午5:39:33 
+ * @version V1.0
+ */
 public class CommonsDbutils {
 
 	public static void main(String[] args) {

@@ -5,6 +5,15 @@ import java.util.Arrays;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
+/**
+ * 
+ * @Title: CommonsCodec.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月12日 下午5:38:47 
+ * @version V1.0
+ */
 public class CommonsCodec {
 	
 	public static void main(String[] args) throws Exception {

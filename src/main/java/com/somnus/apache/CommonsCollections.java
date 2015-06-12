@@ -5,7 +5,17 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+/**
+ * 
+ * @Title: CommonsCollections.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月12日 下午5:38:59 
+ * @version V1.0
+ */
 public class CommonsCollections {
+    
 	public static void main(String[] args) {
 
 		List<String> list0 = new ArrayList<String>();

@@ -21,6 +21,7 @@ import org.apache.commons.io.IOUtils;
  * @version V1.0
  */
 public class CommonsIo {
+    
 	public static void main(String[] args) throws Exception {
 		
 		InputStream is1 = new URL("https://www.baidu.com/").openStream();

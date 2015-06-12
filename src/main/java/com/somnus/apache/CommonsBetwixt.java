@@ -5,7 +5,17 @@ import java.io.StringWriter;
 import org.apache.commons.betwixt.io.BeanReader;
 import org.apache.commons.betwixt.io.BeanWriter;
 
+/**
+ * 
+ * @Title: CommonsBetwixt.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月12日 下午5:38:38 
+ * @version V1.0
+ */
 public class CommonsBetwixt {
+    
 	public static void main(String[] args) throws Exception {
 		// ****************************创建一个例子Bean，并将它转化为XML ************************************************
 		// 先创建一个StringWriter，我们将把它写入为一个字符串

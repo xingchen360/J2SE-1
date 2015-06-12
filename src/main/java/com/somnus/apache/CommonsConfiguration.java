@@ -6,10 +6,16 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
- * @description: TODO
- * @author Somnus date 2015年4月1日 下午6:18:16
+ * 
+ * @Title: CommonsConfiguration.java 
+ * @Package com.somnus.apache 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月12日 下午5:39:14 
+ * @version V1.0
  */
 public class CommonsConfiguration {
+    
     public void configuration() {
         try {
             String url = getClass().getClassLoader().getResource("info.properties").getPath();
