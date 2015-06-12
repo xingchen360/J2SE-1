@@ -3,7 +3,6 @@ package com.somnus.enums;
 /**
  * 实现带有抽象方法的枚举
  * @author somnus
- *
  */
 public enum OrderStateEnum {
 	/** 已取消 */

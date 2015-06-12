@@ -2,7 +2,7 @@ package com.somnus;
 
 import java.util.LinkedList;
 /**
- * 
+ * 使用LinkedList实现队列，先进先出
  * @Title: Queue.java 
  * @Package com.somnus 
  * @Description: TODO
@@ -19,6 +19,14 @@ public class Queue<E> {
 	
 	public E get(){
 		return list.removeFirst();
+	}
+	
+	/**
+	 * 获取队列长度
+	 * @return
+	 */
+	public int getSize(){
+	    return list.size();
 	}
 	
 	public boolean isEmpty(){
