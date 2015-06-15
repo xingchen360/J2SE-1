@@ -1,6 +1,7 @@
 package com.somnus.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,11 +46,12 @@ public class TestFileOutputStream {
 	 * @throws IOException 
 	 */
 	public static void file2file() throws IOException{
+	    InputStream is = null;
 	    OutputStream os = null;
-        InputStream is = null;
         try {
+            is = new FileInputStream(new File(
+                    TestFileOutputStream.class.getClassLoader().getResource("build.xml").getPath()));
             os = new FileOutputStream(new File("target/classes/TestFileOutputStream2.txt"));
-            is = new URL("https://www.baidu.com/").openStream();
             
             /**分批读，分批写*/
             byte[] buff = new byte[128];
