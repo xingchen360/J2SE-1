@@ -19,7 +19,7 @@ package com.somnus.thread;
  * @date 2015年4月26日 下午3:00:16
  * @version V1.0
  */
-public class Thread5Test {
+public class Thread5InterruptTest {
 	/**
 	 * 在这里主线程和子线程是交替执行的，别混淆噢
 	 * 可能在i=10的时候，子线程已经执行过5次，也可能是12次，也会是N次，

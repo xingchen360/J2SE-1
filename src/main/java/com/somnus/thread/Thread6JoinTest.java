@@ -16,7 +16,7 @@ package com.somnus.thread;
  * @date 2015年4月26日 下午3:00:16
  * @version V1.0
  */
-public class Thread6Test {
+public class Thread6JoinTest {
 	
 	public static void main(String[] args) throws InterruptedException {
 		Join j = new Join();

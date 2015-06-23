@@ -11,7 +11,7 @@ package com.somnus.thread;
  * @date 2015年4月26日 下午3:00:16
  * @version V1.0
  */
-public class Thread7Test {
+public class Thread7YieldTest {
 	
 	public static void main(String[] args) throws InterruptedException {
 		Yield y = new Yield();
