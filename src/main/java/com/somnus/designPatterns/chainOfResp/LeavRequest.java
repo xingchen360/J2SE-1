@@ -1,9 +1,14 @@
 package com.somnus.designPatterns.chainOfResp;
 /**
- * 封装请假的基本信息
- * @author Smile
- *
+ * 
+ * @Title: LeavRequest.java 
+ * @Package com.somnus.designPatterns.chainOfResp 
+ * @Description: TODO
+ * @author Somnus
+ * @date 2015年6月24日 下午5:25:21 
+ * @version V1.0
  */
+//请假单：请求类
 public class LeavRequest {
 	private String empName;
 	private int leaveDays;
