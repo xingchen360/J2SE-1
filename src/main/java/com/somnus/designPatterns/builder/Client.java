@@ -1,10 +1,10 @@
 package com.somnus.designPatterns.builder;
 
 public class Client {
-	public static void main(String[] args) {
-	    ActorBuilder ab = new AngelBuilder();
+	public static void main(String[] args) throws Exception {
+	    ActorBuilder ab = (ActorBuilder)XMLUtil.getBean();
 
-        ActorController ac = new  ActorController();
+        ActorController ac = new ActorController();
         Actor actor = ac.construct(ab); //通过指挥者创建完整的建造者对象
 
         System.out.println(actor.getType()  + "的外观：");
