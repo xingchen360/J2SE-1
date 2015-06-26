@@ -7,7 +7,7 @@ import org.dom4j.io.SAXReader;
 
 /** 
  * @Title: XMLUtil.java 
- * @Package com.somnus.designPatterns.simpleFactory 
+ * @Package com.somnus.designPatterns.abstractFactory
  * @Description: TODO
  * @author Somnus
  * @date 2015年6月25日 上午11:25:47 

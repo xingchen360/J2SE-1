@@ -25,6 +25,6 @@ public class EncryptFacade {
 	public void fileEncrypt(String fileNameSrc, String fileNameDes) {
 		String plainStr = reader.read(fileNameSrc);
 		String encryptStr = cipher.encrypt(plainStr);
-		writer.Write(encryptStr, fileNameDes);
+		writer.write(encryptStr, fileNameDes);
 	}
 }

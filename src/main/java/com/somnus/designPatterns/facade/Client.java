@@ -1,11 +1,21 @@
 package com.somnus.designPatterns.facade;
 
-public class Client {
+import org.junit.Test;
 
-	public static void main(String[] args) {
-		EncryptFacade ef = new EncryptFacade();  
+public class Client {
+    
+    @Test
+	public void main() {
+	    EncryptFacade ef = new EncryptFacade();  
         ef.fileEncrypt("com/somnus/designPatterns/facade/src.txt", 
-        		"target/classes/des.txt");  
+                "target/classes/des.txt");
 	}
+    
+    @Test
+    public void main2() throws Exception {
+        AbstractEncryptFacade ef = (AbstractEncryptFacade) XMLUtil.getBean(); 
+        ef.fileEncrypt("com/somnus/designPatterns/facade/src.txt", 
+                "target/classes/des.txt");
+    }
 
 }

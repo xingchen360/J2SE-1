@@ -15,7 +15,7 @@ import java.io.OutputStream;
  */
 //文件保存类，充当子系统类
 public class FileWriter {
-	public void Write(String encryptStr, String fileNameDes) {
+	public void write(String encryptStr, String fileNameDes) {
 		System.out.println("保存密文，写入文件。");
 		OutputStream os = null;
 		try {

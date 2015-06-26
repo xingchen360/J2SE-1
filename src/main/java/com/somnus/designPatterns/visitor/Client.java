@@ -10,7 +10,7 @@ package com.somnus.designPatterns.visitor;
  */
 public class Client {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         EmployeeList list = new EmployeeList();  
         Employee fte1,fte2,fte3,pte1,pte2;  
   
@@ -26,7 +26,7 @@ public class Client {
         list.addEmployee(pte1);  
         list.addEmployee(pte2);  
   
-        Department dep = new HRDepartment();
+        Department dep = (Department) XMLUtil.getBean();
         list.accept(dep);
     }
 
