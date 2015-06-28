@@ -13,10 +13,10 @@ import java.util.Hashtable;
 //围棋棋子工厂类：享元工厂类，使用单例模式进行设计
 public class IgoChessmanFactory {
     private static IgoChessmanFactory instance = new IgoChessmanFactory();  
-    private static Hashtable ht; //使用Hashtable来存储享元对象，充当享元池  
+    private static Hashtable<String,IgoChessman> ht; //使用Hashtable来存储享元对象，充当享元池  
       
     private IgoChessmanFactory() {  
-        ht = new Hashtable();  
+        ht = new Hashtable<String,IgoChessman>();  
         IgoChessman black,white;  
         black = new BlackIgoChessman();  
         ht.put("b",black);  
@@ -30,7 +30,7 @@ public class IgoChessmanFactory {
     }  
       
     //通过key来获取存储在Hashtable中的享元对象  
-    public static IgoChessman getIgoChessman(String color) {  
+    public IgoChessman getIgoChessman(String color) {  
         return (IgoChessman)ht.get(color);    
     } 
 }
