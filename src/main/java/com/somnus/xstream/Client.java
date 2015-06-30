@@ -11,7 +11,7 @@ import com.somnus.xstream.PersonBean.Friends;
  * @Title: Client.java 
  * @Package com.somnus.xstream 
  * @Description: TODO
- * @author yh.liu
+ * @author Somnus
  * @date 2015年6月30日 下午5:56:47 
  * @version V1.0 
  */
@@ -53,7 +53,6 @@ public class Client {
         pet.setAnimalList(petList);
         per.setPet(pet);
          
-                    //java对象转换成xml
         String xml=XmlUtil.toXml(per);
         System.out.println(xml);
 

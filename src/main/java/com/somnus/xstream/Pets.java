@@ -8,7 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @Title: Pets.java 
  * @Package com.somnus.xstream 
  * @Description: TODO
- * @author yh.liu
+ * @author Somnus
  * @date 2015年6月30日 下午5:55:53 
  * @version V1.0 
  */

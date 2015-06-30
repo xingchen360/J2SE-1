@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @Title: Animal.java 
  * @Package com.somnus.xstream 
  * @Description: TODO
- * @author yh.liu
+ * @author Somnus
  * @date 2015年6月30日 下午5:52:36 
  * @version V1.0 
  */

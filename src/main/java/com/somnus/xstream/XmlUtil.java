@@ -7,7 +7,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * @Title: XmlUtil.java 
  * @Package com.somnus.xstream 
  * @Description: TODO
- * @author yh.liu
+ * @author Somnus
  * @date 2015年6月30日 下午5:59:59 
  * @version V1.0 
  */
@@ -21,10 +21,10 @@ public class XmlUtil {
      */
     public static String toXml(Object obj){
         XStream xstream=new XStream();
-//      XStream xstream=new XStream(new DomDriver()); //直接用jaxp dom来解释
-//      XStream xstream=new XStream(new DomDriver("utf-8")); //指定编码解析器,直接用jaxp dom来解释
+        /*XStream xstream=new XStream(new DomDriver());*/
+        /*XStream xstream=new XStream(new DomDriver("utf-8"));*/
          
-        ////如果没有这句，xml中的根元素会是<包.类名>；或者说：注解根本就没生效，所以的元素名就是类的属性
+        /*如果没有这句，xml中的根元素会是<包.类名>；或者说：注解根本就没生效，所以的元素名就是类的属性*/
         xstream.processAnnotations(obj.getClass()); //通过注解方式的，一定要有这句话
         return xstream.toXML(obj);
     }

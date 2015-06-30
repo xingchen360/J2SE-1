@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @Title: PersonBean.java 
  * @Package com.somnus.xstream 
  * @Description: TODO
- * @author yh.liu
+ * @author Somnus
  * @date 2015年6月30日 下午5:43:26 
  * @version V1.0 
  */
