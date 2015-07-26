@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.Date;
 
 public class DbUtil{
 
@@ -159,7 +161,17 @@ public class DbUtil{
 		}
 		return flag;
 	}
-	public CallableStatement gerCall(String sql,Object[] inparamerters,Integer[] outparamerters){
+	
+	/**
+	 * 调用存储过程
+	 * 
+	 * @param sql
+	 * 				{call.queryempinfo(?,?,?,?)}
+	 * @param inparamerters
+	 * @param outparamerters
+	 * @return
+	 */
+	public CallableStatement gerCall(String sql,Object[] inparamerters,Object[] outparamerters){
 		Connection conn = getConnection();
 		CallableStatement call = null;
 		try{
@@ -172,7 +184,15 @@ public class DbUtil{
 			}
 			if(outparamerters!=null){
 				for (int i = 0; i < outparamerters.length; i++){
-					call.registerOutParameter(inparamerters.length+1+i, outparamerters[i]);
+					if(outparamerters[i] instanceof String){
+						call.registerOutParameter(inparamerters.length+1+i, Types.VARCHAR);
+					} else if(outparamerters[i] instanceof Integer){
+						call.registerOutParameter(inparamerters.length+1+i, Types.INTEGER);
+					}  else if(outparamerters[i] instanceof Double){
+						call.registerOutParameter(inparamerters.length+1+i, Types.NUMERIC);
+					} else if(outparamerters[i] instanceof Date){
+						call.registerOutParameter(inparamerters.length+1+i, Types.DATE);
+					}
 				}
 			}
 		}
@@ -181,6 +201,7 @@ public class DbUtil{
 		}
 		return call;
 	}
+	
 	public void crudCall(String sql,Object[] paramerters){
 		Connection conn = getConnection();
 		try{
