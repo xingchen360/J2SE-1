@@ -42,12 +42,12 @@ public class Test {
         
         System.out.println("/************************************************************************************************************/");
         for(GenderEnum gender : GenderEnum.values()){
-            System.out.println("迭代得到的值："+gender.value);
+            System.out.println("迭代得到的值："+gender.code);
         }
         
-        GenderEnum genum = GenderEnum.getByCode("0");
-        if(genum.getValue().equals(GenderEnum.MAN.getValue())){
+        if(GenderEnum.MAN.getCode().equals("0")){
             System.out.println("true");
+            System.out.println(GenderEnum.getByCode("0").getDescription());
         }
        
         System.out.println("/************************************************************************************************************/");
