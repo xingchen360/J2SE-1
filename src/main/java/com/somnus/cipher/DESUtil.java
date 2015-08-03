@@ -85,7 +85,7 @@ public class DESUtil {
         byte[] buff = cipher.doFinal(data.getBytes());
         System.out.println(Arrays.toString(buff));
         // 执行加密操作。加密后的结果通常都会用Base64编码进行传输 
-        return Hex.encodeHexString(buff);
+        return Base64.encodeBase64String(buff);
     }
 
     /** 
@@ -101,7 +101,7 @@ public class DESUtil {
         //初始化Cipher对象，设置为解密模式
         cipher.init(Cipher.DECRYPT_MODE, deskey);
         // 执行解密操作
-        byte[] buff = cipher.doFinal(Hex.decodeHex(data.toCharArray()));
+        byte[] buff = cipher.doFinal(Base64.decodeBase64(data));
         System.out.println(Arrays.toString(buff));
         return new String(buff);
     }
@@ -131,7 +131,8 @@ public class DESUtil {
        SecretKey secretKey = kg.generateKey();  
        return Base64.encodeBase64String(secretKey.getEncoded()); 
    }
-    public static void main(String[] args) throws Exception {
+   
+   public static void main(String[] args) throws Exception {
         String key = initKey();
         System.out.println(key+"size:"+Base64.decodeBase64(key).length);
         
