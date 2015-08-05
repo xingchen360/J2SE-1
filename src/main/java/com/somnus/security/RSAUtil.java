@@ -1,4 +1,4 @@
-package com.somnus.cipher;
+package com.somnus.security;
 
 import java.io.InputStream;
 import java.security.Key;

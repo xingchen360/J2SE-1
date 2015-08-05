@@ -1,4 +1,4 @@
-package com.somnus.cipher;
+package com.somnus.security;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -15,7 +15,6 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 
 /**对称加密算法DES&AES
  * @description: TODO 

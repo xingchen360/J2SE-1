@@ -1,4 +1,4 @@
-package com.somnus.cipher;
+package com.somnus.security;
 
 /** 
  * @Title: Base64Helper.java 

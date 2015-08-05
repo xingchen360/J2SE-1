@@ -1,4 +1,4 @@
-package com.somnus.cipher;
+package com.somnus.security;
 
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
