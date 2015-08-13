@@ -45,7 +45,7 @@ public class StringFormat {
 	 */
 	@Test
 	public void test2(){
-	    Date date=new Date(); // 创建日期对象
+	    Date date = new Date(); // 创建日期对象
 	    System.out.println(String.format("全部日期和时间信息：%tc%n", date));//格式化输出日期或时间
 	    System.out.println(String.format("年-月-日格式：%tF%n", date));
 	    System.out.println(String.format("月/日/年格式：%tD%n", date));
@@ -81,7 +81,7 @@ public class StringFormat {
 	 */
 	@Test
 	public void test3(){
-	    Date date=new Date();                                                                             // 创建日期对象
+	    Date date = new Date();                                                                             // 创建日期对象
 	    System.out.println(String.format(Locale.US,"英文月份简称：%tb",date));                                                                              // 输出字符串内容
 	    System.out.println(String.format("本地月份简称：%tb%n",date));
 	    System.out.println(String.format(Locale.US,"英文月份全称：%tB",date));
@@ -117,7 +117,7 @@ public class StringFormat {
 	 */
 	@Test
 	public void test4(){
-	    Date date=new Date();                               // 创建日期对象
+	    Date date = new Date();                               // 创建日期对象
 	    System.out.println(String.format("2位数字24时制的小时(不足2位前面补0):%tH%n",date));
 	    System.out.println(String.format("2位数字12时制的小时(不足2位前面补0):%tI%n",date));
 	    System.out.println(String.format("2位数字24时制的小时(前面不补0):%tk%n",date));
