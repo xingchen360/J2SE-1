@@ -1,4 +1,4 @@
-package com.somnus.classloader;
+package com.somnus.statics;
 
 class Singletion2{
 	/* 1、类的加载：查找并加载类的二进制数据

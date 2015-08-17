@@ -1,4 +1,4 @@
-package com.somnus.classloader;
+package com.somnus.statics;
 
 import java.util.Random;
 

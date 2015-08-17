@@ -1,4 +1,4 @@
-package com.somnus.classloader;
+package com.somnus.statics;
 
 class Singletion{
 	private static Singletion singletion = new Singletion();
