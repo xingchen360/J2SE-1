@@ -1,4 +1,4 @@
-package com.somnus.accessModifier;
+package com.somnus.statics;
 
 /**
  * 执行顺序
@@ -16,24 +16,24 @@ public class StaticTest {
 }
 class Animal{
 	static{
-		System.out.println("Animal static");
+		System.out.println("as");
 	}
 	public Animal(){
-		System.out.println("Animal constructor");
+		System.out.println("ac");
 	}
 }
 class Dog extends Animal{
 	Cat cat = new Cat();
 	static{
-		System.out.println("Dog static");
+		System.out.println("ds");
 	}
 	public Dog(){
-		System.out.println("Dog constructor");
+		System.out.println("dc");
 	}
 }
 class Cat{
 	public Cat(){
-		System.out.println("Cat constructor");
+		System.out.println("cc");
 	}
 }
 /* 1、在new B一个实例时首先要进行类的装载。（类只有在使用New调用创建的时候才会被java类装载器装入）
