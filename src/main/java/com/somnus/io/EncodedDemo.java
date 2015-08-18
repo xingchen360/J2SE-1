@@ -25,7 +25,7 @@ public class EncodedDemo {
 		}
 		
 		System.out.println();
-		//gbk编码中文占用32个字节，英文占用1个字节
+		//gbk编码中文占用2个字节，英文占用1个字节
 		byte[] buff2 = str.getBytes("gbk");
 		for(byte b:buff2){
 			System.out.print(Integer.toHexString(b & 0xff )+" ");
