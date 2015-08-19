@@ -66,8 +66,14 @@ public class Grammar {
 	@Test
 	public void testReturn(){
 		for(int i=0;i<10;i++){
-			System.out.println("执行了return语句,直接跳出了当前的testReturn方法!");
-			return;
+		    if(i==1){
+		        System.out.println(i);
+	            System.out.println("执行了return语句,直接跳出了当前的testReturn方法!");
+	            return;
+		    }else{
+		        System.out.println("等于0时会执行到==="+i);
+		    }
 		}
+		System.out.println("本语句永远不会有机会执行到");
 	}
 }

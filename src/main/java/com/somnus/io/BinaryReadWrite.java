@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.junit.Test;
-
 /**
  * 数据流读和写数据
  * @Title: BinaryReadWrite.java 
