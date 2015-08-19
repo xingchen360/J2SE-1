@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.junit.Test;
+
 /**
  * 数据流读和写数据
  * @Title: BinaryReadWrite.java 
@@ -38,7 +40,7 @@ public class BinaryReadWrite {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void writeBinaryStream() throws IOException {
 		if (dos != null) {
 			dos.writeBoolean(true);
@@ -74,7 +76,7 @@ public class BinaryReadWrite {
 			dos.close();
 		}
 	}
-
+	
 	public void readBinaryStream() throws IOException {
 		if (dis != null) {
 			while (dis.available() > 0) {

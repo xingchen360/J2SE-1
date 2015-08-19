@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+import org.junit.Test;
+
 /**
  * 
  * @Title: TestFileOutputStream.java 
@@ -26,7 +28,8 @@ public class TestFileOutputStream {
 	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public static void bytes2file() throws IOException{
+    @Test
+	public void bytes2file() throws IOException{
 	    OutputStream os = null;
         try {
             os = new FileOutputStream(new File("target/classes/TestFileOutputStream1.txt"));
@@ -45,7 +48,8 @@ public class TestFileOutputStream {
 	 * 并且往另一目录文件写入相同的文件
 	 * @throws IOException 
 	 */
-	public static void file2file() throws IOException{
+    @Test
+	public void file2file() throws IOException{
 	    InputStream is = null;
 	    OutputStream os = null;
         try {
@@ -99,11 +103,6 @@ public class TestFileOutputStream {
             is.close();
             os.close();
         }
-	}
-	
-	public static void main(String[] args) throws IOException{
-	    file2file();
-	    bytes2file();
 	}
 	
 }

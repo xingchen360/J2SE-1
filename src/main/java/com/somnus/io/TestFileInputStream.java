@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * 
  * @Title: TestFileInputStream.java 
@@ -26,7 +28,8 @@ public class TestFileInputStream {
      *          边从文件输入流读边往字节输出流中写
      * @throws IOException 
      */
-    public static byte[] file2bytes() throws IOException{
+    @Test
+    public byte[] file2bytes() throws IOException{
         byte[] buffer = null;
         ByteArrayOutputStream bos = null;
         InputStream is = null;
@@ -51,6 +54,7 @@ public class TestFileInputStream {
             is.close();
             bos.close();
         }
+        System.out.println(Arrays.toString(buffer));
         return buffer;
     }
     
@@ -58,7 +62,8 @@ public class TestFileInputStream {
      * 三种方式读取一个流
      * @throws IOException
      */
-    public static void readStream() throws IOException{
+    @Test
+    public void readStream() throws IOException{
         InputStream is = null;
         try {
             is = new URL("https://www.baidu.com/").openStream();
@@ -93,12 +98,5 @@ public class TestFileInputStream {
             is.close();
         }
     }
-
-	public static void main(String[] args) throws IOException {
-	    readStream();
-	    System.out.println();
-	    byte[] buff = file2bytes();
-	    System.out.println(Arrays.toString(buff));
-	}
 	
 }
