@@ -8,9 +8,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.Vector;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,8 +75,7 @@ public class SFTPUtil {
         this.keyFilePath = keyFilePath;
     }
 
-    public SFTPUtil() {
-    }
+    public SFTPUtil(){}
 
     /**
      * 连接sftp服务器
@@ -86,9 +87,9 @@ public class SFTPUtil {
             JSch jsch = new JSch();
             if (keyFilePath != null) {
                 jsch.addIdentity(keyFilePath);// 设置私钥
-                log.info("连接sftp，私钥文件路径：" + keyFilePath);
+                log.info("sftp connect,path of private key file：{}" , keyFilePath);
             }
-            log.info("sftp connect by host:{}  username:{}",host,username);
+            log.info("sftp connect by host:{} username:{}",host,username);
 
             session = jsch.getSession(username, host, port);
             log.info("Session is build");
@@ -107,9 +108,9 @@ public class SFTPUtil {
             log.info("channel is connected");
 
             sftp = (ChannelSftp) channel;
-            log.info("连接到SFTP成功。host: " + host);
+            log.info(String.format("sftp server host:[%s] port:[%s] is connect successfull", host, port));
         } catch (JSchException e) {
-            log.error(e.getMessage(), e);
+            log.error("Cannot connect to specified sftp server : {}:{} \n Exception message is: {}", new Object[]{host, port, e.getMessage()});
             throw new RuntimeException(e);
         }
     }
@@ -121,13 +122,15 @@ public class SFTPUtil {
         if (sftp != null) {
             if (sftp.isConnected()) {
                 sftp.disconnect();
-                session.disconnect();
-                log.info("sftp连接关闭成功！" + sftp);
-            } else if (sftp.isClosed()) {
-                log.warn("sftp 已经关闭,不需要重复关闭！" + sftp);
+                log.info("sftp is closed already");
             }
         }
-
+        if (session != null) {
+            if (session.isConnected()) {
+                session.disconnect();
+                log.info("sshSession is closed already");
+            }
+        }
     }
 
     /**
@@ -146,7 +149,7 @@ public class SFTPUtil {
             sftp.cd(directory);
         } catch (SftpException e) {
             log.error(e.getMessage(), e);
-            log.warn("目录不存在");
+            log.warn("directory is not exist");
             try {
                 sftp.mkdir(directory);
                 sftp.cd(directory);
@@ -157,7 +160,7 @@ public class SFTPUtil {
         }
         try {
             sftp.put(input, sftpFileName);
-            log.info("sftp上传成功！文件名：" + sftpFileName);
+            log.info("file:{} is upload successful" , sftpFileName);
         } catch (SftpException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
@@ -231,7 +234,7 @@ public class SFTPUtil {
             }
             File file = new File(saveFile);
             sftp.get(downloadFile, new FileOutputStream(file));
-            log.info("sftp下载文件成功！文件名:{}" ,downloadFile);
+            log.info("file:{} is download successful" , downloadFile);
         } catch (FileNotFoundException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
@@ -255,10 +258,9 @@ public class SFTPUtil {
             }
             InputStream is = sftp.get(downloadFile);
             
-            fileData = new byte[is.available()];
-            is.read(fileData);
+            fileData = IOUtils.toByteArray(is);
             
-            log.info("sftp下载文件成功！文件名" + downloadFile);
+            log.info("file:{} is download successful" , downloadFile);
         } catch (SftpException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
@@ -297,12 +299,16 @@ public class SFTPUtil {
      * @return
      * @throws SftpException
      */
-    public Vector listFiles(String directory) throws SftpException {
+    public Vector<?> listFiles(String directory) throws SftpException {
         return sftp.ls(directory);
     }
+    
     public static void main(String[] args) {
-        SFTPUtil sftp = new SFTPUtil("bfjin", "bfjin", "192.168.12.214", 22);
+        SFTPUtil sftp = new SFTPUtil("177779259", "123456", "101.231.206.140", 21121);
         sftp.login();
+        byte[] buff = sftp.download("./download", "abc.jar");
+        System.out.println(Arrays.toString(buff));
         sftp.logout();
     }
+    
 }

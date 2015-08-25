@@ -41,19 +41,17 @@ public class BinaryTree {
 	 * 										 12
 	 * 									  /		  \
 	 * 								    9		   76
-	 * 								   / \        /   \
-	 *								 6	  10   35   90
-	 *									       /     \
-	 *									     22     48
-	 *									    /        /  \
-	 *									 16       46  58
-	 *										      /
-	 *										    40
+	 * 								   / \        /  \
+	 *								 6	  10    35    90
+	 *									       /       \
+	 *									     22        48
+	 *									    /         /  \
+	 *									  16        46    58
+	 *										       /
+	 *										     40
 	 */
-	public static void preOrder(Node root) 
-	{
-		if (root != null) 
-		{
+	public static void preOrder(Node root){
+		if (root != null){
 			System.out.print(root.data + "-");
 			preOrder(root.left);
 			preOrder(root.right);
@@ -66,24 +64,22 @@ public class BinaryTree {
      * 3.中序遍历右子树 
 	 */
 	/*
-	 * 										 12
-	 * 									  /		  \
-	 * 								    9		   76
-	 * 								   / \        /   \
-	 *								 6	  10   35   90
-	 *									       /     \
-	 *									     22     48
-	 *									    /        /  \
-	 *									 16       46  58
-	 *										      /
-	 *										    40
-	 */
-	public static void inOrder(Node root) 
-	{
-		if (root != null) 
-		{
+     *                                       12
+     *                                    /       \
+     *                                  9          76
+     *                                 / \        /  \
+     *                               6    10    35    90
+     *                                         /       \
+     *                                       22        48
+     *                                      /         /  \
+     *                                    16        46    58
+     *                                             /
+     *                                           40
+     */
+	public static void inOrder(Node root){
+		if (root != null){
 			inOrder(root.left);
-			System.out.print(root.data + "--");
+			System.out.print(root.data + "-");
 			inOrder(root.right);
 		}
 	}
@@ -95,39 +91,38 @@ public class BinaryTree {
      * 3.访问根节点
 	 */
 	/*
-	 * 										 12
-	 * 									  /		  \
-	 * 								    9		   76
-	 * 								   / \        /   \
-	 *								 6	  10   35   90
-	 *									       /     \
-	 *									     22     48
-	 *									    /        /  \
-	 *									 16       46  58
-	 *										      /
-	 *										    40
-	 */
-	public static void postOrder(Node root) 
-	{
+     *                                       12
+     *                                    /       \
+     *                                  9          76
+     *                                 / \        /  \
+     *                               6    10    35    90
+     *                                         /       \
+     *                                       22        48
+     *                                      /         /  \
+     *                                    16        46    58
+     *                                             /
+     *                                           40
+     */
+	public static void postOrder(Node root){
 		if (root != null) {
 			postOrder(root.left);
 			postOrder(root.right);
-			System.out.print(root.data + "---");
+			System.out.print(root.data + "-");
 		}
 	}
 	/*
-	 * 										 12
-	 * 									  /		  \
-	 * 								    9		   76
-	 * 								   / \        /   \
-	 *								 6	  10   35   90
-	 *									       /     \
-	 *									     22     48
-	 *									    /        /  \
-	 *									 16       46  58
-	 *										      /
-	 *										    40
-	 */
+     *                                       12
+     *                                    /       \
+     *                                  9          76
+     *                                 / \        /  \
+     *                               6    10    35    90
+     *                                         /       \
+     *                                       22        48
+     *                                      /         /  \
+     *                                    16        46    58
+     *                                             /
+     *                                           40
+     */
 	public static void main(String[] str) {
 		int[] array = { 12, 76, 35, 22, 16, 48, 90, 46, 9, 40,58,6,10 };
 		Node root = new Node(array[0]); // 创建二叉树
