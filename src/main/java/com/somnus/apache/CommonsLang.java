@@ -38,6 +38,13 @@ public class CommonsLang {
         String str = ArrayUtils.toString(s);
         str = str.substring(1, str.length() - 1);
         System.out.println(str + ">>" + str.length());
+        String[] s3 = new String[] {"", "a","", "b", "c" };
+        for (int i = 0; i < s3.length; i++){
+            if(StringUtils.isEmpty(s3[i])){
+                s3 = ArrayUtils.remove(s3, i);
+            }
+        }
+        System.out.println(ArrayUtils.toString(s3));
     }
     
     @Test
@@ -109,8 +116,8 @@ public class CommonsLang {
         //直接将日期格式化为内置的固定格式
         System.out.println(DateFormatUtils.ISO_DATE_FORMAT.format(new Date()));
         //字符型日期转化为Date
-        System.out.println(DateUtils.parseDate("2014-11-11 11:11:11", new String[] { "yyyy-MM-dd HH:mm:ss","yyyy-MM-dd", "yyyy/MM/dd" }));
-        System.out.println(DateUtils.parseDate("2014年11月11日", new String[] { "yyyy年MM月dd日","yyyy-MM-dd", "yyyy/MM/dd" }));
+        System.out.println(DateUtils.parseDate("2014-11-11 11:11:11", new String[] {"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd", "yyyy/MM/dd" }));
+        System.out.println(DateUtils.parseDate("2014年11月11日", new String[] {"yyyy年MM月dd日","yyyy-MM-dd", "yyyy/MM/dd" }));
         //日期舍入与截整
         System.out.println(DateUtils.truncate(new Date(), Calendar.DATE));
         //判断是否是同一天
