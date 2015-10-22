@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 
 /**
@@ -27,21 +28,23 @@ import org.junit.Test;
 public class CommonsLang {
     
     @Test
-    public void arrayUtils(){
-        // 将两个数组合并为一个数组
-        String[] s1 = new String[] { "1", "2", "3" };
-        String[] s2 = new String[] { "a", "b", "c" };
+    public void ArrayUtils(){
+        /**判断数组是否为空*/
+        System.out.println(ArrayUtils.isEmpty(new String[]{"21","是"}));//false
+        System.out.println(ArrayUtils.isEmpty(new String[]{""}));//false
+        System.out.println(ArrayUtils.isEmpty(new String[]{null}));//false
+        System.out.println(ArrayUtils.isEmpty(new String[]{}));//true
+        /**将两个数组合并为一个数组*/
+        String[] s1 = new String[] {"1", "2", "3" };
+        String[] s2 = new String[] {"a", "b", "c" };
         String[] s = (String[]) ArrayUtils.addAll(s1, s2);
-        for (int i = 0; i < s.length; i++) {
-            System.out.println(s[i]);
-        }
-        String str = ArrayUtils.toString(s);
-        str = str.substring(1, str.length() - 1);
-        System.out.println(str + ">>" + str.length());
-        String[] s3 = new String[] {"", "a","", "b", "c" };
+        System.out.println(ArrayUtils.toString(s));
+        /**移除*/
+        String[] s3 = new String[] {"","", "a","", "b", "c" };
         for (int i = 0; i < s3.length; i++){
             if(StringUtils.isEmpty(s3[i])){
                 s3 = ArrayUtils.remove(s3, i);
+                i--;
             }
         }
         System.out.println(ArrayUtils.toString(s3));
@@ -65,7 +68,7 @@ public class CommonsLang {
     }
     
     @Test
-    public void stringUtils(){
+    public void StringUtils(){
         // 截取从from开始字符串
         System.out.println(StringUtils.substringAfter("SELECT * FROM PERSON " , "FROM"));
         // 判断该字符串是不是为数字(0~9)组成，如果是，返回true 但该方法不识别有小数点和请注意
@@ -108,6 +111,7 @@ public class CommonsLang {
          * StringUtils.remove("queued", "zz") = "queued"
          */
         System.out.println(StringUtils.remove("2015-10-01", "-"));
+        System.out.println(StringUtils.isNumeric("100"));
     }
     
     @Test
@@ -133,6 +137,19 @@ public class CommonsLang {
         Validate.isTrue(sourceFile.isFile(), "source file [%s] is not a valid file.", sourceFile);
         String string = "";
         Validate.notEmpty(string, "string is not empty");
+    }
+    
+    public void NumberUtils(){
+        /**判断字符串是否是数字*/
+        System.out.println(NumberUtils.isNumber("5.96"));//结果是true
+        System.out.println(NumberUtils.isNumber("s5"));//结果是false
+        System.out.println(NumberUtils.isNumber("0000000000596"));//结果是true
+        /**判断字符串中是否全为数字*/
+        System.out.println(NumberUtils.isDigits("0000000000.596"));//false
+        System.out.println(NumberUtils.isDigits("0000000000596"));//true
+        /**找出最大的一个*/
+        System.out.println(NumberUtils.max(new int[]{3,5,6}));
+        System.out.println(NumberUtils.max(3,1,7));
     }
     
 }
