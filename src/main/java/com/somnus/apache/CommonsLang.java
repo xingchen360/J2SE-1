@@ -2,8 +2,10 @@ package com.somnus.apache;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.ArrayUtils;
@@ -48,6 +50,8 @@ public class CommonsLang {
             }
         }
         System.out.println(ArrayUtils.toString(s3));
+        String[] ss = ArrayUtils.subarray(s, 1, 4);
+        System.out.println(ArrayUtils.toString(ss));
     }
     
     @Test
@@ -62,22 +66,22 @@ public class CommonsLang {
     
     @Test
     public void StringEscapeUtils(){
-        System.out.println(StringEscapeUtils.escapeHtml3("<html>"));
-        // 输出结果为&lt;html&gt;
-        System.out.println(StringEscapeUtils.escapeJava("String"));
+        System.out.println(StringEscapeUtils.escapeHtml3("<html>"));//&lt;html&gt;
+        System.out.println(StringEscapeUtils.escapeJava("String你好"));//String\u4F60\u597D
+        System.out.println(StringEscapeUtils.unescapeJava("String\u4F60\u597D"));//String你好
     }
     
     @Test
     public void StringUtils(){
         // 截取从from开始字符串
-        System.out.println(StringUtils.substringAfter("SELECT * FROM PERSON " , "FROM"));
+        System.out.println(StringUtils.substringAfter("SELECT * FROM PERSON " , "FROM"));// PERSON 
         // 判断该字符串是不是为数字(0~9)组成，如果是，返回true 但该方法不识别有小数点和请注意
-        System.out.println(StringUtils.isNumeric("454534"));// 返回true
+        System.out.println(StringUtils.isNumeric("454534"));// true
         // StringUtils,判断是否是空格字符
         /**
          * StringUtils.isBlank(null)      = true
          * StringUtils.isBlank("")        = true
-         * StringUtils.isBlank(" ")       = true
+         * StringUtils.isBlank(" ")       = true *
          * StringUtils.isBlank("bob")     = false
          * StringUtils.isBlank("  bob  ") = false
          */
@@ -85,23 +89,27 @@ public class CommonsLang {
         /**
          * StringUtils.isEmpty(null)      = true
          * StringUtils.isEmpty("")        = true
-         * StringUtils.isEmpty(" ")       = false
+         * StringUtils.isEmpty(" ")       = false *
          * StringUtils.isEmpty("bob")     = false
          * StringUtils.isEmpty("  bob  ") = false
          */
         System.out.println(StringUtils.isEmpty("   "));
         // 将数组中的内容以,分隔
-        System.out.println(StringUtils.join(new String[] { "1", "2", "3" }, ","));
+        System.out.println(StringUtils.join(new String[] { "1", "2", "3" }, ","));//1,2,3
+        // 将集合中的内容以,分隔
+        List<String> list = new ArrayList<String>();
+        list.add("1");list.add("2");list.add("3");
+        System.out.println(StringUtils.join(list, ","));//1,2,3
         // 在右边加下字符,使之总长度为6
-        System.out.println(StringUtils.rightPad("abc", 6, 'T'));
+        System.out.println(StringUtils.rightPad("abc", 6, 'T'));//abcTTT
         // 首字母大写 
-        System.out.println(StringUtils.capitalize("abc"));
+        System.out.println(StringUtils.capitalize("abc"));//Abc
         // Deletes all whitespaces from a String 删除所有空格
-        System.out.println(StringUtils.deleteWhitespace("   ab  c  "));
+        System.out.println(StringUtils.deleteWhitespace("   ab  c  "));//abc
         // 判断是否包含这个字符 
-        System.out.println(StringUtils.contains("abc", "ba"));
+        System.out.println(StringUtils.contains("abc", "ba"));//false
         // 表示左边两个字符 
-        System.out.println(StringUtils.left("abc", 2));
+        System.out.println(StringUtils.left("abc", 2));//ab
         /**
          * StringUtils.remove(null, *)        = null
          * StringUtils.remove("", *)          = ""
@@ -110,8 +118,60 @@ public class CommonsLang {
          * StringUtils.remove("queued", "ue") = "qd"
          * StringUtils.remove("queued", "zz") = "queued"
          */
-        System.out.println(StringUtils.remove("2015-10-01", "-"));
-        System.out.println(StringUtils.isNumeric("100"));
+        System.out.println(StringUtils.remove("2015-10-01", "-"));//20151001
+        System.out.println(StringUtils.isNumeric("100"));//true
+        /**
+         * StringUtils.strip(null)     = null
+         * StringUtils.strip("")       = ""
+         * StringUtils.strip("   ")    = ""
+         * StringUtils.strip("abc")    = "abc"
+         * StringUtils.strip("  abc")  = "abc"
+         * StringUtils.strip("abc  ")  = "abc"
+         * StringUtils.strip(" abc ")  = "abc"
+         * StringUtils.strip(" ab c ") = "ab c"
+         */
+        //去掉字符串两端的空白符(whitespace) 
+        System.out.println(StringUtils.strip("abc")); 
+        //去掉字符串两端的控制符(control characters, char <= 32) 
+        /**
+         * StringUtils.trim(null)          = null
+         * StringUtils.trim("")            = ""
+         * StringUtils.trim("     ")       = ""
+         * StringUtils.trim("abc")         = "abc"
+         * StringUtils.trim("    abc    ") = "abc"
+         * StringUtils.trim("     \n\tss   \b") = "ss"
+         * StringUtils.trim("  \b \t \n \f \r    ") = ""
+         */
+        System.out.println(StringUtils.trim("abc"));
+        //去掉 str 两端的在 stripChars 中的字符
+        System.out.println(StringUtils.strip("  abcyx", "xyz")); // "  abc"  
+        //去掉 str 前端的在 stripChars 中的字符
+        System.out.println(StringUtils.stripStart("yxabc  ", "xyz")); // "abc  "
+        //去掉 str 末端的在 stripChars 中的字符
+        System.out.println(StringUtils.stripEnd("  abcyx", "xyz")); // "  abc"
+        //默认半角空格分割  
+        String str = "aaa bbb ccc";  
+        String[] s = StringUtils.split(str);
+        System.out.println(ArrayUtils.toString(s));//{aaa,bbb,ccc}
+        //指定分隔符  
+        String str2 = "aaa,bbb,ccc";  
+        String[] s2 = StringUtils.split(str2, ",");
+        System.out.println(ArrayUtils.toString(s2));//{aaa,bbb,ccc}
+        String str22 = "aaa|bbb|ccc";  
+        String[] s22 = StringUtils.split(str22, "\\|");
+        System.out.println(ArrayUtils.toString(s22));//{aaa,bbb,ccc}
+        //去除空字符串 
+        String str3 = "aaa,,ccc,";  
+        String[] s3 = StringUtils.split(str3, ",");
+        System.out.println(ArrayUtils.toString(s3));//{aaa,ccc}
+        //去除空字符串 
+        String str4 = "aaa,,ccc,";  
+        String[] s4 = StringUtils.splitPreserveAllTokens(str4, ",");
+        System.out.println(ArrayUtils.toString(s4));//{aaa,,ccc,}
+        //指定分割的最大次数（超过后不分割）  
+        String str5 = "aaa,bbb,ccc,ddd,eee";  
+        String[] s5 = StringUtils.split(str5, ",", 3);
+        System.out.println(ArrayUtils.toString(s5));//{"aaa","bbb","ccc,ddd,eee"}
     }
     
     @Test
