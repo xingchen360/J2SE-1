@@ -132,7 +132,6 @@ public class CommonsLang {
          */
         //去掉字符串两端的空白符(whitespace) 
         System.out.println(StringUtils.strip("abc")); 
-        //去掉字符串两端的控制符(control characters, char <= 32) 
         /**
          * StringUtils.trim(null)          = null
          * StringUtils.trim("")            = ""
@@ -142,6 +141,7 @@ public class CommonsLang {
          * StringUtils.trim("     \n\tss   \b") = "ss"
          * StringUtils.trim("  \b \t \n \f \r    ") = ""
          */
+        //去掉字符串两端的控制符(control characters, char <= 32) 
         System.out.println(StringUtils.trim("abc"));
         //去掉 str 两端的在 stripChars 中的字符
         System.out.println(StringUtils.strip("  abcyx", "xyz")); // "  abc"  
