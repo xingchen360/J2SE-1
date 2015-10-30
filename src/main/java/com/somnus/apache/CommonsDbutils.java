@@ -34,6 +34,7 @@ public class CommonsDbutils {
 		try {
 			conn = DriverManager.getConnection(url, username, password);
 			QueryRunner qr = new QueryRunner();
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			List results = (List) qr.query(conn, "select id,name from person",new BeanListHandler(Person.class));
 			for (int i = 0; i < results.size(); i++) {
 				Person p = (Person) results.get(i);
