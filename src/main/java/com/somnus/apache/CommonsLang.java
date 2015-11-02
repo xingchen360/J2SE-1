@@ -3,6 +3,7 @@ package com.somnus.apache;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -97,9 +98,7 @@ public class CommonsLang {
         // 将数组中的内容以,分隔
         System.out.println(StringUtils.join(new String[] { "1", "2", "3" }, ","));//1,2,3
         // 将集合中的内容以,分隔
-        List<String> list = new ArrayList<String>();
-        list.add("1");list.add("2");list.add("3");
-        System.out.println(StringUtils.join(list, ","));//1,2,3
+        System.out.println(StringUtils.join(Arrays.asList("1", "2", "3"), ","));//1,2,3
         // 在右边加下字符,使之总长度为6
         System.out.println(StringUtils.rightPad("abc", 6, 'T'));//abcTTT
         // 首字母大写 

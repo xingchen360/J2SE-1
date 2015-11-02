@@ -29,7 +29,8 @@ public class CommonsBeanUtils {
         System.out.println("克隆对象>>" + person2);
     }
     
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void populate() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
         Map<String, String> map = new HashMap<String, String>();
         map.put("name", "tom");

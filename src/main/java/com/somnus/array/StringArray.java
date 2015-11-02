@@ -48,22 +48,19 @@ public class StringArray{
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		List<String> list = new ArrayList<String>();
 		for (String str : arr1){
-			if (!map.containsKey(str))
-			{
+			if (!map.containsKey(str)) {
 				map.put(str, Boolean.FALSE);
 			}
 		}
 		for (String str : arr2){
-			if (map.containsKey(str))
-			{
+			if (map.containsKey(str)) {
 				map.put(str, Boolean.TRUE);
 			}
 		}
 
 		for (Iterator<Entry<String, Boolean>> it = map.entrySet().iterator();it.hasNext();){
 			Entry<String,Boolean> e = (Entry<String,Boolean>)it.next();
-			if (e.getValue().equals(Boolean.TRUE))
-			{
+			if (e.getValue().equals(Boolean.TRUE)) {
 				list.add(e.getKey());
 			}
 		}

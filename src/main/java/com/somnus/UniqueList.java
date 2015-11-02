@@ -24,12 +24,7 @@ public class UniqueList {
 	 */
     @Test
 	public void removeDuplicateFromList() {
-	    List<String> list = new ArrayList<String>();
-        list.add("a");
-        list.add("b");
-        list.add("c");
-        list.add("a");
-        list.add("c");
+	    List<String> list = Arrays.asList("a", "b", "c","a", "c", "a");
 		Set<String> set = new HashSet<String>();
 		List<String> newList = new ArrayList<String>();
 		for (String element:list) {
@@ -41,10 +36,7 @@ public class UniqueList {
     
     @Test
     public void removeDuplicateFromList2() {
-        List<String> list = new ArrayList<String>();
-        list.add("a");list.add("b");
-        list.add("c");list.add("a");
-        list.add("c");list.add("a");
+    	List<String> list = Arrays.asList("a", "b", "c","a", "c", "a");
         List<String> newList = new ArrayList<String>();
         for (String element:list) {
             if(!newList.contains(element)) {  

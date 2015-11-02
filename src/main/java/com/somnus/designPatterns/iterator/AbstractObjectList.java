@@ -7,7 +7,7 @@ import java.util.List;
  * @Title: AbstractObjectList.java 
  * @Package com.somnus.designPatterns.iterator 
  * @Description: TODO
- * @author yh.liu
+ * @author Somnus
  * @date 2015年6月26日 上午11:45:05 
  * @version V1.0 
  */
