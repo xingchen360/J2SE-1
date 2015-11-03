@@ -49,9 +49,11 @@ public class CommonsDbutils {
 		try {
 			conn = DriverManager.getConnection(url, username, password);
 			QueryRunner qr = new QueryRunner();
-			List results = (List) qr.query(conn, "select age,name from person",new MapListHandler());
+			@SuppressWarnings("rawtypes")
+            List results = (List) qr.query(conn, "select age,name from person",new MapListHandler());
 			for (int i = 0; i < results.size(); i++) {
-				Map map = (Map) results.get(i);
+				@SuppressWarnings("unchecked")
+                Map<String,Object> map = (Map<String,Object>) results.get(i);
 				System.out.println("age:" + map.get("age") + ",name:"+ map.get("name"));
 			}
 		} catch (SQLException e) {
