@@ -47,7 +47,7 @@ public class FTPClientHelper{
 	
 	/**
 	 * @Description 连接并登录到FTP
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public void login(){
 		client = new FTPClient();
@@ -83,7 +83,7 @@ public class FTPClientHelper{
 	 * @Description 判断文件是否存在
 	 * @param remoteFile 文件
 	 * @return
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public boolean isRemoteFileExists(String remoteFile){
 		
@@ -111,7 +111,7 @@ public class FTPClientHelper{
 	 * @Description 判断目录是否存在
 	 * @param remoteDirPath
 	 * @return
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public boolean isRemoteDirExists(String remoteDirPath){
 		try{
@@ -128,7 +128,7 @@ public class FTPClientHelper{
 	 * @param remoteFilePath 远程文件全路径
 	 * @param remoteFileName
 	 * @return
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public boolean upload(File localFile, String remoteFilePath, String remoteFileName){
 		try {
@@ -161,7 +161,7 @@ public class FTPClientHelper{
 	 * @param remoteFilePath 远程全路径
 	 * @param localFile 本地文件全路径
 	 * @return
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public boolean download(String remoteFilePath, File localFile){
 		
@@ -185,7 +185,7 @@ public class FTPClientHelper{
 	
 	/**
 	 * @Description 登出FTP
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public void logout(){
 		try {

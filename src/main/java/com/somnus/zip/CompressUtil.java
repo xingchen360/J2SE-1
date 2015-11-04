@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Description 压缩/解压缩工具类
- * @author caobin
+ * @author Somnus
  * @date 2013-5-22
  * @version 1.0
  */
@@ -38,7 +38,7 @@ public class CompressUtil {
 	 * @throws java.io.FileNotFoundException
 	 * @throws java.io.IOException
 	 * @throws ArchiveException
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public static void unTargzFile(File sourceFile) throws FileNotFoundException, IOException, ArchiveException{
 		unTargzFile(sourceFile, null);
@@ -48,7 +48,7 @@ public class CompressUtil {
 	 * @Description 解压文件(tar.gz)到指定目录
 	 * @param sourceFile  指定解压文件
 	 * @param targetDir 目标目录(null为当前目录)
-	 * @author caobin
+	 * @author Somnus
 	 * @throws java.io.IOException
 	 * @throws java.io.FileNotFoundException
 	 * @throws ArchiveException 
@@ -95,7 +95,7 @@ public class CompressUtil {
 	 * @param sourceFiles 指定打包文件
 	 * @param targetFile 目标文件(.tar,压缩后即为.tar.gz)
 	 * @throws Throwable
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public static void targzFiles(File[] sourceFiles, File targetFile) throws Throwable{
 		tarFiles(sourceFiles, targetFile, "UTF-8");
@@ -107,7 +107,7 @@ public class CompressUtil {
 	 * @param sourceDir 指定打包目录
 	 * @param targetFile 目标文件(.tar,压缩后即为.tar.gz)
 	 * @throws Throwable
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public static void targzDir(File sourceDir, File targetFile) throws Throwable{
 		tarDir(sourceDir, targetFile, null, "UTF-8");
@@ -121,7 +121,7 @@ public class CompressUtil {
 	 * @param targetFile 目标文件
 	 * @param tarDir 包中目录(为null责不建立目录)
 	 * @param encoding 编码
-	 * @author caobin
+	 * @author Somnus
 	 * @throws java.io.IOException
 	 */
 	public static void tarDir(File sourceDir, File targetFile, String tarDir, String encoding) throws IOException{
@@ -147,7 +147,7 @@ public class CompressUtil {
 	 * @param targetFile 目标文件
 	 * @param encoding 编码
 	 * @throws java.io.IOException
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public static void tarFiles(File[] sourceFiles, File targetFile, String encoding) throws IOException{
 		Validate.notNull(targetFile, "target file is required.");
@@ -175,7 +175,7 @@ public class CompressUtil {
 	 * @param dir
 	 * @param tarDir
 	 * @throws java.io.IOException
-	 * @author caobin
+	 * @author Somnus
 	 */
 	private static void tar(TarArchiveOutputStream taos, File dir, String tarDir) throws IOException{
 		File[] files = dir.listFiles();
@@ -197,7 +197,7 @@ public class CompressUtil {
 	 * @Description gzip压缩指定文件
 	 * @param deleteSourceFile 是否删除
 	 * @param sourceFile 源文件
-	 * @author caobin
+	 * @author Somnus
 	 * @throws Throwable 
 	 */
 	public static void gzip(File sourceFile, boolean deleteSourceFile) throws Throwable{
@@ -239,7 +239,7 @@ public class CompressUtil {
 	 * @param sourceFile 源文件
 	 * @param deleteSourceFile 是否删除
 	 * @throws Throwable
-	 * @author caobin
+	 * @author Somnus
 	 */
 	public static void gunzip(File sourceFile, boolean deleteSourceFile) throws Throwable{
 		Validate.notNull(sourceFile, "source file is required.");
