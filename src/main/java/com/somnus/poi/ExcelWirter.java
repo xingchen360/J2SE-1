@@ -3,23 +3,31 @@ package com.somnus.poi;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
 
-public class ExportExcelUtil<T>{
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+/**
+ * 
+ * @Description: 生成Excel2007
+ * @author Somnus
+ * @date 2015年11月6日 上午11:23:11 
+ * @version V1.0
+ */
+public class ExcelWirter<T>{
 
 	/**
 	 * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
@@ -27,7 +35,7 @@ public class ExportExcelUtil<T>{
 	 *            表格标题名
 	 * @param headers
 	 *            表格属性列名数组
-	 * @param dataset
+	 * @param dataSet
 	 *            需要显示的数据集合,集合中一定要放置符合javabean风格的类的对象。此方法支持的
 	 *            javabean属性的数据类型有基本数据类型及String,Date,byte[](图片数据)
 	 * @param out
@@ -36,71 +44,72 @@ public class ExportExcelUtil<T>{
 	 *            如果有时间数据，设定输出格式。默认为"yyy-MM-dd"
 	 */
 
-	@SuppressWarnings("unchecked")
-	public byte[] exportExcel(String title, String[] headers,Collection<T> dataset, String pattern){
+	public byte[] exportExcel(String title, String[] headers,Collection<T> dataSet, String pattern){
 		// 声明一个工作薄
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		HSSFFont font3 = workbook.createFont();
+        XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFFont font3 = workbook.createFont();
 		// 生成一个表格
 		// 生成一个样式
-		HSSFCellStyle style = workbook.createCellStyle();
+		XSSFCellStyle style = workbook.createCellStyle();
 		// 设置这些样式
 		style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
-		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		style.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		style.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		style.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		style.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		// 生成一个字体
-		HSSFFont font = workbook.createFont();
+		XSSFFont font = workbook.createFont();
 		font.setColor(HSSFColor.VIOLET.index);
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
 		// 把字体应用到当前的样式
 		style.setFont(font);
 		// 生成并设置另一个样式
-		HSSFCellStyle style2 = workbook.createCellStyle();
+		XSSFCellStyle style2 = workbook.createCellStyle();
 		style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
-		style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		style2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		style2.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		style2.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		style2.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		style2.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		style2.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		style2.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
 		// 生成另一个字体
-		HSSFFont font2 = workbook.createFont();
-		font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		XSSFFont font2 = workbook.createFont();
+		font2.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
 		// 把字体应用到当前的样式
 		style2.setFont(font2);
-		HSSFSheet sheet = null;
-		HSSFRow row = null;
+		XSSFSheet sheet = null;
+		XSSFRow row = null;
 		int index = 0;
 		int sheetnum = 0;
-		Iterator<T> it = dataset.iterator();
-		// 产生表格标题行
+		Iterator<T> it = dataSet.iterator();
+		//生成表格标题行
 		sheet = workbook.createSheet(title + sheetnum);
-		sheet.setDefaultColumnWidth((short) 15);
+		sheet.setDefaultColumnWidth(15);
 		row = sheet.createRow(0);
-		for (short i = 0; i < headers.length; i++){
-			HSSFCell cell = row.createCell(i);
+		for (int i = 0; i < headers.length; i++){
+			XSSFCell cell = row.createCell(i);
 			cell.setCellStyle(style);
-			HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+			XSSFRichTextString text = new XSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
 		}
+		//生成表格具体数据行
 		while (it.hasNext()){
 			index++;
+			//如果数据大于5000行，生成下一个sheet
 			if (index > 50000){
 				index = 0;
 				++sheetnum;
 				sheet = workbook.createSheet(title + sheetnum);
-				sheet.setDefaultColumnWidth((short) 15);
+				sheet.setDefaultColumnWidth(15);
 				row = sheet.createRow(0);
-				for (short i = 0; i < headers.length; i++){
-					HSSFCell cell = row.createCell(i);
+				for (int i = 0; i < headers.length; i++){
+					XSSFCell cell = row.createCell(i);
 					cell.setCellStyle(style);
-					HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+					XSSFRichTextString text = new XSSFRichTextString(headers[i]);
 					cell.setCellValue(text);
 				}
 			}
@@ -108,16 +117,13 @@ public class ExportExcelUtil<T>{
 			T t = (T) it.next();
 			// 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
 			Field[] fields = t.getClass().getDeclaredFields();
-			for (short i = 0; i < fields.length; i++){
-				HSSFCell cell = row.createCell(i);
+			for (int i = 0; i < fields.length; i++){
+				XSSFCell cell = row.createCell(i);
 				cell.setCellStyle(style2);
 				Field field = fields[i];
 				String fieldName = field.getName();
-				String getMethodName = "get"+ fieldName.substring(0, 1).toUpperCase()+ fieldName.substring(1);
 				try{
-					Class tCls = t.getClass();
-					Method getMethod = tCls.getMethod(getMethodName,new Class[] {});
-					Object value = getMethod.invoke(t, new Object[] {});
+					Object value = PropertyUtils.getProperty(t, fieldName);
 					// 判断值的类型后进行强制类型转换
 					String textValue = null;
 					if (value instanceof Integer){
@@ -126,12 +132,12 @@ public class ExportExcelUtil<T>{
 					}
 					else if (value instanceof Float){
 						float fValue = (Float) value;
-						textValue = new HSSFRichTextString(String.valueOf(fValue)).toString();
+						textValue = new XSSFRichTextString(String.valueOf(fValue)).toString();
 						cell.setCellValue(textValue);
 					}
 					else if (value instanceof Double){
 						double dValue = (Double) value;
-						textValue = new HSSFRichTextString(String.valueOf(dValue)).toString();
+						textValue = new XSSFRichTextString(String.valueOf(dValue)).toString();
 						cell.setCellValue(textValue);
 					}
 					else if (value instanceof Long){
@@ -170,30 +176,26 @@ public class ExportExcelUtil<T>{
 							cell.setCellValue(Double.parseDouble(textValue));
 						}
 						else{
-							HSSFRichTextString richString = new HSSFRichTextString(textValue);
+							XSSFRichTextString richString = new XSSFRichTextString(textValue);
 							font3.setColor(HSSFColor.BLUE.index);
 							richString.applyFont(font3);
 							cell.setCellValue(richString);
 						}
 					}
-				}
-				catch (Exception e){
+				} catch (Exception e){
 					e.printStackTrace();
+					throw new RuntimeException(e);
 				}
 			}
 		}
-		//*****************测试用******************************************
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try{
-			// OutputStream out2 = new FileOutputStream("E://b.xls");
-			// workbook.write(out2);
 			workbook.write(baos);
-			baos.flush();
+			return baos.toByteArray();
 		}
 		catch (IOException e){
 			e.printStackTrace();
 		}
-		//*****************测试用******************************************
-		return baos.toByteArray();
+		return null;
 	}
 }
