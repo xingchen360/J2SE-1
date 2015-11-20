@@ -19,7 +19,7 @@ import java.io.IOException;
 public class BinaryReadWrite {
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
-	private String s_FilePath = "src/main/resources/bin.dat";
+	private String s_FilePath = "target/classes/bin.dat";
 	private byte[] buff = "{\"name\":\"alen\"}".getBytes();
 
 	public BinaryReadWrite() {
@@ -127,10 +127,5 @@ public class BinaryReadWrite {
 		BinaryReadWrite bin = new BinaryReadWrite();
 		bin.writeBinaryStream();
 		bin.readBinaryStream();
-		System.out.println("*******************************");
-		String str = "abcd<好好学习";
-		System.out.println(str.length());
-		System.out.println(str.getBytes(/*"UTF-8"*/).length);
-		System.out.println(str.getBytes("GB2312").length);
 	}
 }

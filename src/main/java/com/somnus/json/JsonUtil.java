@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -46,8 +47,8 @@ public class JsonUtil {
      * @param bean
      * @return
      */
-    public static <T> String beanToJson(T t) {
-        JSONObject json = JSONObject.fromObject(t);
+    public static String obj2JsonString(Object obj) {
+        JSONObject json = JSONObject.fromObject(obj);
         return json.toString();
     }
 
@@ -60,16 +61,16 @@ public class JsonUtil {
      * @param nory
      * @return
      */
-    public static <T> String beanToJson(T t, String[] include, boolean nory) {
+    public static String obj2JsonString(Object obj, String[] include, boolean nory) {
         JSONObject json = null;
         // 转换include里的属性
         if (nory){
-            Field[] fields = t.getClass().getDeclaredFields();
+            Field[] fields = obj.getClass().getDeclaredFields();
             String str = "";
             for (Field field : fields) {
                 str += ("#" + field.getName());
             }
-            fields = t.getClass().getSuperclass().getDeclaredFields();
+            fields = obj.getClass().getSuperclass().getDeclaredFields();
             for (Field field : fields) {
                 str += ("#" + field.getName());
             }
@@ -77,11 +78,11 @@ public class JsonUtil {
             for (String s : include) {
                 str = str.replace("#" + s + "#", "#");
             }
-            json = JSONObject.fromObject(t, configJson(str.split(":")));
+            json = JSONObject.fromObject(obj, configJson(str.split(":")));
         } 
         // 转换除了include里的属性
         else {
-            json = JSONObject.fromObject(t, configJson(include));
+            json = JSONObject.fromObject(obj, configJson(include));
         }
         return json.toString();
     }
@@ -92,28 +93,22 @@ public class JsonUtil {
      * @param beans
      * @return
      */
-    public static <T> String beanListToJson(List<T> beans) {
+    public static <E> String list2JsonString(List<E> list) {
         StringBuffer temp = new StringBuffer();
         temp.append("[");
-        int size = beans.size();
+        int size = list.size();
         for (int i = 0; i < size; i++) {
-            temp.append(beanToJson(beans.get(i)) + ((i < size - 1) ? "," : ""));
+            temp.append(obj2JsonString(list.get(i)) + ((i < size - 1) ? "," : ""));
         }
         temp.append("]");
         return temp.toString();
     }
-
-    public static <T> String beanListToJson2(List<T> beans) {
-        JSONObject onejson = null;
-        String json = "[\n";
-        for (Iterator<T> it = beans.iterator(); it.hasNext();) {
-            Object obj = it.next();
-            onejson = JSONObject.fromObject(obj);
-            json = json + onejson.toString() + ",\n";
-        }
-        // 去掉最后一个，逗号
-        return json.substring(0, json.lastIndexOf(",")) + "\n]";
+    
+    public static <E> String list2JsonString_(List<E> list) {
+        JSONArray jsonArray = JSONArray.fromObject(list);
+        return jsonArray.toString();
     }
+
 
     /**
      * 将List中所含对象指定的属性转换成json字符串
@@ -124,16 +119,17 @@ public class JsonUtil {
      * @param nory
      * @return
      */
-    public static <T> String beanListToJson(List<T> beans, String[] include, boolean nory) {
+    public static <E> String list2JsonString(List<E> beans, String[] include, boolean nory) {
         StringBuffer rest = new StringBuffer();
         rest.append("[");
         int size = beans.size();
         for (int i = 0; i < size; i++) {
-            rest.append(beanToJson(beans.get(i), include, nory) + ((i < size - 1) ? "," : ""));
+            rest.append(obj2JsonString(beans.get(i), include, nory) + ((i < size - 1) ? "," : ""));
         }
         rest.append("]");
         return rest.toString();
     }
+   
 
     /**
      * map集合转换成json格式数据
@@ -142,13 +138,13 @@ public class JsonUtil {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> String mapToJson(Map<String, T> map, String[] include, boolean nory) {
+    public static <E, V> String map2JsonString(Map<E, V> map, String[] include, boolean nory) {
         String s_json = "{";
-        for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
+        for (Iterator<E> it = map.keySet().iterator(); it.hasNext();) {
             String key = (String) it.next();
             if (map.get(key) == null) {
             } else if (map.get(key) instanceof List) {
-                s_json += ("\"" + key + "\":" + JsonUtil.beanListToJson((List<T>) map.get(key), include, nory));
+                s_json += ("\"" + key + "\":" + JsonUtil.list2JsonString((List<E>) map.get(key), include, nory));
             } else {
                 JSONObject json = JSONObject.fromObject(map.get(key));
                 s_json += ("\"" + key + "\":" + json.toString());
@@ -161,17 +157,6 @@ public class JsonUtil {
         return s_json;
     }
 
-    public static String commonJson(Object obj) {
-        if ((obj instanceof List)) {
-            List para = (List) obj;
-            return beanListToJson(para);
-        } else if (obj instanceof Map) {
-            Map para = (Map) obj;
-            return mapToJson(para, new String[] {}, false);
-        }
-        return beanToJson(obj);
-    }
-
     // *************************************以下JSON转换为对象***************************************************************
 
     /**
@@ -182,9 +167,9 @@ public class JsonUtil {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T jsonToBean(String jsonString, Class<T> beanCalss) {
+    public static <T> T jsonString2Object(String jsonString, Class<T> clazz) {
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        T bean = (T) JSONObject.toBean(jsonObject, beanCalss);
+        T bean = (T) JSONObject.toBean(jsonObject, clazz);
         return bean;
     }
 
@@ -195,34 +180,18 @@ public class JsonUtil {
      * @return
      */
     @SuppressWarnings({ "unchecked" })
-    public static Map jsonToMap(String jsonString) {
+    public static<E, V> Map<E, V> jsonString2Map(String jsonString) {
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        Iterator keyIter = jsonObject.keys();
-        String key;
-        Object value;
-        Map valueMap = new HashMap();
+        Iterator<E> keyIter = jsonObject.keys();
+        E key;
+        V value;
+        Map<E, V> valueMap = new HashMap<E, V>();
         while (keyIter.hasNext()) {
-            key = (String) keyIter.next();
-            value = jsonObject.get(key).toString();
+            key = (E)keyIter.next();
+            value = (V)jsonObject.get(key);
             valueMap.put(key, value);
         }
         return valueMap;
-    }
-
-    /**
-     * 从json数组中得到相应java数组
-     *
-     * @param jsonString
-     * @return
-     */
-    public static Object[] jsonToObjectArray(String jsonString) {
-        JSONArray jsonArray = JSONArray.fromObject(jsonString);
-        return jsonArray.toArray();
-    }
-
-    public static <T> String listToJson(List<T> list) {
-        JSONArray jsonArray = JSONArray.fromObject(list);
-        return jsonArray.toString();
     }
 
     /**
@@ -233,7 +202,7 @@ public class JsonUtil {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass) {
+    public static <T> List<T> json2ObjectList(String jsonString, Class<T> beanClass) {
         JSONArray jsonArray = JSONArray.fromObject(jsonString);
         JSONObject jsonObject;
         T bean;
@@ -245,6 +214,17 @@ public class JsonUtil {
             list.add(bean);
         }
         return list;
+    }
+    
+    /**
+     * 从json数组中得到相应java数组
+     *
+     * @param jsonString
+     * @return
+     */
+    public static Object[] jsonToObjectArray(String jsonString) {
+        JSONArray jsonArray = JSONArray.fromObject(jsonString);
+        return jsonArray.toArray();
     }
 
     /**
@@ -320,42 +300,38 @@ public class JsonUtil {
         user2.setUsername("admin2");
         user2.setPassword("123456");
         user2.setAge(24);
-        System.out.println("一：" + JsonUtil.beanToJson(user));
+        System.out.println("一：" + JsonUtil.obj2JsonString(user));
 
         Map<String, String> map11 = new HashMap<String, String>();
         map11.put("1", "a");
         map11.put("2", "b");
-        System.out.println("二：" + JsonUtil.beanToJson(map11));
+        System.out.println("二：" + JsonUtil.obj2JsonString(map11));
 
         System.out.println("****************************************************************");
         List<User> list = new ArrayList<User>();
         list.add(user);
         list.add(user2);
-        System.out.println("三：" + JsonUtil.beanListToJson(list));
-        System.out.println("四：" + JsonUtil.beanListToJson2(list));
+        System.out.println("三：" + JsonUtil.list2JsonString(list));
+        System.out.println("四：" + JsonUtil.list2JsonString_(list));
 
         System.out.println("****************************************************************");
         // 只包含数组里面的属性
-        System.out.println("五：" + JsonUtil.beanToJson(user, new String[] { "username" }, true));
+        System.out.println("五：" + JsonUtil.obj2JsonString(user, new String[] { "username" }, true));
         // 除数组之外的所有属性
-        System.out.println("六：" + JsonUtil.beanToJson(user, new String[] { "username" }, false));
+        System.out.println("六：" + JsonUtil.obj2JsonString(user, new String[] { "username" }, false));
 
-        System.out.println("七：" + JsonUtil.beanListToJson(list, new String[] { "username", "password" }, true));
+        System.out.println("七：" + JsonUtil.list2JsonString(list, new String[] { "username", "password" }, true));
 
         System.out.println("****************************************************************");
         Map<String, User> map1 = new HashMap<String, User>();
         map1.put("1", user);
         map1.put("2", user2);
-        System.out.println("八：" + JsonUtil.mapToJson(map1, new String[] { "username", "password" }, true));
+        System.out.println("八：" + JsonUtil.map2JsonString(map1, new String[] { "username", "password" }, true));
 
         Map<String, List<User>> map2 = new HashMap<String, List<User>>();
         map2.put("1", list);
-        System.out.println("九：" + JsonUtil.mapToJson(map2, new String[] { "username", "password" }, true));
+        System.out.println("九：" + JsonUtil.map2JsonString(map2, new String[] { "username", "password" }, true));
 
-        System.out.println("****************************************************************");
-        System.out.println("十：" + JsonUtil.commonJson(list));
-        System.out.println("十一：" + JsonUtil.commonJson(map1));
-        System.out.println("十二：" + JsonUtil.commonJson(map2));
     }
 
 }

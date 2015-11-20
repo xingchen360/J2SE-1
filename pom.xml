@@ -109,6 +109,18 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier><!--指定jdk版本 -->
 		</dependency>
+		
+		<!-- jackson -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
 
 		<!-- 加入poi依赖包 -->
 		<dependency>
