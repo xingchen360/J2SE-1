@@ -14,7 +14,7 @@ public class Test{
 	public static void compare(Animal animal){
 		if(animal instanceof Dog){
 			System.out.println("传进来的对象是狗的实例");
-			Dog dog = (Dog)animal;
+			Dog dog = Dog.class.cast(animal);
 			dog.say();
 		}
 		else if(animal instanceof Cat){
@@ -32,7 +32,7 @@ public class Test{
 			 * 或是否是其超类或超接口。如果是则返回 true；否则返回 false。
 			 */
 			if(Animal.class.isAssignableFrom(clazz)){
-				Animal animal = (Animal) clazz.newInstance();
+				Animal animal = Animal.class.cast(clazz.newInstance());
 				value = clazz.isInstance(animal) ? (T) animal : null;
 			}
 		} catch (Exception e) {
