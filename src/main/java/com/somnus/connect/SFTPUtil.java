@@ -304,9 +304,9 @@ public class SFTPUtil {
     }
     
     public static void main(String[] args) {
-        SFTPUtil sftp = new SFTPUtil("177779259", "123456", "101.231.206.140", 21121);
+        SFTPUtil sftp = new SFTPUtil("somnus", "passw0rd", "192.168.1.100", 22);
         sftp.login();
-        byte[] buff = sftp.download("./download", "abc.jar");
+        byte[] buff = sftp.download("./download", "abc.txt");
         System.out.println(Arrays.toString(buff));
         sftp.logout();
     }
