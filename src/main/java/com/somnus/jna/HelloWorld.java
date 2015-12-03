@@ -5,25 +5,26 @@ import com.sun.jna.Platform;
 
 /**
  * @description: TODO
- * @author Somnus date 2015年4月1日 下午1:26:56
+ * @author Somnus 
+ * @date 2015年4月1日 下午1:26:56
  */
 public class HelloWorld {
+    
     public interface CLibrary extends Library {
+        
         CLibrary INSTANCE = (CLibrary) Native.loadLibrary(
                 (Platform.isWindows() ? "msvcrt" : "c"), 
                 CLibrary.class);
-        /**
-         * @see http://blog.csdn.net/shendl/article/details/3589676/
-         * @param format
-         * @param args
-         */
+        
         void printf(String format, Object... args);
     }
 
     public static void main(String[] args) {
+        
         CLibrary.INSTANCE.printf("Hello, World\n");
         for (int i = 0; i < args.length; i++) {
             CLibrary.INSTANCE.printf("Argument %d: %s\n", i, args[i]);
         }
+        
     }
 }

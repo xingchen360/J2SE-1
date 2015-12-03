@@ -1,16 +1,12 @@
 package com.somnus.reflect;
 
-public class Reflect06 
-{
-	public static void main(String[] args) 
-	{
+public class Reflect06 {
+	public static void main(String[] args) {
         Class<?> demo=null;         
-        try
-        {             
-        	demo=Class.forName("com.reflect.People");         
+        try{             
+        	demo=Class.forName("com.somnus.reflect.People");         
         }
-        catch (Exception e) 
-        {             
+        catch (Exception e) {             
         	e.printStackTrace();         
         }         
         //取得父类         

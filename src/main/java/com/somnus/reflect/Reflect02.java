@@ -1,22 +1,18 @@
 package com.somnus.reflect;
 
-public class Reflect02 
-{
+public class Reflect02 {
 	/**
 	 * 实例化Class类对象
 	 * @param args
 	 */
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args){
 		Class<?> demo1=null;
 		Class<?> demo2=null;
 		Class<?> demo3=null;
-		try 
-		{
-			demo1=Class.forName("com.somnus.reflect.Demo");
+		try {
+			demo1=Class.forName("com.somnus.somnus.reflect.Demo");
 		} 
-		catch (ClassNotFoundException e) 
-		{
+		catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		demo2=new Demo().getClass();
@@ -32,4 +28,3 @@ public class Reflect02
  * 类名称   Reflect.Demo
  */
 }
-
