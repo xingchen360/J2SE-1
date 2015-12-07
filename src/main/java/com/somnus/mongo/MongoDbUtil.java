@@ -11,7 +11,7 @@ public class MongoDbUtil {
 	private static ThreadLocal<DB> threadLocal = new ThreadLocal<DB>();
 	static{
 		try {
-			mongo = new Mongo("127.0.0.1:27017");
+			mongo = new Mongo("192.168.1.100:27017");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@ public class MongoDemo {
 		DBCollection coll = MongoDbUtil.getDBCollection("persons");
 		
 		DBObject dbo = new BasicDBObject();
-		dbo.put("name", "uspcat.com");
+		dbo.put("name", "somnus");
 		dbo.put("age", 2);
 		List<String>  books = new ArrayList<String>();
 		books.add("EXTJS");
