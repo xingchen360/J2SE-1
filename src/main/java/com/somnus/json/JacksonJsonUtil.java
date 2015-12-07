@@ -250,5 +250,12 @@ public class JacksonJsonUtil {
             String value = (String)m.get(key);
             System.out.println(key+":"+value);
         }
+        
+        Map<String, Map<String, String>> m2 = jsonString2Map(mapStr);
+        for(Iterator<String> it = m2.keySet().iterator();it.hasNext();){
+            String key = (String)it.next();
+            Map<String, String> map = (Map<String, String>)m2.get(key);
+            System.out.println(key+":"+map.get("username")+"|"+map.get("password"));
+        }
     }
 }
