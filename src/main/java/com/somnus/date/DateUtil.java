@@ -1,6 +1,5 @@
 package com.somnus.date;
 
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,14 +17,8 @@ public class DateUtil {
 	// 格式：年－月－日
 	public static final String FORMAT_FOUR = "yyyy-MM-dd";
 
-	// 格式：年－月
-	public static final String FORMAT_FIVE = "yyyy-MM";
-
-	// 格式：年月
-	public static final String FORMAT_SIX = "yyyyMM";
-
-	static final String dayNames[] = { "星期日", "星期一", "星期二", "星期三", "星期四",
-			"星期五", "星期六" };
+	// 格式：时分秒
+	public static final String FORMAT_FIVE = "HH:mm:ss";
 
 	/**
 	 * @description yyyy-MM-dd 转换为 yyyyMMdd
@@ -60,32 +53,11 @@ public class DateUtil {
 	}
 
 	/**
-	 * 把符合日期格式的字符串转换为日期类型 ParsePosition(1) 从第几位开始处理
-	 */
-	public static java.util.Date stringtoDate(String dateStr, String format,
-			ParsePosition pos) {
-		Date d = null;
-		SimpleDateFormat formater = new SimpleDateFormat(format);
-		try {
-			formater.setLenient(false);
-			d = formater.parse(dateStr, pos);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return d;
-	}
-
-	/**
 	 * 把日期转换为字符串
 	 */
 	public static String dateToString(java.util.Date date, String format) {
-		String result = "";
 		SimpleDateFormat formater = new SimpleDateFormat(format);
-		try {
-			result = formater.format(date);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		String result = formater.format(date);
 		return result;
 	}
 
@@ -129,17 +101,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取某年某月的天数 Method1
-	 */
-	public static int getDaysOfMonth(String year, String month) {
-		Date date = stringtoDate(year + "-" + month, FORMAT_FIVE);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-	}
-
-	/**
-	 * 获取某年某月的天数 Method2
+	 * 获取某年某月的天数 
 	 */
 	public static int getDaysOfMonth(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
@@ -268,17 +230,7 @@ public class DateUtil {
 	 * 比较指定日期与当前日期的差
 	 */
 	public static int yearDiffCurr(String after) {
-		return yearDiff(getNow(), after);
-	}
-
-	/**
-	 * 获取当前日期字符串，格式"yyyy-MM-dd HH:mm:ss"
-	 * 
-	 * @return
-	 */
-	public static String getNow() {
-		Calendar today = Calendar.getInstance();
-		return dateToString(today.getTime(), FORMAT_ONE);
+		return yearDiff(getSysCurrentDate(), after);
 	}
 
 	/**
@@ -287,12 +239,38 @@ public class DateUtil {
 	public static String getCurrDate(String format) {
 		return dateToString(new Date(), format);
 	}
+	
+	/**
+     * @return 当前系统时间 yyyy-MM-dd HH24:MI:SS
+     */
+    public static String getSysCurrentDateTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_ONE);
+        String time = sdf.format(new java.util.Date());  
+        return time;
+    }
+    
+    /**
+     * @return 当前系统时间 yyyy-MM-dd
+     */
+    public static String getSysCurrentDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_FOUR);  
+        String time = sdf.format(new java.util.Date());  
+        return time;
+    }
+    
+    /**
+     * @return 当前系统时间 HH24:MI:SS
+     */
+    public static String getSysCurrentTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_FIVE);  
+        String time = sdf.format(new java.util.Date());  
+        return time;
+    }
 
 	public static void main(String[] args) {
 		System.out.println("当前时间：" + DateUtil.getCurrDate(FORMAT_ONE));
-		System.out.println("当前时间：" + DateUtil.getNow());
+		System.out.println("当前时间：" + DateUtil.getSysCurrentDate());
 		System.out.println("某年某月的最大天数：" + DateUtil.getDaysOfMonth(2011, 5));
-		System.out.println("某年某月的最大天数：" + DateUtil.getDaysOfMonth("2014", "2"));
 
 		System.out.println("当前日期+2：" + DateUtil.dateSub(2));
 		System.out.println("指定日期+2："
@@ -307,9 +285,6 @@ public class DateUtil {
 				+ DateUtil.dateToString(new Date(), FORMAT_ONE));
 		System.out.println("String转换为Date："
 				+ DateUtil.stringtoDate("2014-03-07 15:12:27", FORMAT_ONE));
-		System.out.println("String转换为Date："
-				+ DateUtil.stringtoDate("22014-03-07 15:12:27", FORMAT_ONE,
-						new ParsePosition(1)));
 
 		System.out.println("两个日期相差的天数："
 				+ DateUtil.dayDiff(new Date(), DateUtil.stringtoDate(

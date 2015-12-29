@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Test;
 
@@ -69,4 +70,11 @@ public class CommonsBeanUtils {
         System.out.println(person.getAge());
     }
     
+    @Test
+    public void reflect2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+        Person person = new Person();
+        MethodUtils.invokeMethod(person, "setName", new Object[] { "andy" });
+        String name = (String) MethodUtils.invokeMethod(person, "getName", new Object[] { });
+        System.out.println(name);
+    }
 }
