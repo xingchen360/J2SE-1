@@ -1,8 +1,10 @@
 package com.somnus.enums;
 
 public class Test {
-	public static void main(String[] args) {
-		//枚举是一种类型，用于定义变量，以限制变量的赋值；赋值时通过“枚举名.值”取得枚举中的值
+    
+    @org.junit.Test
+    public void colorEnum(){
+        //枚举是一种类型，用于定义变量，以限制变量的赋值；赋值时通过“枚举名.值”取得枚举中的值
         ColorEnum colorEnum = ColorEnum.blue;
         switch (colorEnum) {
             case red:
@@ -36,23 +38,32 @@ public class Test {
         
         //枚举默认实现了java.lang.Comparable接口
         System.out.println("类型比较："+ColorEnum.red.compareTo(ColorEnum.green));//-1
-        
-        System.out.println("/************************************************************************************************************/");
+    }
+    
+    @org.junit.Test
+    public void seasonEnum(){
         System.out.println("季节为：" + SeasonEnum.getSeason());
-        
-        System.out.println("/************************************************************************************************************/");
+    }
+    
+    @org.junit.Test
+    public void genderEnum(){
         for(GenderEnum gender : GenderEnum.values()){
+            System.out.println(gender);
             System.out.println("迭代得到的值："+gender.code);
         }
         
         if(GenderEnum.MAN.getCode().equals("0")){
             System.out.println("true");
-            System.out.println(GenderEnum.getByCode("0").getDescription());
+            System.out.println(GenderEnum.getByCode("0").getSex());
         }
-       
-        System.out.println("/************************************************************************************************************/");
+    }
+    
+    @org.junit.Test
+    public void orderStateEnum(){
         for(OrderStateEnum order : OrderStateEnum.values()){
+            System.out.println(order);
             System.out.println(order.getName());
         }
-	}
+    }
+    
 }

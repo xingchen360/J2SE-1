@@ -5,14 +5,14 @@ package com.somnus.enums;
  */
 public enum SeasonEnum {
 	//注：枚举写在最前面，否则编译出错
-    spring, summer, autumn, winter;
+    SPRING, SUMMER, AUTUMN, WINTER;
 
     private final static String position = "test";
 
     public static SeasonEnum getSeason() {
         if ("test".equals(position))
-            return spring;
+            return SPRING;
         else
-            return winter;
+            return WINTER;
     }
 }

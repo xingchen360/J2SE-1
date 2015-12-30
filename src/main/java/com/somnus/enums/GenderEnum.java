@@ -11,20 +11,20 @@ public enum GenderEnum {
     
     public final String code;
     
-    public final String description;
+    public final String sex;
 
     //构造器默认也只能是private, 从而保证构造函数只能在内部使用
-    GenderEnum(String code,String description) {
+    private GenderEnum(String code,String sex) {
         this.code = code;
-        this.description = description;
+        this.sex = sex;
     }
     
     public String getCode() {
         return code;
     }
     
-    public String getDescription() {
-        return description;
+    public String getSex() {
+        return sex;
     }
     
     /**
@@ -36,7 +36,6 @@ public enum GenderEnum {
     public static GenderEnum getByCode(String code) {
         for (GenderEnum genum : values()) {
             if (genum.getCode().equals(code)) {
-
                 return genum;
             }
         }
