@@ -27,7 +27,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @date 2015年11月6日 上午11:23:11 
  * @version V1.0
  */
-public class ExcelWirter<T>{
+public class ExcelWirter{
 
 	/**
 	 * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
@@ -44,7 +44,7 @@ public class ExcelWirter<T>{
 	 *            如果有时间数据，设定输出格式。默认为"yyy-MM-dd"
 	 */
 
-	public byte[] exportExcel(String title, String[] headers,Collection<T> dataSet, String pattern){
+	public <T> byte[] exportExcel(String title, String[] headers,Collection<T> dataSet, String pattern){
 		// 声明一个工作薄
         XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFFont font3 = workbook.createFont();

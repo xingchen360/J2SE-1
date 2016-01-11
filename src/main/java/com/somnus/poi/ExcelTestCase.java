@@ -29,7 +29,7 @@ public class ExcelTestCase {
         list.add(p1);list.add(p2);
         list.add(p3);list.add(p4);
         list.add(p5);list.add(p6);
-        ExcelWirter<People> writer = new ExcelWirter<People>();
+        ExcelWirter writer = new ExcelWirter();
         byte[] buff = writer.exportExcel("测试例子", new String[]{"姓名","年龄"}, list, null);
         OutputStream os = new FileOutputStream(new File("E:/Somnus.xlsx"));
         IOUtils.write(buff, os);
