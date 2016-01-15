@@ -169,6 +169,11 @@ public class CommonsLang {
         String str5 = "aaa,bbb,ccc,ddd,eee";  
         String[] s5 = StringUtils.split(str5, ",", 3);
         System.out.println(ArrayUtils.toString(s5));//{"aaa","bbb","ccc,ddd,eee"}
+        //生成n*String或n*char长度的字符串
+        System.out.println(StringUtils.repeat("ab", 5));
+        //两边填充
+        System.out.println(StringUtils.center("ab", 4));
+        System.out.println(StringUtils.center("ab", 6, "*"));
     }
     
     @Test
