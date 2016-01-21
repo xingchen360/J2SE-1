@@ -11,7 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.compress.compressors.FileNameUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.junit.Test;
@@ -185,6 +187,15 @@ public class CommonsIo {
         } finally{
             IOUtils.closeQuietly(os);
         }
+    }
+    
+    @Test
+    public void FilenameUtils(){
+        System.out.println(FilenameUtils.getExtension("src/main/resources/build.xml"));
+        System.out.println(FilenameUtils.getBaseName("src/main/resources/build.xml"));
+        System.out.println(FilenameUtils.getFullPathNoEndSeparator("src/main/resources/build.xml"));
+        System.out.println(FilenameUtils.getPathNoEndSeparator("src/main/resources/build.xml"));
+        
     }
     
 }

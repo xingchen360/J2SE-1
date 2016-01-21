@@ -2,14 +2,13 @@ package com.somnus;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 
-/**   
- * @Title: SystemUtil
+/**
+ * 
  * @Description: TODO
- * @author: cjliu
- * @date: 2012-9-13下午7:30:00
- * @version: 1.0  
+ * @author Somnus
+ * @date 2016年1月21日 下午2:51:49 
+ * @version V1.0
  */
 public class SystemUtil {
 	private static String ip = null;
@@ -23,8 +22,8 @@ public class SystemUtil {
 			e.printStackTrace();
 		}
 		 
-		ip=addr.getHostAddress().toString();//获得本机IP 
-		machine=addr.getHostName().toString();//获得本机名称 
+		ip = addr.getHostAddress().toString();//获得本机IP 
+		machine = addr.getHostName().toString();//获得本机名称 
 	}
 	/**
 	 * 

@@ -174,6 +174,8 @@ public class CommonsLang {
         //两边填充
         System.out.println(StringUtils.center("ab", 4));
         System.out.println(StringUtils.center("ab", 6, "*"));
+        //截取()中间的字符串
+        System.out.println(StringUtils.substringBetween("abc(123)cde", "(", ")"));
     }
     
     @Test
