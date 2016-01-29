@@ -14,10 +14,10 @@ public class CardMask {
     @Test
     public void mask(){
         String cardNo = "6226095722249733";
-        String mask = StringUtils.rightPad(cardNo.substring(0, 6), 
+        String mask = StringUtils.rightPad(StringUtils.left(cardNo, 6), 
                 cardNo.length()-4, 
                 '*')
-                .concat(cardNo.substring(cardNo.length()-4,cardNo.length()));
+                .concat(StringUtils.right(cardNo, 4));
         System.out.println(mask);
     }
     

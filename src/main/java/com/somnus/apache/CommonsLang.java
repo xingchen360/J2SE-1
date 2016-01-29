@@ -97,6 +97,8 @@ public class CommonsLang {
         System.out.println(StringUtils.join(new String[] { "1", "2", "3" }, ","));//1,2,3
         // 将集合中的内容以,分隔
         System.out.println(StringUtils.join(Arrays.asList("1", "2", "3"), ","));//1,2,3
+        // 在左边加下字符,使之总长度为6
+        System.out.println(StringUtils.leftPad("abc", 6, 'T'));//TTTabc
         // 在右边加下字符,使之总长度为6
         System.out.println(StringUtils.rightPad("abc", 6, 'T'));//abcTTT
         // 首字母大写 
@@ -107,6 +109,8 @@ public class CommonsLang {
         System.out.println(StringUtils.contains("abc", "ba"));//false
         // 表示左边两个字符 
         System.out.println(StringUtils.left("abc", 2));//ab
+        // 表示左边两个字符 
+        System.out.println(StringUtils.right("abc", 2));//bc
         /**
          * StringUtils.remove(null, *)        = null
          * StringUtils.remove("", *)          = ""

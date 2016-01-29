@@ -1,5 +1,7 @@
 package com.somnus.date;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +38,29 @@ public class DateUtil {
 	public static String convert2yyyy_MM_dd(String datestr){
 		return datestr.replaceAll("(\\d{4})(\\d{2})(\\d{2})","$1-$2-$3");
 	}
+	
+	/**
+     * 
+     * @Description: 将字符串从一种格式转化的
+     * @param @param src         日期原串
+     * @param @param infmt       日期输入格式
+     * @param @param outfmt      日期输出格式
+     * @param @return            目标日期字符串  
+     * @throws ParseException
+     */
+    public static String getFmtDateStr(String src,String infmt,String outfmt) {
+        String result = "";
+        //输入格式
+        DateFormat informater = new SimpleDateFormat(infmt);
+        //输出格式
+        DateFormat outfomater = new SimpleDateFormat(outfmt);
+        try {
+            result = outfomater.format(informater.parse(src));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 	/**
 	 * 把符合日期格式的字符串转换为日期类型
