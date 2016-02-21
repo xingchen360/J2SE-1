@@ -11,10 +11,10 @@ public class Client {
         System.out.println("周次：" +  log_previous.getDate());
         System.out.println("姓名：" +  log_previous.getName());
         System.out.println("内容：" +  log_previous.getContent());
+        
         System.out.println("--------------------------------");
        
-        WeeklyLog  log_new;
-        log_new  = log_previous.clone(); //调用克隆方法创建克隆对象
+        WeeklyLog  log_new = log_previous.clone(); //调用克隆方法创建克隆对象
         log_new.setDate("第13周");
         System.out.println("****周报****");
         System.out.println("周次：" + log_new.getDate());
