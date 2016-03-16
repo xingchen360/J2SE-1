@@ -6,8 +6,7 @@ public class Modifier{
 	 * 被private所修饰的属性和方法
 	 * A只能在该类内部被使用
 	 */
-	private void c()
-	{
+	private void c(){
 		
 	}
 	/**2
@@ -15,8 +14,7 @@ public class Modifier{
 	 * A在类内部
 	 * B相同包下面的类
 	 */
-	 void d()
-	{
+	 void d(){
 		
 	}
 	 
@@ -26,8 +24,7 @@ public class Modifier{
 	 * B相同包下面的类
 	 * C子类(可以是不同的包)
 	 */
-	protected void b()
-	{
+	protected void b(){
 			
 	}
 		
@@ -36,8 +33,7 @@ public class Modifier{
 	 * 被public所修饰的属性和方法
 	 * 可以被所有类访问
 	 */
-	public void a()
-	{
+	public void a(){
 			
 	}
 }
