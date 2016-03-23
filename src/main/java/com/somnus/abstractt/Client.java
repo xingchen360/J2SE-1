@@ -22,8 +22,8 @@ public class Client {
 	private static List<AbstractHuman> list;
 	
 	static{
-		Man man = new Man("A");
-		Woman woman = new Woman("B");
+		Man man = new Man("M");
+		Woman woman = new Woman("W");
 		list = new ArrayList<AbstractHuman>();
 		list.add(man);
 		list.add(woman);
@@ -41,7 +41,7 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-		AbstractHuman human = get("A");
+		AbstractHuman human = get("M");
 		human.办理银行业务();
 	}
 
