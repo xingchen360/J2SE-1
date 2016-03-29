@@ -48,14 +48,16 @@ public class Test {
     @org.junit.Test
     public void genderEnum(){
         for(GenderEnum gender : GenderEnum.values()){
-            System.out.println(gender);
-            System.out.println("迭代得到的值："+gender.code);
+            System.out.println("迭代得到的code值："+gender.code);
+            System.out.println("迭代得到的name值："+gender.name());
         }
         
         if(GenderEnum.MAN.getCode().equals("0")){
             System.out.println("true");
             System.out.println(GenderEnum.getByCode("0").getSex());
         }
+        
+        System.out.println(GenderEnum.nameOf("man"));
     }
     
     @org.junit.Test

@@ -41,4 +41,15 @@ public enum GenderEnum {
         }
         return null;
     }
+    
+    public static GenderEnum nameOf(String name){
+    	GenderEnum genum = null;
+		if (name != null){
+			for (GenderEnum type : GenderEnum.values()) {
+				if (type.name().equalsIgnoreCase(name))
+					genum = type;
+			}
+		}
+		return genum;
+	}
 }
