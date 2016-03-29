@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.somnus.abstractt;
 
 import java.util.ArrayList;
