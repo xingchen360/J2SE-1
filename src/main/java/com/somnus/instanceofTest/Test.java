@@ -14,6 +14,7 @@ public class Test{
 	public static void compare(Animal animal){
 		if(animal instanceof Dog){
 			System.out.println("传进来的对象是狗的实例");
+			Dog dog_ = (Dog)animal;
 			Dog dog = Dog.class.cast(animal);
 			dog.say();
 		}
@@ -44,6 +45,8 @@ public class Test{
 	public static void main(String[] args) throws Exception{
 		
 		Dog dog = new Dog();
+		Organism organism = dog.unwrap(Organism.class);
+		organism.defined();
 		
 		Animal dog2 = new Dog();
 		
@@ -59,6 +62,9 @@ public class Test{
 	}
 
 }
+interface Organism{
+	void defined();
+}
 class Animal{
 	public Animal(){
 		System.out.println("Animal is instance");
@@ -67,7 +73,7 @@ class Animal{
 		System.out.println("动物都会跑");
 	}
 }
-class Dog extends Animal{
+class Dog extends Animal implements Organism{
 	public Dog(){
 		System.out.println("Dog is instance");
 	}
@@ -77,8 +83,18 @@ class Dog extends Animal{
 	public void run(){
 		System.out.println("狗还会跳");
 	}
+	public final <T> T unwrap(Class<T> type) {
+		if ( type.isAssignableFrom( getClass() ) ) {
+			return type.cast( this );
+		}
+		return null;
+	}
+	@Override
+	public void defined() {
+		System.out.println("I am dog");
+	}
 }
-class Cat extends Animal{
+class Cat extends Animal implements Organism{
 	public Cat(){
 		System.out.println("Cat is instance");
 	}
@@ -87,5 +103,15 @@ class Cat extends Animal{
 	}
 	public void run(){
 		System.out.println("猫还会爬树");
+	}
+	public final <T> T unwrap(Class<T> type) {
+		if ( type.isAssignableFrom( getClass() ) ) {
+			return type.cast( this );
+		}
+		return null;
+	}
+	@Override
+	public void defined() {
+		System.out.println("I am cat");
 	}
 }
