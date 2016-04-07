@@ -1,7 +1,5 @@
 package com.somnus.proxy.dynamic;
 
-import java.lang.reflect.Proxy;
-
 import com.somnus.proxy.Hello;
 import com.somnus.proxy.HelloImpl;
 

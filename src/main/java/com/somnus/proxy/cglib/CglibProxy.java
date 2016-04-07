@@ -23,7 +23,7 @@ public class CglibProxy implements Serializable {
 		return enhancer.create();
 	}
 	
-	public Object getProxy(Class<? extends Object> clazz){
+	public Object getProxy(Class<?> clazz){
 		Enhancer enhancer = new Enhancer();
 		enhancer.setSuperclass(clazz);
         enhancer.setCallback(new Handler());
