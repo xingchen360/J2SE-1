@@ -55,6 +55,8 @@ public class Test{
 		Test.compare(dog2);
 		
 		System.out.println("**************************");
+		Animal a = Test.isAssignableFrom(Animal.class);
+		a.run();
 		Dog d = Test.isAssignableFrom(Dog.class);
 		d.run();
 		Cat c = Test.isAssignableFrom(Cat.class);
