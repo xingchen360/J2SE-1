@@ -42,6 +42,6 @@ public class CommonsCodec {
 	@Test
 	public void DigestUtils(){
 		System.out.println(DigestUtils.md5Hex("admin"));
-		System.out.println(DigestUtils.shaHex("admin"));
+		/*System.out.println(DigestUtils.shaHex("admin"));*/
 	}
 }
