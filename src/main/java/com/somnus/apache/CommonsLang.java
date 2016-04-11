@@ -207,6 +207,7 @@ public class CommonsLang {
         Validate.notEmpty(string, "string is not empty");
     }
     
+    @Test
     public void NumberUtils(){
         /**判断字符串是否是数字*/
         System.out.println(NumberUtils.isNumber("5.96"));//结果是true
@@ -218,6 +219,22 @@ public class CommonsLang {
         /**找出最大的一个*/
         System.out.println(NumberUtils.max(new int[]{3,5,6}));
         System.out.println(NumberUtils.max(3,1,7));
+    }
+    
+    @Test
+    public void RandomStringUtils(){
+    	//产生5位长度的随机字符串，中文环境下是乱码
+    	System.out.println(RandomStringUtils.random(5));
+    	//使用指定的字符生成5位长度的随机字符串
+    	System.out.println(RandomStringUtils.random(5, new char[]{'a','b','c','d','e','f', '1', '2', '3'}));
+    	//生成指定长度的字母和数字的随机组合字符串
+    	System.out.println(RandomStringUtils.randomAlphanumeric(5));
+    	//生成随机数字字符串
+    	System.out.println(RandomStringUtils.randomNumeric(5));
+    	//生成随机[a-z]字符串，包含大小写
+    	System.out.println(RandomStringUtils.randomAlphabetic(5));
+    	//生成从ASCII 32到126组成的随机字符串 
+    	System.out.println(RandomStringUtils.randomAscii(4));
     }
     
 }

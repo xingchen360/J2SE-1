@@ -1,5 +1,8 @@
 package com.somnus.apache;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Person {
 	private String name;
 	private int age;
@@ -24,6 +27,6 @@ public class Person {
 		this.age = age;
 	}
 	public String toString() {  
-        return "Person[name='" + name + "',age='" + age + "']";  
-    }  
+    	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
+    }
 }
