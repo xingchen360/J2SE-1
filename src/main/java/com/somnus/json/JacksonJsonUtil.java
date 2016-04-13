@@ -2,6 +2,7 @@ package com.somnus.json;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -225,6 +226,11 @@ public class JacksonJsonUtil {
         user2.setUsername("admin2");
         user2.setPassword("123456");
         user2.setAge(24);
+        List<Plot> listt = Arrays.asList(new Plot("diudiu"),new Plot("dudu") );
+        user.setList(listt);
+        Map<String,List<String>> mapp = new HashMap<String, List<String>>();
+        mapp.put("somnus",Arrays.asList("1","2"));
+        user.setMap(mapp);
         System.out.println("一：" + obj2JsonString(user));
 
         List<User> list = new ArrayList<User>();
