@@ -1,4 +1,4 @@
-package com.somnus.instanceofTest;
+package com.somnus.instanceoff;
 
 /**
  * instanceof关键字和isInstance方法的区别

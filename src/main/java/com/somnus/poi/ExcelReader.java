@@ -23,7 +23,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /** 
  * @Description: 读取Excel 兼容2003/2007/2010
- * @author Ssomnus
+ * @author Somnus
  * @date 2015年11月6日 上午10:05:52 
  * @version 1.0 
  */
