@@ -54,8 +54,7 @@ public class CreateNodeSyncAuth implements Watcher {
 	}
 	@Override
 	public void process(WatchedEvent event) {
-		// TODO Auto-generated method stub
-		System.out.println("####"+event);
+		System.out.println("收到事件"+event);
 		if (event.getState()==KeeperState.SyncConnected){
 			if (!somethingDone && event.getType()==EventType.None && null==event.getPath()){
 				doSomething();

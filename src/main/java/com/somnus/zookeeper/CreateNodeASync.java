@@ -26,13 +26,13 @@ public class CreateNodeASync implements Watcher {
 	
 	private void doSomething(){
 	
-		zookeeper.create("/node_5", "123".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT,new IStringCallback(),"����");
+		zookeeper.create("/node_5", "123".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT,new IStringCallback(),"创建");
 		
 	}
 	
 	@Override
 	public void process(WatchedEvent event) {
-		System.out.println("####"+event);
+		System.out.println("收到事件"+event);
 		if (event.getState()==KeeperState.SyncConnected){
 			if (event.getType()==EventType.None && null==event.getPath()){
 				doSomething();

@@ -16,7 +16,7 @@ public class GetChildrenSync implements Watcher{
     
 	public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
 				
-		zooKeeper = new ZooKeeper("192.168.1.105:2181",5000,new GetChildrenSync());
+		zooKeeper = new ZooKeeper("192.168.1.101:2181",5000,new GetChildrenSync());
 		
 		System.out.println(zooKeeper.getState().toString());
 			

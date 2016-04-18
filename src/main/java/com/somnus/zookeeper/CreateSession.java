@@ -25,7 +25,7 @@ public class CreateSession implements Watcher {
 	}
 	@Override
 	public void process(WatchedEvent event) {
-		System.out.println("####"+event);
+		System.out.println("收到事件"+event);
 		if (event.getState()==KeeperState.SyncConnected){
 			
 			if (event.getType()==EventType.None && null==event.getPath()){

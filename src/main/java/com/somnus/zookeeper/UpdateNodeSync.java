@@ -21,7 +21,6 @@ public class UpdateNodeSync implements Watcher{
 		System.out.println(zooKeeper.getState().toString());
 		
 		Thread.sleep(Integer.MAX_VALUE);
-
 	}
 	
 	private void doSomething(ZooKeeper zooKeeper){
