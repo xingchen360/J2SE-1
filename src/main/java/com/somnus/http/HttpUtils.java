@@ -1,330 +1,207 @@
 package com.somnus.http;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
+import net.sf.json.JSONObject;
 
-/** 
- * @Description: HTTP（HTTPS）接口方式，工具类
- * @author Somnus
- * @date 2015年12月16日 下午4:37:59 
- * @version V1.0 
- */
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class HttpUtils {
-
-    /**
-     * 获取https连接
-     * 
-     * @param uri
-     *            请求地址
-     * @param cerServerFile
-     *            服务端CA认证文件
-     * @param cerServerPwd
-     *            服务端CA认证文件密码
-     * @param cerClientFile
-     *            客户端CA认证文件
-     * @param cerClientPwd
-     *            客户端CA认证文件密码
-     * @return
-     * @throws Exception
-     */
-    public static HttpsURLConnection getHttpsConnection(String uri, String cerServerFile, String cerServerPwd,
-            String cerClientFile, String cerClientPwd) throws Exception {
-        @SuppressWarnings("restriction")
-        URL url = new URL(null, uri, new sun.net.www.protocol.https.Handler());
-        // 解决 HTTPS hostname wrong: should be <localhost>
-        System.setProperty("java.protocol.handler.pkgs", "javax.net.ssl");
-        HostnameVerifier hv = new HostnameVerifier() {
-            public boolean verify(String urlHostName, SSLSession session) {
-                return urlHostName.equals(session.getPeerHost());
+	
+	private transient static Logger log = LoggerFactory.getLogger(HttpUtils.class);
+	
+	public static String doGet(String url, Map<String,String> param){
+		//创建HttpClient对象
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+        String resultString = "";
+        CloseableHttpResponse httpResponse = null;
+        try {
+        	//创建uri
+        	URIBuilder builder = new URIBuilder(url);
+            if(param!=null && !param.isEmpty()){
+            	for(String key :param.keySet()){
+            		builder.addParameter(key, param.get(key));
+            	}
             }
-        };
-        HttpsURLConnection.setDefaultHostnameVerifier(hv);
-
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-        connection.setSSLSocketFactory(getSSLSocketFactory(cerServerFile, cerServerPwd, cerClientFile, cerClientPwd));
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("accept", "*/*");
-        connection.setRequestProperty("connection", "Keep-Alive");
-        connection.setRequestProperty("Content-Type", "text/html");
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-        return connection;
-    }
-
-    /**
-     * 获取http连接
-     * 
-     * @param uri
-     *            请求地址
-     * @return
-     * @throws Exception
-     */
-    public static HttpURLConnection getHttpConnection(String uri) throws Exception {
-        URL url = new URL(uri);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("accept", "*/*");
-        connection.setRequestProperty("connection", "Keep-Alive");
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "application/xml; charset=UTF-8");
-
-        return connection;
-    }
-
-    /**
-     * 私有方法
-     * @param cerServerFile
-     * @param cerServerPwd
-     * @param cerClientFile
-     * @param cerClientPwd
-     * @return
-     * @throws Exception
-     */
-    private static SSLSocketFactory getSSLSocketFactory(String cerServerFile, String cerServerPwd,
-            String cerClientFile, String cerClientPwd) throws Exception {
-        SysKeyManager keyManager = new SysKeyManager(SysKeyStoreUtil.KeyStoreType.PKCS12, cerClientFile, cerClientPwd.toCharArray());
-        SysTrustManager trustManager = new SysTrustManager(cerServerFile, cerServerPwd.toCharArray());
-        SysSSLContext context = new SysSSLContext("TLS", keyManager, trustManager);
-        return context.getSSLContext().getSocketFactory();
-    }
-    
-    private static class SysKeyManager {
-
-        private KeyStore ks;
-        private char[] password;
-
-        /**
-         * @param keyStore 
-         * @param password 
-         * @throws Exception 
-         */
-        @SuppressWarnings("unused")
-        public SysKeyManager(String keyStore, char[] password) throws Exception {
-            this(SysKeyStoreUtil.KeyStoreType.JKS, keyStore, password);
-        }
-
-        /**
-         * 
-         * @param type 
-         * @param keyStore 
-         * @param password 
-         * @throws Exception 
-         */
-        public SysKeyManager(SysKeyStoreUtil.KeyStoreType type, String keyStore, char[] password) throws Exception {
-            this.password = password;
-            this.ks = SysKeyStoreUtil.loadKeyStore(type, keyStore, password);
-        }
-
-        public KeyManager[] getKeyManagers() throws Exception {
+            URI uri = builder.build();
+            // 创建httpGet请求
+            HttpGet httpGet = new HttpGet(uri);
+            
+            // 开始执行http请求
+            long startTime = System.currentTimeMillis();
+            httpResponse = httpclient.execute(httpGet);
+            long endTime = System.currentTimeMillis();
+            
+            // 获得响应状态码
+            int statusCode = httpResponse.getStatusLine().getStatusCode();  
+            log.info("statusCode:" + statusCode);  
+            log.info("调用API花费时间(单位：毫秒)：" + (endTime - startTime));
+            
+            // 取出应答字符串
+            HttpEntity httpEntity = httpResponse.getEntity();
+            resultString = EntityUtils.toString(httpEntity,Charset.forName("UTF-8"));
+            // 去掉返回结果中的"\r"字符，否则会在结果字符串后面显示一个小方格
+            resultString.replaceAll("\r", "");
+            
+            // 判断返回状态是否为200
+            if (statusCode != HttpStatus.SC_OK) {
+            	throw new RuntimeException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
+            }
+        } catch (ClientProtocolException e) {
+            log.error(e.getMessage(), e);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        } catch (URISyntaxException e) {
+        	log.error(e.getMessage(), e);
+		} finally{
             try {
-                KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-                kmf.init(ks, password);
-                return kmf.getKeyManagers();
-            } catch (Exception e) {
-                throw e;
-            }
+            	if(httpResponse != null){
+            		httpResponse.close();
+            	}
+            	httpclient.close();
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
         }
+        return resultString;
     }
-    
-    private static class SysKeyStoreUtil {
-
-        private SysKeyStoreUtil() {}
-
-        public static KeyStore loadKeyStore(KeyStoreType type, String keyStore, char[] password) throws Exception {
-            KeyStoreType type2 = type;
-            if (type2 == null) {
-                type2 = KeyStoreType.JKS;
+	
+	public static String doGet(String url){
+		return doGet(url,null);
+	}
+	
+	public static String doPost(String url, Map<String,String> param){
+		//创建HttpClient对象
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        String resultString = "";
+        CloseableHttpResponse httpResponse = null;
+        try {
+        	// 创建HttpPost对象
+            HttpPost httpPost = new HttpPost(url);
+            
+            if(param!=null && !param.isEmpty()){
+            	List<NameValuePair> params = new ArrayList<NameValuePair>();
+            	for(String key :param.keySet()){
+            		params.add(new BasicNameValuePair(key, param.get(key)));
+            	}
+            	httpPost.setEntity(new UrlEncodedFormEntity(params, Charset.forName("UTF-8")));
             }
-            InputStream in = null;
+            
+            // 开始执行http请求
+            long startTime = System.currentTimeMillis();  
+            httpResponse = httpclient.execute(httpPost);
+            long endTime = System.currentTimeMillis();
+            
+            // 获得响应状态码
+            int statusCode = httpResponse.getStatusLine().getStatusCode();  
+            log.info("statusCode:" + statusCode);  
+            log.info("调用API花费时间(单位：毫秒)：" + (endTime - startTime));
+            
+            // 取出应答字符串
+            HttpEntity httpEntity = httpResponse.getEntity();
+            resultString = EntityUtils.toString(httpEntity,Charset.forName("UTF-8"));
+            
+            // 判断返回状态是否为200
+            if (statusCode != HttpStatus.SC_OK) {
+            	throw new RuntimeException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
+            } 
+        } catch (ClientProtocolException e) {
+            log.error(e.getMessage(), e);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        } finally{
             try {
-                try {
-                    KeyStore ks = type2.getKeyStore();
-                    if(keyStore.startsWith("/") || keyStore.indexOf(":") > 0){
-                        //绝对路径
-                        in = new FileInputStream(keyStore);
-                    }else{
-                        //相对项目根目录的路径
-                        in = SysKeyStoreUtil.class.getClassLoader().getResourceAsStream(keyStore);
-                    }
-                    ks.load(in, password);
-                    return ks;
-                } finally {
-                    if (in != null) {
-                        in.close();
-                    }
-                }
-            } catch (Exception e) {
-                throw e;
-            }
+            	if(httpResponse != null){
+            		httpResponse.close();
+            	}
+            	httpclient.close();
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
         }
-
-        public static enum KeyStoreType {
-            JKS {
-                @Override
-                public KeyStore getKeyStore() throws KeyStoreException {
-                    return super.getKeyStore("JKS");
-                }
-            },
-
-            PKCS12 {
-                @Override
-                public KeyStore getKeyStore() throws KeyStoreException {
-                    return super.getKeyStore("PKCS12");
-                }
-            };
-
-            public abstract KeyStore getKeyStore() throws KeyStoreException ;
-
-            private static KeyStore getKeyStore(String type) throws KeyStoreException {
-                return KeyStore.getInstance(type);
-            }
-           
-        }
+		return resultString;
     }
-    
-    private static class SysSSLContext {
-
-        private String protocol;
-        private SysKeyManager keyManager;
-        private SysTrustManager trustManager;
-
-        /**
-         * @param protocol 
-         * @param keyManager 
-         * @param trustManager 
-         */
-        public SysSSLContext(String protocol, SysKeyManager keyManager, SysTrustManager trustManager) {
-            this.protocol = protocol;
-            this.keyManager = keyManager;
-            this.trustManager = trustManager;
-        }
-
-        /**
-         * @param protocol 
-         * @param trustManager 
-         */
-        @SuppressWarnings("unused")
-        public SysSSLContext(String protocol, SysTrustManager trustManager) {
-            this(protocol, null, trustManager);
-        }
-
-        /**
-         * @param protocol 
-         * @param keyManager 
-         */
-        @SuppressWarnings("unused")
-        public SysSSLContext(String protocol, SysKeyManager keyManager) {
-            this(protocol, keyManager, null);
-        }
-
-        public SSLContext getSSLContext() {
+	
+	public static String doJsonPost(String url, Map<String,String> param){
+		String resultString = "";
+		if(param!=null && !param.isEmpty()){
+			JSONObject jsonObject = new JSONObject();
+			for(String key :param.keySet()){
+				jsonObject.put(key, param.get(key));
+			}
+			String json = jsonObject.toString();
+			resultString = doJsonPost(url,json);
+		} else{
+			resultString = doJsonPost(url,"");
+		}
+		return resultString;
+	}
+	
+	public static String doJsonPost(String url, String json){
+		//创建HttpClient对象
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        String resultString = "";
+        CloseableHttpResponse httpResponse = null;
+        try {
+        	// 创建HttpPost对象
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(new StringEntity(json,ContentType.APPLICATION_JSON));
+            
+            // 开始执行http请求
+            long startTime = System.currentTimeMillis();  
+            httpResponse = httpclient.execute(httpPost);
+            long endTime = System.currentTimeMillis();
+            
+            // 获得响应状态码
+            int statusCode = httpResponse.getStatusLine().getStatusCode();  
+            log.info("statusCode:" + statusCode);  
+            log.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+            
+            // 取出应答字符串
+            HttpEntity httpEntity = httpResponse.getEntity();
+            resultString = EntityUtils.toString(httpEntity,Charset.forName("UTF-8"));
+            
+            // 判断返回状态是否为200
+            if (statusCode != HttpStatus.SC_OK) {
+            	throw new RuntimeException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
+            } 
+        } catch (ClientProtocolException e) {
+            log.error(e.getMessage(), e);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        } finally{
             try {
-                SSLContext context = SSLContext.getInstance(protocol);
-                context.init(getKeyManagers(), getTrustManagers(), null);
-                return context;
-            } catch (Exception e) {
-                throw new IllegalStateException("error, protocol: " + protocol, e);
-            }
+            	if(httpResponse != null){
+            		httpResponse.close();
+            	}
+            	httpclient.close();
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
         }
-
-        private KeyManager[] getKeyManagers() throws Exception {
-            if (keyManager == null) {
-                return null;
-            }
-            return keyManager.getKeyManagers();
-        }
-
-        private TrustManager[] getTrustManagers() throws Exception {
-            if (trustManager == null) {
-                return null;
-            }
-            return trustManager.getTrustManagers();
-        }
+		return resultString;
     }
-    
-    private static class SysTrustManager {
-
-        private KeyStore ks;
-
-        /**
-         * @param keyStore
-         * @param password
-         * @throws Exception
-         */
-        public SysTrustManager(String keyStore, char[] password) throws Exception {
-            this(SysKeyStoreUtil.KeyStoreType.JKS, keyStore, password);
-        }
-
-        /**
-         * @param type
-         * @param keyStore
-         * @param password
-         * @throws Exception
-         */
-        public SysTrustManager(SysKeyStoreUtil.KeyStoreType type, String keyStore, char[] password) throws Exception {
-            this.ks = SysKeyStoreUtil.loadKeyStore(type, keyStore, password);
-        }
-
-        public TrustManager[] getTrustManagers() throws Exception {
-            return new TrustManager[] { new ClientTrustManager() };
-        }
-
-        private class ClientTrustManager implements X509TrustManager {
-            private X509TrustManager sunJSSEX509TrustManager;
-
-            public ClientTrustManager() throws Exception {
-                loadTrust();
-            }
-
-            private void loadTrust() throws Exception {
-                try {
-                    TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-                    tmf.init(ks);
-                    TrustManager[] tms = tmf.getTrustManagers();
-                    for (int i = 0; i < tms.length; i++) {
-                        if (tms[i] instanceof X509TrustManager) {
-                            sunJSSEX509TrustManager = (X509TrustManager) tms[i];
-                            return;
-                        }
-                    }
-                } catch (Exception e) {
-                    throw e;
-                }
-            }
-
-            @Override
-            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                sunJSSEX509TrustManager.checkClientTrusted(chain, authType);
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                sunJSSEX509TrustManager.checkServerTrusted(chain, authType);
-            }
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return sunJSSEX509TrustManager.getAcceptedIssuers();
-            }
-        }
-    }
+	
 }

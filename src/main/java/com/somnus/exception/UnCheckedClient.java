@@ -37,7 +37,7 @@ public class UnCheckedClient {
      * @param parameter
      * @return
      */
-    public void defined(int parameter){
+    public int defined(int parameter){
         if(parameter<0){
             /*
              * 在处理业务逻辑的时候需要new出这种异常的时候 ，最好前面加个error日志
@@ -47,6 +47,7 @@ public class UnCheckedClient {
             throw new BizException("传输的数字不应该是个负数");
         }
         System.out.println("&&&&&&&&&&&&&&&&&&&&");
+        return parameter;
     }
     
 
@@ -55,7 +56,7 @@ public class UnCheckedClient {
      */
     public static void main(String[] args) {
         UnCheckedClient client = new UnCheckedClient();
-        client.defined(-2);
+        System.out.println(client.defined(-2));
         System.out.println("********************");
     }
 
