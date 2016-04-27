@@ -38,3 +38,10 @@ public class ThreadLocal2Test {
 		}
 	}
 }
+class Index {
+	int num;
+
+	public void increase() {
+		num++;
+	}
+}
