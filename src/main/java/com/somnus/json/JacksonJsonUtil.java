@@ -9,14 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonGenerator.Feature;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.JavaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator.Feature;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** 
  * @Description: TODO
@@ -26,7 +27,7 @@ import org.codehaus.jackson.type.JavaType;
  */
 public class JacksonJsonUtil {
 
-    private static Log log = LogFactory.getLog(JacksonJsonUtil.class);
+    private static Logger log = LoggerFactory.getLogger(JacksonJsonUtil.class);
     
     /**
      * 空JSON字符串
@@ -247,8 +248,8 @@ public class JacksonJsonUtil {
         
         User u = jsonString2Object("{\"username\":\"admin\",\"password\":\"123\",\"age\":\"20\"}",User.class);
         System.out.println("四：" +u.getUsername());
-        List<User> l = json2ObjectList(listStr,User.class);
-        System.out.println("五：" + l.get(0).getPassword());
+        /*List<User> l = json2ObjectList(listStr,User.class);
+        System.out.println("五：" + l.get(0).getPassword());*/
         
         Map<String, String> m = jsonString2Map("{\"username\":\"admin\",\"password\":\"123\",\"age\":\"20\"}");
         for(Iterator<String> it = m.keySet().iterator();it.hasNext();){
