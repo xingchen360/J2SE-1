@@ -43,6 +43,9 @@ public class User {
 }
 class Plot{
 	
+	public Plot() {
+		super();
+	}
 	public Plot(String name){
 		this.name = name;
 	}

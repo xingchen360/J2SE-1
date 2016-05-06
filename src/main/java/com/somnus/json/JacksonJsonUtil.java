@@ -248,8 +248,8 @@ public class JacksonJsonUtil {
         
         User u = jsonString2Object("{\"username\":\"admin\",\"password\":\"123\",\"age\":\"20\"}",User.class);
         System.out.println("四：" +u.getUsername());
-        /*List<User> l = json2ObjectList(listStr,User.class);
-        System.out.println("五：" + l.get(0).getPassword());*/
+        List<User> l = json2ObjectList(listStr,User.class);
+        System.out.println("五：" + l.get(0).getPassword());
         
         Map<String, String> m = jsonString2Map("{\"username\":\"admin\",\"password\":\"123\",\"age\":\"20\"}");
         for(Iterator<String> it = m.keySet().iterator();it.hasNext();){
