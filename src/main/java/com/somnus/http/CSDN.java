@@ -33,7 +33,7 @@ public class CSDN {
         	new Thread(new Runnable() {
                 @Override
                 public void run() {
-                	for(int i = 0; i<500;i++){
+                	while(true){
                 		try {
 							Thread.sleep(60*1000);
 						} catch (InterruptedException e) {
