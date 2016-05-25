@@ -16,6 +16,7 @@ public class ThreadTest15{
 				public void run(){
 					for(int i=0;i<10;i++){
 						math.increase();
+						System.out.println(Thread.currentThread().getName()+":increase");
 					}
 				}
 			}).start();
@@ -24,6 +25,7 @@ public class ThreadTest15{
 				public void run(){
 					for(int i=0;i<10;i++){
 						math.decrease();
+						System.out.println(Thread.currentThread().getName()+":decrease");
 					}
 				}
 			}).start();
@@ -44,7 +46,7 @@ class Math{
 			}
 		}
 		num++;
-		System.out.println(Thread.currentThread().getName() + "[" + num+"]");
+		System.out.println("[" + num+"]");
 		notify();
 	}
 	public synchronized void decrease(){
@@ -57,7 +59,7 @@ class Math{
 			}
 		}
 		num--;
-		System.out.println(Thread.currentThread().getName() + "{" + num+"}");
+		System.out.println("{" + num+"}");
 		notify();
 	}
 	
