@@ -3,7 +3,7 @@ package com.somnus.thread;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThreadTest12{
+public class ThreadTest12EggSyn{
 	public static void main(String args[]){
 		final Plate plate = new Plate();
 		for (int i = 0; i < 10; i++){
@@ -39,7 +39,7 @@ class Plate{
 	
 	/** 放鸡蛋 */
 	public synchronized void putEgg(Object egg){
-		while (eggs.size() > 0){
+		while (eggs.size() == 1){
 			try{
 				wait();
 			}
