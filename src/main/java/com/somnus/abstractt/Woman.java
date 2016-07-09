@@ -2,7 +2,6 @@ package com.somnus.abstractt;
 
 /**
  * @description: 
- * Copyright 2011-2016 B5M.COM. All rights reserved
  * @author:  Somnus
  * @version: 1.0
  * @createDate: 2016年3月23日 下午3:17:14 
