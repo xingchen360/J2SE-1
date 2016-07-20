@@ -30,7 +30,7 @@ public class HttpClient {
     
     @Test
     public void doPost2(){
-    	String url = "http://120.26.68.243:8080/restful/service/com.somnus.resource.RestfulResource/getAccount";
+    	String url = "http://restful.wozsz.com/service/com.somnus.resource.RestfulResource/getAccount";
         Map<String,String> param = new HashMap<String, String>();
         param.put("username", "admin");
         param.put("password", "123456");
