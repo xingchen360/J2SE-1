@@ -23,7 +23,7 @@ public class BubbleSort{
 					array[j+1] = temp;	  
 				}
 			}
-			System.out.println("第"+(i+1)+"躺排序");
+			System.out.println("第"+(i+1)+"趟排序");
 			for(int k = 0;k < array.length;k++){
 				System.out.print(array[k]+"  ");
 			}

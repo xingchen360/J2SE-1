@@ -29,11 +29,20 @@ public class HttpClient {
     }
     
     @Test
-    public void doPost2(){
+    public void doPost1(){
     	String url = "http://restful.wozsz.com/service/com.somnus.resource.RestfulResource/getAccount";
         Map<String,String> param = new HashMap<String, String>();
         param.put("username", "admin");
         param.put("password", "123456");
         System.out.println(HttpUtils.doJsonPost(url, param));
+    }
+    
+    @Test
+    public void doPost2(){
+    	String url = "http://restful.wozsz.com/service/com.somnus.resource.RestfulResource/getAccount2";
+        Map<String,String> param = new HashMap<String, String>();
+        param.put("username", "admin");
+        param.put("password", "123456");
+        System.out.println(HttpUtils.doXmlPost(url,param));
     }
 }

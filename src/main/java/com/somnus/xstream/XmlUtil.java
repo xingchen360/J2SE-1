@@ -20,7 +20,7 @@ public class XmlUtil {
      * @return String xml字符串
      */
     public static String toXml(Object obj){
-        XStream xstream=new XStream();
+        XStream xstream = new XStream();
         /*XStream xstream=new XStream(new DomDriver());*/
         /*XStream xstream=new XStream(new DomDriver("utf-8"));*/
          
