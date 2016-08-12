@@ -27,6 +27,7 @@ public class FilePath {
         String path = getClass().getResource("").getPath();
         System.out.println(path);
     }
+    
     @Test
     public void print2(){
         /**
@@ -39,12 +40,15 @@ public class FilePath {
     @Test
     public void print3(){
         /**
-         * /E:/github/J2SE/target/classes/logback.xml
+         * 必须加上/，否则报错
+         * 如：/luoli.jpg
+         * /E:/github/J2SE/target/classes/excel/80034.xls
          */
-        String path = getClass().getResource("/logback.xml").getPath();
+        String path = getClass().getResource("/excel/80034.xls").getPath();
         System.out.println(path);
     }
     
+    /*********************************getClass().getClassLoader()*********************************************/
     
     @Test
     public void print4(){
@@ -52,16 +56,25 @@ public class FilePath {
         String path = getClass().getClassLoader().getResource("").getPath();
         System.out.println(path);
     }
+    
     @Test
     public void print5(){
         /*error*/
+    	/**
+    	 * 加上/ 就会报错
+    	 */
         String path = getClass().getClassLoader().getResource("/").getPath();
         System.out.println(path);
     }
+    
     @Test
     public void print6(){
-        /*/E:/github/J2SE/target/classes/logback.xml*/
-        String path = getClass().getClassLoader().getResource("logback.xml").getPath();
+    	/**
+         * 不能加上/，否则报错
+         * 如：luoli.jpg
+    	 * /E:/github/J2SE/target/classes/excel/80034.xls
+    	 */
+        String path = getClass().getClassLoader().getResource("excel/80034.xls").getPath();
         System.out.println(path);
     }
     
@@ -71,8 +84,6 @@ public class FilePath {
         String path = getClass().getClassLoader().getResource("META-INF").getPath();
         System.out.println(path);
     }
-    
-    
     
     @Test
     public void prin() throws IOException{
