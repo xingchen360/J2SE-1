@@ -22,6 +22,7 @@ public class FilePath {
     @Test
     public void print1(){
         /**
+         *  path不以’/'开头时，默认是从此类所在的包下取资源；
          * /E:/github/J2SE/target/test-classes/com/somnus/
          */
         String path = getClass().getResource("").getPath();
@@ -31,6 +32,7 @@ public class FilePath {
     @Test
     public void print2(){
         /**
+         * path以’/'开头时，则是从ClassPath根下获取；
          * /E:/github/J2SE/target/test-classes//
          */
         String path = getClass().getResource("/").getPath();
@@ -40,8 +42,6 @@ public class FilePath {
     @Test
     public void print3(){
         /**
-         * 必须加上/，否则报错
-         * 如：/luoli.jpg
          * /E:/github/J2SE/target/classes/excel/80034.xls
          */
         String path = getClass().getResource("/excel/80034.xls").getPath();
@@ -52,7 +52,10 @@ public class FilePath {
     
     @Test
     public void print4(){
-        /*/E:/github/J2SE/target/test-classes/*/
+    	/**
+    	 * path为空就直接是从ClassPath根下获取
+    	 * /E:/github/J2SE/target/test-classes
+    	 */
         String path = getClass().getClassLoader().getResource("").getPath();
         System.out.println(path);
     }
@@ -61,6 +64,7 @@ public class FilePath {
     public void print5(){
         /*error*/
     	/**
+    	 * path不能以’/'开头时；
     	 * 加上/ 就会报错
     	 */
         String path = getClass().getClassLoader().getResource("/").getPath();
@@ -70,8 +74,6 @@ public class FilePath {
     @Test
     public void print6(){
     	/**
-         * 不能加上/，否则报错
-         * 如：luoli.jpg
     	 * /E:/github/J2SE/target/classes/excel/80034.xls
     	 */
         String path = getClass().getClassLoader().getResource("excel/80034.xls").getPath();
