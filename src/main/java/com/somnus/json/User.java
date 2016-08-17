@@ -3,12 +3,29 @@ package com.somnus.json;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class User {
 	private String username;
+	
 	private String password;
+	
 	private int age;
+	
 	private List<Plot> list;
+	
 	private Map<String,List<String>> map;
+	
+	public User() {
+		super();
+	}
+	
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -40,6 +57,9 @@ public class User {
 		this.map = map;
 	}
 	
+	public String toString() {  
+    	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
+    } 
 }
 class Plot{
 	
