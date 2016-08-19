@@ -2,7 +2,6 @@ package com.somnus.json;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +10,8 @@ import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 
-public class FastJsonUtil {
+public class FastJsonTestCase {
 	/**
      * 简单序列化
      */
@@ -62,20 +60,6 @@ public class FastJsonUtil {
 
         String jsonStr = JSON.toJSONString(map);
         System.out.println(jsonStr);
-    }
-	
-	/**
-     * 日期序列化
-     */
-	@Test
-    public void DateTest() {
-        Date date = new Date();
-        // 默认输出
-        System.out.println("时间戳=" + JSON.toJSONString(date));
-        // 默认的日期格式
-        System.out.println("当前日期=" + JSON.toJSONString(date, SerializerFeature.WriteDateUseDateFormat));
-        // 使用指定的日期格式
-        System.out.println("当前日期=" + JSON.toJSONStringWithDateFormat(date, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteDateUseDateFormat));
     }
 	
 	/**

@@ -9,13 +9,13 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /** 
  * @Description: TODO
@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @date 2015年11月20日 下午2:10:04 
  * @version V1.0 
  */
-public class JacksonJsonUtil {
+public class JacksonJsonTestCase {
 
     /**
      * 简单序列化
@@ -44,10 +44,9 @@ public class JacksonJsonUtil {
         map.put("somnus",Arrays.asList("1","2"));
         user.setMap(map);*/
         
-        JsonFactory jf = new JsonFactory();
-        jf.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
-        ObjectMapper objectMapper = new ObjectMapper(jf);
-        
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);  
+        objectMapper.setSerializationInclusion(Include.NON_EMPTY);
         String jsonStr = objectMapper.writeValueAsString(user);
         System.out.println(jsonStr);
     }
@@ -75,9 +74,9 @@ public class JacksonJsonUtil {
         
         map.put("hobby", list);
 
-        JsonFactory jf = new JsonFactory();
-        jf.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
-        ObjectMapper objectMapper = new ObjectMapper(jf);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);  
+        objectMapper.setSerializationInclusion(Include.NON_EMPTY);
         
         String jsonStr = objectMapper.writeValueAsString(map);
         System.out.println(jsonStr);
@@ -88,9 +87,7 @@ public class JacksonJsonUtil {
      */
 	@Test
     public void simpleDeserializeTest() throws JsonParseException, JsonMappingException, IOException {
-		JsonFactory jf = new JsonFactory();
-        jf.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
-        ObjectMapper objectMapper = new ObjectMapper(jf);
+		ObjectMapper objectMapper = new ObjectMapper();
 		
         String jsonStr = "{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24}";
         
@@ -106,9 +103,7 @@ public class JacksonJsonUtil {
      */
 	@Test
     public void genericTypeDeserializeTest() throws JsonParseException, JsonMappingException, IOException {
-		JsonFactory jf = new JsonFactory();
-        jf.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
-        ObjectMapper objectMapper = new ObjectMapper(jf);
+		ObjectMapper objectMapper = new ObjectMapper();
 		
         String jsonStr = "{\"user\":{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24}}";
         Map<String, User> map = objectMapper.readValue(jsonStr, new TypeReference<Map<String, User>>(){});
