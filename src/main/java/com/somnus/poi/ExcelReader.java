@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -116,10 +115,4 @@ public class ExcelReader {
         return cellArray;
     }
     
-    public static void main(String[] args) {
-        List<String[]> list = readExcel("excel/80034.xls");
-        for(String[] arr:list){
-            System.out.println(Arrays.toString(arr));
-        }
-    }
 }

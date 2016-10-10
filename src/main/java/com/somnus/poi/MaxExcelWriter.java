@@ -12,22 +12,17 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- * 
- * @Description: 生成Excel2007
- * @author Somnus
- * @date 2015年11月6日 上午11:23:11
- * @version V1.0
- */
-public class ExcelWirter {
+public class MaxExcelWriter {
 
 	/**
 	 * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
@@ -47,11 +42,11 @@ public class ExcelWirter {
 
 	public <T> byte[] exportExcel(String title, String[] headers, Collection<T> dataSet, String pattern) {
 		// 声明一个工作薄
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFFont font3 = workbook.createFont();
+		SXSSFWorkbook workbook = new SXSSFWorkbook(10000);
+		Font font3 = workbook.createFont();
 		// 生成一个表格
 		// 生成一个样式
-		XSSFCellStyle style = workbook.createCellStyle();
+		CellStyle style = workbook.createCellStyle();
 		// 设置这些样式
 		style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
 		style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
@@ -61,14 +56,14 @@ public class ExcelWirter {
 		style.setBorderTop(XSSFCellStyle.BORDER_THIN);
 		style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		// 生成一个字体
-		XSSFFont font = workbook.createFont();
+		Font font = workbook.createFont();
 		font.setColor(HSSFColor.VIOLET.index);
 		font.setFontHeightInPoints((short) 12);
 		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
 		// 把字体应用到当前的样式
 		style.setFont(font);
 		// 生成并设置另一个样式
-		XSSFCellStyle style2 = workbook.createCellStyle();
+		CellStyle style2 = workbook.createCellStyle();
 		style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
 		style2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		style2.setBorderBottom(XSSFCellStyle.BORDER_THIN);
@@ -78,12 +73,12 @@ public class ExcelWirter {
 		style2.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		style2.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
 		// 生成另一个字体
-		XSSFFont font2 = workbook.createFont();
+		Font font2 = workbook.createFont();
 		font2.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
 		// 把字体应用到当前的样式
 		style2.setFont(font2);
-		XSSFSheet sheet = null;
-		XSSFRow row = null;
+		Sheet sheet = null;
+		Row row = null;
 		int index = 0;
 		int sheetnum = 0;
 		Iterator<T> it = dataSet.iterator();
@@ -92,7 +87,7 @@ public class ExcelWirter {
 		sheet.setDefaultColumnWidth(15);
 		row = sheet.createRow(0);
 		for (int i = 0; i < headers.length; i++) {
-			XSSFCell cell = row.createCell(i);
+			Cell cell = row.createCell(i);
 			cell.setCellStyle(style);
 			XSSFRichTextString text = new XSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
@@ -108,7 +103,7 @@ public class ExcelWirter {
 				sheet.setDefaultColumnWidth(15);
 				row = sheet.createRow(0);
 				for (int i = 0; i < headers.length; i++) {
-					XSSFCell cell = row.createCell(i);
+					Cell cell = row.createCell(i);
 					cell.setCellStyle(style);
 					XSSFRichTextString text = new XSSFRichTextString(headers[i]);
 					cell.setCellValue(text);
@@ -119,7 +114,7 @@ public class ExcelWirter {
 			// 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
 			Field[] fields = t.getClass().getDeclaredFields();
 			for (int i = 0; i < fields.length; i++) {
-				XSSFCell cell = row.createCell(i);
+				Cell cell = row.createCell(i);
 				cell.setCellStyle(style2);
 				Field field = fields[i];
 				String fieldName = field.getName();
