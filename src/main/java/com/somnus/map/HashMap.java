@@ -10,7 +10,7 @@ public class HashMap {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                	for (int j = 0; j < 100000; j++) {
+                	for (int j = 0; j < 100; j++) {
                         map.put(j, j);
                     }
                 	System.out.println(Thread.currentThread().getName()+" put over");
@@ -22,8 +22,8 @@ public class HashMap {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                	for (int j = 0; j < 100000; j++) {
-                        map.get(j);
+                	for (int j = 0; j < 100; j++) {
+                        System.out.println(Thread.currentThread().getName()+ ":" + map.get(j));;
                     }
                 	System.out.println(Thread.currentThread().getName()+" get over");
                 }

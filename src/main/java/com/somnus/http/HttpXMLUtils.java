@@ -20,6 +20,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.somnus.exception.HttpStatusException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -37,10 +38,12 @@ public class HttpXMLUtils {
 			XStream xstream = new XStream();
 	        xstream.processAnnotations(param.getClass());
 	        xstream.registerConverter(new Converter(){
+				@SuppressWarnings("rawtypes")
 				@Override
 				public boolean canConvert(Class clazz) {
 					return AbstractMap.class.isAssignableFrom(clazz); 
 				}
+				@SuppressWarnings("unchecked")
 				@Override
 				public void marshal(Object value,HierarchicalStreamWriter writer,MarshallingContext context) {
 					 AbstractMap<String,String> map = (AbstractMap<String,String>) value;
@@ -98,7 +101,7 @@ public class HttpXMLUtils {
             
             // 判断返回状态是否为200
             if (statusCode != HttpStatus.SC_OK) {
-            	throw new RuntimeException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
+            	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             } 
         } catch (ClientProtocolException e) {
             log.error(e.getMessage(), e);

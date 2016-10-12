@@ -19,7 +19,7 @@ public class HttpClient {
         Map<String,String> param = new HashMap<String, String>();
         param.put("username", "admin");
         param.put("password", "123456");
-        System.out.println(HttpJSONUtils.doJsonPost(url, param));
+        System.out.println("body:" + HttpClientUtils.doJsonPost(url, param));
     }
     
     @Test
@@ -28,13 +28,13 @@ public class HttpClient {
         Map<String,String> param = new HashMap<String, String>();
         param.put("username", "admin");
         param.put("password", "123456");
-        System.out.println(HttpXMLUtils.doXmlPost(url, param));
+        System.out.println("body:" + HttpXMLUtils.doXmlPost(url, param));
     }
     
     @Test
     public void doPathParamGet() {
         String url = "http://restful.wozsz.com/service/com.somnus.resource.RestfulResource/getAccount3/admin/123456";
-        System.out.println(HttpUtils.doGet(url));
+        System.out.println("body:" + HttpClientUtils.doGet(url));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class HttpClient {
         Map<String,String> param = new HashMap<String, String>();
         param.put("username", "admin");
         param.put("password", "123456");
-        System.out.println(HttpUtils.doGet(url, param));
+        System.out.println("body:" + HttpClientUtils.doGet(url, param));
     }
 
     @Test
@@ -52,6 +52,6 @@ public class HttpClient {
         Map<String,String> param = new HashMap<String, String>();
         param.put("username", "admin");
         param.put("password", "123456");
-        System.out.println(HttpUtils.doPost(url, param));
+        System.out.println("body:" + HttpClientUtils.doPost(url, param));
     }
 }

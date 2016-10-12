@@ -2,9 +2,12 @@ package com.somnus.apache;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 
 /**
  * 
@@ -46,5 +49,11 @@ public class CommonsCollections {
 		System.out.println(CollectionUtils.subtract(
 				Arrays.asList("2", "3", "5"), 
 				Arrays.asList("1", "2", "3")));//list1与list2的差{1}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("a", "dddd");
+		map.put("b", 100);
+		System.out.println(MapUtils.getString(map, "a"));
+		System.out.println(MapUtils.getIntValue(map, "b"));
 	}
 }
