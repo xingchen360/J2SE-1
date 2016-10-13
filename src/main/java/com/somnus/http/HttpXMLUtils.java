@@ -9,9 +9,9 @@ import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -32,7 +32,7 @@ public class HttpXMLUtils {
 	
 	private transient static Logger log = LoggerFactory.getLogger(HttpXMLUtils.class);
 	
-	public static String doXmlPost(String url, Map<String,String> param){
+	public static String doXmlPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
 		String resultString = "";
 		if(param!=null && !param.isEmpty()){
 			XStream xstream = new XStream();
@@ -75,7 +75,7 @@ public class HttpXMLUtils {
 		return resultString;
 	}
 	
-	public static String doXmlPost(String url, String xml){
+	public static String doXmlPost(String url, String xml) throws HttpHostConnectException, IOException{
 		//创建HttpClient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -103,10 +103,6 @@ public class HttpXMLUtils {
             if (statusCode != HttpStatus.SC_OK) {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             } 
-        } catch (ClientProtocolException e) {
-            log.error(e.getMessage(), e);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
         } finally{
             try {
             	if(httpResponse != null){

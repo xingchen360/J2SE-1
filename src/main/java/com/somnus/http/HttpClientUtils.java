@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,11 +30,29 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.somnus.exception.HttpStatusException;
 
+/**
+ * @ClassName:     HttpClientUtils.java
+ * @Description:   TODO
+ * @author         Somnus
+ * @version        V1.0  
+ * @Date           2016年10月13日 下午3:40:17
+ */
 public class HttpClientUtils {
 	
 	private transient static Logger log = LoggerFactory.getLogger(HttpClientUtils.class);
 	
-	public static String doJsonPost(String url, Map<String,String> param){
+	/**
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws HttpHostConnectException
+	 * 				连接不可用
+	 * @throws IOException
+	 * 				网络传输出错
+	 */
+	public static String doJsonPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
+		Validate.notNull(url, "url is required.");
+		Validate.notEmpty(param);
 		String resultString = "";
 		if(param!=null && !param.isEmpty()){
 			resultString = doJsonPost(url,JSON.toJSONString(param));
@@ -41,8 +60,18 @@ public class HttpClientUtils {
 		return resultString;
 	}
 	
-	
-	public static String doJsonPost(String url, String json){
+	/**
+	 * @param url
+	 * @param json
+	 * @return
+	 * @throws HttpHostConnectException
+	 * 				连接不可用
+	 * @throws IOException
+	 * 				网络传输出错
+	 */
+	public static String doJsonPost(String url, String json) throws HttpHostConnectException, IOException{
+		Validate.notNull(url, "url is required.");
+		Validate.notNull(json, "json is required.");
 		//创建HttpClient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -70,10 +99,6 @@ public class HttpClientUtils {
             if (statusCode != HttpStatus.SC_OK) {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             } 
-        } catch (ClientProtocolException e) {
-            log.error(e.getMessage(), e);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
         } finally{
             try {
             	if(httpResponse != null){
@@ -87,7 +112,20 @@ public class HttpClientUtils {
 		return resultString;
     }
 	
-	public static String doGet(String url, Map<String,String> param){
+	/**
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws HttpHostConnectException
+	 * 				连接不可用
+	 * @throws IOException
+	 * 				网络传输出错
+	 * @throws URISyntaxException
+	 * 				URI格式出错
+	 */
+	public static String doGet(String url, Map<String,String> param) throws HttpHostConnectException, IOException, URISyntaxException{
+		Validate.notNull(url, "url is required.");
+		Validate.notEmpty(param);
 		//创建HttpClient对象
 		CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -124,13 +162,7 @@ public class HttpClientUtils {
             if (statusCode != HttpStatus.SC_OK) {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             }
-        } catch (ClientProtocolException e) {
-            log.error(e.getMessage(), e);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        } catch (URISyntaxException e) {
-        	log.error(e.getMessage(), e);
-		} finally{
+        } finally{
             try {
             	if(httpResponse != null){
             		httpResponse.close();
@@ -143,11 +175,32 @@ public class HttpClientUtils {
         return resultString;
     }
 	
-	public static String doGet(String url){
+	/**
+	 * @param url
+	 * @return
+	 * @throws HttpHostConnectException
+	 * 				连接不可用
+	 * @throws IOException
+	 * 				网络传输出错
+	 * @throws URISyntaxException
+	 * 				URI格式出错
+	 */
+	public static String doGet(String url) throws HttpHostConnectException, IOException, URISyntaxException{
 		return doGet(url,null);
 	}
 	
-	public static String doPost(String url, Map<String,String> param){
+	/**
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws HttpHostConnectException
+	 * 				连接不可用
+	 * @throws IOException
+	 * 				网络传输出错
+	 */
+	public static String doPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
+		Validate.notNull(url, "url is required.");
+		Validate.notEmpty(param);
 		//创建HttpClient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -182,10 +235,6 @@ public class HttpClientUtils {
             if (statusCode != HttpStatus.SC_OK) {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             } 
-        } catch (ClientProtocolException e) {
-            log.error(e.getMessage(), e);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
         } finally{
             try {
             	if(httpResponse != null){
