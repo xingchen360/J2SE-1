@@ -8,6 +8,7 @@ public class ArrayDefined{
 	 * 定义数组的三种方式
 	 * 数组的长度一旦确定就无法更改 public final int
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args){
 		byte[] array1 = new byte[10];
 		

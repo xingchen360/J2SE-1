@@ -19,25 +19,19 @@ public class ShellUtil {
      * @param data 要加密的数据 
      * @param commonKey 加密口令文件名 
      * @return　加密数据 
+     * @throws IOException 
      */  
-    public static String encryption(String data, String key){
-        // 加密后的数据定义  
-        String encryptionData = "";
-        try {
-            // 加密命令  
-            String encryption = "echo {0} | openssl enc -aes-128-cbc -e -a -k {1}";
-            // 替换命令中占位符  
-            encryption = MessageFormat.format(encryption, data, key);
-            System.out.println(encryption);
-            String[] sh = new String[]{"/bin/sh", "-c", encryption};
-            // Execute Shell Command
-            ProcessBuilder pb = new ProcessBuilder(sh);
-            Process p = pb.start();
-            encryptionData = getShellOut(p);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return encryptionData;
+    public static String encryption(String data, String key) throws IOException{
+        // 加密命令  
+        String encryption = "echo {0} | openssl enc -aes-128-cbc -e -a -k {1}";
+        // 替换命令中占位符  
+        encryption = MessageFormat.format(encryption, data, key);
+        System.out.println(encryption);
+        String[] sh = new String[]{"/bin/sh", "-c", encryption};
+        // Execute Shell Command
+        ProcessBuilder pb = new ProcessBuilder(sh);
+        Process p = pb.start();
+        return getShellOut(p);
     }
     
     /** 
@@ -60,8 +54,6 @@ public class ShellUtil {
                 sb.append('\n');
                 sb.append(s);
             }
-        } catch (IOException e) {
-            throw e;  
         } finally {
             br.close();
             in.close();

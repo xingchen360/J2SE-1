@@ -13,7 +13,8 @@ import java.util.Comparator;
  */
 public class MergeSorter implements Sorter {
 
-    @Override  
+    @SuppressWarnings("unchecked")
+	@Override  
     public <T extends Comparable<T>>void sort(T[] arr) {  
        T[]temp = (T[]) new Comparable[arr.length];  
        mSort(arr,temp, 0, arr.length- 1);  
@@ -54,7 +55,8 @@ public class MergeSorter implements Sorter {
          }   
     }  
     
-    @Override  
+    @SuppressWarnings("unchecked")
+	@Override  
     public <T> void sort(T[] arr,Comparator<T> comp) {  
        T[]temp = (T[]) new Comparable[arr.length];  
        mSort(arr,temp, 0, arr.length- 1, comp);  

@@ -1,6 +1,5 @@
 package com.somnus.designPatterns.facade;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;

@@ -26,6 +26,7 @@ class Singletion{
 	}
 }
 public class JVMStaticTest{
+	@SuppressWarnings("static-access")
 	public static void main(String[] args){
 		Singletion singletion = Singletion.getInstance();
 		System.out.println(singletion.counter1);

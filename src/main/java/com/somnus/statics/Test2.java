@@ -35,7 +35,8 @@ public class Test2{
         System.out.println(T.c);*/
     }
     
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void test3(){
         T t = new T();
         t.d = 6;

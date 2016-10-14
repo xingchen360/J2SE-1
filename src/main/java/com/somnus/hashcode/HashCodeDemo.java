@@ -14,7 +14,7 @@ public class HashCodeDemo {
         Name n1 = new Name("01");  
         Name n2 = new Name("01");  
           
-        Collection c = new HashSet();  
+        Collection<Object> c = new HashSet<Object>();  
         c.add(n1);  
         System.out.println("------------");  
         c.add(n2);  

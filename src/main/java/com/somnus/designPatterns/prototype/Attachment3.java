@@ -11,7 +11,8 @@ import java.io.Serializable;
  * @version V1.0
  */
 public class Attachment3 implements Serializable {
-    private String name; // 附件名
+	private static final long serialVersionUID = 1L;
+	private String name; // 附件名
 
     public void setName(String name) {
         this.name = name;

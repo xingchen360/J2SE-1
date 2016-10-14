@@ -18,6 +18,8 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.somnus.exception.BizException;
+
 /**
  * 
  * @Title: FTPClientHelper.java 
@@ -48,34 +50,24 @@ public class FTPClientHelper{
 	/**
 	 * @Description 连接并登录到FTP
 	 * @author Somnus
+	 * @throws IOException 
 	 */
-	public void login(){
+	public void login() throws IOException{
 		client = new FTPClient();
-		try {
-			client.connect(host, Integer.parseInt(port));
-			int replyCode = client.getReplyCode();
-			if(!FTPReply.isPositiveCompletion(replyCode)){
+		client.connect(host, Integer.parseInt(port));
+		int replyCode = client.getReplyCode();
+		if(!FTPReply.isPositiveCompletion(replyCode)){
+			client.disconnect();
+			throw new SocketException("connection refused.");
+		}
+		if(StringUtils.isNotBlank(username)){
+			if(!client.login(username, password)){
 				client.disconnect();
-				throw new SocketException("connection refused.");
+				throw new BizException(String.format("incorrect username[%s] or password[%s]", username, password));
 			}
-			if(StringUtils.isNotBlank(username)){
-				if(!client.login(username, password)){
-					client.disconnect();
-					throw new RuntimeException(String.format("incorrect username[%s] or password[%s]", username, password));
-				}
-			}else{
-				throw new RuntimeException("username is required.");
-			}
-		} catch (NumberFormatException e) {
-			log.error(e.getMessage(), e);
-			throw new RuntimeException(e);
-		} catch (SocketException e) {
-			log.error("Cannot connect to specified ftp server : {}:{} \n Exception message is: {}", new Object[]{host, port, e.getMessage()});
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-			throw new RuntimeException(e);
-		}	
+		}else{
+			throw new BizException("username is required.");
+		}
 	}
 	
 	
@@ -86,7 +78,6 @@ public class FTPClientHelper{
 	 * @author Somnus
 	 */
 	public boolean isRemoteFileExists(String remoteFile){
-		
 		try {
 			FTPFile[] files = client.listFiles(remoteFile);
 			return !ArrayUtils.isEmpty(files) && files.length > 0;
@@ -96,7 +87,7 @@ public class FTPClientHelper{
 		}
 	}	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		FTPClientHelper ftp = new FTPClientHelper("192.168.12.216", "21", "tech", "tech123");
 		ftp.login();
 		
@@ -129,31 +120,27 @@ public class FTPClientHelper{
 	 * @param remoteFileName
 	 * @return
 	 * @author Somnus
+	 * @throws IOException 
 	 */
-	public boolean upload(File localFile, String remoteFilePath, String remoteFileName){
-		try {
-			if(remoteFilePath == null){
-				log.error("remoteFilePath file is required.");
-				throw new IOException("remoteFilePath file is required.");
-			}
-			//set ftp file transfer mode
-			client.setFileType(FTP.BINARY_FILE_TYPE);
-			//create directory
-			client.makeDirectory(new String(remoteFilePath.getBytes(), client.getControlEncoding()));
-			//change directory
-			client.changeWorkingDirectory(remoteFilePath);   
-			//construct input stream
-			InputStream is = new FileInputStream(localFile);
-			//put file to server
-			boolean stored = client.storeFile(remoteFileName, is);
-			//close stream
-			IOUtils.closeQuietly(is);
-			log.info("upload {}", stored ? "successful" : "failed");
-			return stored;
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-			throw new RuntimeException(e);
-		} 
+	public boolean upload(File localFile, String remoteFilePath, String remoteFileName) throws IOException{
+		if(remoteFilePath == null){
+			log.error("remoteFilePath file is required.");
+			throw new IOException("remoteFilePath file is required.");
+		}
+		//set ftp file transfer mode
+		client.setFileType(FTP.BINARY_FILE_TYPE);
+		//create directory
+		client.makeDirectory(new String(remoteFilePath.getBytes(), client.getControlEncoding()));
+		//change directory
+		client.changeWorkingDirectory(remoteFilePath);   
+		//construct input stream
+		InputStream is = new FileInputStream(localFile);
+		//put file to server
+		boolean stored = client.storeFile(remoteFileName, is);
+		//close stream
+		IOUtils.closeQuietly(is);
+		log.info("upload {}", stored ? "successful" : "failed");
+		return stored;
 	}
 	
 	/**
@@ -162,39 +149,29 @@ public class FTPClientHelper{
 	 * @param localFile 本地文件全路径
 	 * @return
 	 * @author Somnus
+	 * @throws IOException 
 	 */
-	public boolean download(String remoteFilePath, File localFile){
-		
-		try {
-			client.enterLocalPassiveMode();
-			client.setFileType(FTP.BINARY_FILE_TYPE);
-			if(!localFile.getParentFile().exists()){
-				boolean dirCreated = localFile.getParentFile().mkdirs();
-				log.info("directory created {}", dirCreated ? "successful" : "failed");
-			}
-			OutputStream os = new FileOutputStream(localFile);
-			boolean received = client.retrieveFile(new String(remoteFilePath.getBytes(), client.getControlEncoding()), os);
-			log.info("download {}", received ? "successful" : "failed");
-			return received;
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-			throw new RuntimeException(e);
+	public boolean download(String remoteFilePath, File localFile) throws IOException{
+		client.enterLocalPassiveMode();
+		client.setFileType(FTP.BINARY_FILE_TYPE);
+		if(!localFile.getParentFile().exists()){
+			boolean dirCreated = localFile.getParentFile().mkdirs();
+			log.info("directory created {}", dirCreated ? "successful" : "failed");
 		}
-		
+		OutputStream os = new FileOutputStream(localFile);
+		boolean received = client.retrieveFile(new String(remoteFilePath.getBytes(), client.getControlEncoding()), os);
+		log.info("download {}", received ? "successful" : "failed");
+		return received;
 	}
 	
 	/**
 	 * @Description 登出FTP
 	 * @author Somnus
+	 * @throws IOException 
 	 */
-	public void logout(){
-		try {
-			client.disconnect();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+	public void logout() throws IOException{
+		client.disconnect();
 	}
-	
 	
 	/*public static void main(String[] args) {
 		FTPClientHelper ftpclient = new FTPClientHelper("192.168.12.216", "21", "tech", "tech123");

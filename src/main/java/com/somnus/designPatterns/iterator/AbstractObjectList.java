@@ -15,7 +15,7 @@ import java.util.List;
 abstract class AbstractObjectList {  
   protected List<Object> objects = new ArrayList<Object>();  
 
-  public AbstractObjectList(List objects) {  
+  public AbstractObjectList(List<Object> objects) {  
       this.objects = objects;  
   }  
     
@@ -27,7 +27,7 @@ abstract class AbstractObjectList {
       this.objects.remove(obj);  
   }  
     
-  public List getObjects() {  
+  public List<Object> getObjects() {  
       return this.objects;  
   }  
     
@@ -37,7 +37,7 @@ abstract class AbstractObjectList {
 
 //商品数据类：具体聚合类  
 class ProductList extends AbstractObjectList {  
-  public ProductList(List products) {  
+  public ProductList(List<Object> products) {  
       super(products);  
   }  
     

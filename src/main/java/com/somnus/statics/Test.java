@@ -23,7 +23,8 @@ class B extends A {
 }
 
 public class Test {
-    public static void main(String[] args) {
+    @SuppressWarnings("static-access")
+	public static void main(String[] args) {
         A a = new B();
         B.a();
         a.a();                          // 输出结果是a，说明静态方法不能再子类之中被覆盖。

@@ -15,7 +15,7 @@ public class ArrayTest1 {
     
 	public static void main(String[] args) throws Exception {
 	    
-		Class classType = Class.forName("java.lang.String");
+		Class<?> classType = Class.forName("java.lang.String");
 		
 		//创建一个具有指定的组件类型和长度的新数组
 		Object array = Array.newInstance(classType, 10);

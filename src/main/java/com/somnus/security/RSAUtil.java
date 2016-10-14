@@ -1,15 +1,18 @@
 package com.somnus.security;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
@@ -17,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -172,9 +176,13 @@ public class RSAUtil {
      *  
      * @param data 
      * @return 
+     * @throws IOException 
+     * @throws InvalidKeySpecException 
+     * @throws NoSuchAlgorithmException 
+     * @throws NoSuchPaddingException 
      * @throws Exception 
      */  
-    public static String encryptByPrivateKey(String data) throws Exception {  
+    public static String encryptByPrivateKey(String data) throws Exception{  
         // 对密钥解密  
         byte[] keyBytes = Base64.decodeBase64(getPrivateKey()); 
         // 取得私钥  
@@ -195,9 +203,12 @@ public class RSAUtil {
      *  
      * @param keyMap 
      * @return 
+     * @throws IOException 
+     * @throws InvalidKeySpecException 
+     * @throws NoSuchAlgorithmException 
      * @throws Exception 
      */  
-    public static String getPrivateKey()throws Exception{  
+    public static String getPrivateKey() throws Exception{  
         Key key = (Key)initKey().get(PRIVATE_KEY); 
         return Base64.encodeBase64String(key.getEncoded());
     }  
@@ -218,6 +229,9 @@ public class RSAUtil {
      * 初始化密钥 
      *  
      * @return 
+     * @throws NoSuchAlgorithmException 
+     * @throws IOException 
+     * @throws InvalidKeySpecException 
      * @throws Exception 
      * @throws Exception 
      */  
@@ -241,9 +255,6 @@ public class RSAUtil {
             keyMap.put(PUBLIC_KEY, publicKey);
             keyMap.put(PRIVATE_KEY, privateKey); 
             return keyMap;
-        } catch(Exception e){
-            e.printStackTrace();
-            throw e;
         } finally {
             in1.close();
             in2.close();
@@ -252,9 +263,10 @@ public class RSAUtil {
     /** 
      * 初始化密钥 2
      * @return 
+     * @throws NoSuchAlgorithmException 
      * @throws Exception 
      */  
-    public static Map<String, Object> initKey2() throws Exception {  
+    public static Map<String, Object> initKey2() throws NoSuchAlgorithmException {  
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ALGORITHM);  
         keyPairGen.initialize(1024);  
         KeyPair keyPair = keyPairGen.generateKeyPair();  

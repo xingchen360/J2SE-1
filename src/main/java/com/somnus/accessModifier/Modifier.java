@@ -6,6 +6,7 @@ public class Modifier{
 	 * 被private所修饰的属性和方法
 	 * A只能在该类内部被使用
 	 */
+	@SuppressWarnings("unused")
 	private void c()
 	{
 		

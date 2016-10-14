@@ -14,7 +14,7 @@ public class Account {
     private String owner; // 开户名
     private double balance = 0; // 账户余额
 
-    public Account(String owner, double init) {
+    public Account(String owner, double init, double balance) {
         this.owner = owner;
         this.balance = balance;
         this.state = new NormalState(this); // 设置初始状态

@@ -16,30 +16,26 @@ import org.apache.commons.configuration.PropertiesConfiguration;
  */
 public class CommonsConfiguration {
     
-    public void configuration() {
-        try {
-            String url = getClass().getClassLoader().getResource("info.properties").getPath();
-            System.out.println(url);
-            PropertiesConfiguration config = new PropertiesConfiguration(url);
-            config.setProperty("age", "22");
-            config.save();
+    public void configuration() throws ConfigurationException {
+    	String url = getClass().getClassLoader().getResource("info.properties").getPath();
+        System.out.println(url);
+        PropertiesConfiguration config = new PropertiesConfiguration(url);
+        config.setProperty("age", "22");
+        config.save();
 
-            Integer age = config.getInt("age");
-            String password = config.getString("username");
-            System.out.println(age);
-            System.out.println(password);
-            
-            for(Iterator<String> it = config.getKeys();it.hasNext();){
-                String key = (String)it.next();
-                String value = config.getString(key);
-                System.out.println(key +"="+value);
-            }
-        } catch (ConfigurationException e) {
-            e.printStackTrace();
+        Integer age = config.getInt("age");
+        String password = config.getString("username");
+        System.out.println(age);
+        System.out.println(password);
+        
+        for(Iterator<String> it = config.getKeys();it.hasNext();){
+            String key = (String)it.next();
+            String value = config.getString(key);
+            System.out.println(key +"="+value);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ConfigurationException {
         CommonsConfiguration config = new CommonsConfiguration();
         config.configuration();
     }

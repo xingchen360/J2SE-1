@@ -17,7 +17,8 @@ import java.io.Serializable;
  * @version V1.0
  */
 public class WeeklyLog3 implements Serializable {
-    private Attachment3 attachment;
+	private static final long serialVersionUID = 1L;
+	private Attachment3 attachment;
     private String name;
     private String date;
     private String content;

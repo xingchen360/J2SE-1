@@ -21,7 +21,7 @@ public class DateUtil {
 
 	// 格式：时分秒
 	public static final String FORMAT_FIVE = "HH:mm:ss";
-
+	
 	/**
 	 * @description yyyy-MM-dd 转换为 yyyyMMdd
 	 * @param datestr
@@ -48,32 +48,23 @@ public class DateUtil {
      * @param @return            目标日期字符串  
      * @throws ParseException
      */
-    public static String getFmtDateStr(String src,String infmt,String outfmt) {
-        String result = "";
+    public static String getFmtDateStr(String src,String infmt,String outfmt) throws ParseException {
         //输入格式
         DateFormat informater = new SimpleDateFormat(infmt);
         //输出格式
         DateFormat outfomater = new SimpleDateFormat(outfmt);
-        try {
-            result = outfomater.format(informater.parse(src));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        String result = outfomater.format(informater.parse(src));
         return result;
     }
 
 	/**
 	 * 把符合日期格式的字符串转换为日期类型
+	 * @throws ParseException 
 	 */
-	public static java.util.Date stringtoDate(String dateStr, String format) {
-		Date d = null;
+	public static Date stringtoDate(String dateStr, String format) throws ParseException {
 		SimpleDateFormat formater = new SimpleDateFormat(format);
-		try {
-			formater.setLenient(false);// 指定日期\时间解析是否不严格
-			d = formater.parse(dateStr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		formater.setLenient(false);
+		Date d  = formater.parse(dateStr);
 		return d;
 	}
 
@@ -94,8 +85,9 @@ public class DateUtil {
 	 * @param amount
 	 *            指定长度
 	 * @return
+	 * @throws ParseException 
 	 */
-	public static String dateSub(int dateKind, String dateStr, int amount) {
+	public static String dateSub(int dateKind, String dateStr, int amount) throws ParseException {
 		Date date = stringtoDate(dateStr, FORMAT_ONE);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -118,8 +110,9 @@ public class DateUtil {
 	 * 两个日期相减
 	 * 
 	 * @return 相减得到的秒数
+	 * @throws ParseException 
 	 */
-	public static long timeSub(String firstTime, String secTime) {
+	public static long timeSub(String firstTime, String secTime) throws ParseException {
 		long first = stringtoDate(firstTime, FORMAT_ONE).getTime();
 		long second = stringtoDate(secTime, FORMAT_ONE).getTime();
 		return (second - first) / 1000;
@@ -244,8 +237,9 @@ public class DateUtil {
 
 	/**
 	 * 比较两个日期的年差
+	 * @throws ParseException 
 	 */
-	public static int yearDiff(String before, String after) {
+	public static int yearDiff(String before, String after) throws ParseException {
 		Date beforeDay = stringtoDate(before, FORMAT_FOUR);
 		Date afterDay = stringtoDate(after, FORMAT_FOUR);
 		return getYear(afterDay) - getYear(beforeDay);
@@ -253,8 +247,9 @@ public class DateUtil {
 
 	/**
 	 * 比较指定日期与当前日期的差
+	 * @throws ParseException 
 	 */
-	public static int yearDiffCurr(String after) {
+	public static int yearDiffCurr(String after) throws ParseException {
 		return yearDiff(getSysCurrentDate(), after);
 	}
 
@@ -292,7 +287,7 @@ public class DateUtil {
         return time;
     }
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		System.out.println("当前时间：" + DateUtil.getCurrDate(FORMAT_ONE));
 		System.out.println("当前时间：" + DateUtil.getSysCurrentDate());
 		System.out.println("某年某月的最大天数：" + DateUtil.getDaysOfMonth(2011, 5));

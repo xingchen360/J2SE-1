@@ -26,10 +26,9 @@ public class AnnotationDemo {
         System.out.println("outdated method, don't use it.");
     }
  
-    @SuppressWarnings({"unchecked"})
     @MethodInfo(author = "Somnus", comments = "Main method", date = "June 12 2015", revision = 10)
     public static void genericsTest() throws FileNotFoundException {
-        List l = new ArrayList();
+        List<String> l = new ArrayList<String>();
         l.add("abc");
         outdatedMethod();
     }

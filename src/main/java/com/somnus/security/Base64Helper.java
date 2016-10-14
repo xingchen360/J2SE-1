@@ -19,7 +19,8 @@ public class Base64Helper {
      * @return 
      * @throws Exception 
      */  
-    public static byte[] decryptBASE64(String key) throws Exception {  
+    @SuppressWarnings("restriction")
+	public static byte[] decryptBASE64(String key) throws Exception {  
         return (new sun.misc.BASE64Decoder()).decodeBuffer(key);  
     }  
   
@@ -32,7 +33,8 @@ public class Base64Helper {
      * @return 
      * @throws Exception 
      */  
-    public static String encryptBASE64(byte[] key) throws Exception {  
+    @SuppressWarnings("restriction")
+	public static String encryptBASE64(byte[] key) throws Exception {  
         return (new sun.misc.BASE64Encoder()).encodeBuffer(key);  
     }  
   

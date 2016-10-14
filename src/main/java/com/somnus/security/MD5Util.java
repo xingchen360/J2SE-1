@@ -74,17 +74,13 @@ public class MD5Util {
      * 初始化HMAC密钥 
      *  
      * @return 
+     * @throws NoSuchAlgorithmException 
      * @throws Exception 
      */  
-    public static String initMacKey(){  
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_MAC);  
-            SecretKey secretKey = keyGenerator.generateKey();  
-            return Base64.encodeBase64String(secretKey.getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;  
+    public static String initMacKey() throws NoSuchAlgorithmException{  
+    	KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_MAC);  
+        SecretKey secretKey = keyGenerator.generateKey();  
+        return Base64.encodeBase64String(secretKey.getEncoded());
     }  
   
     /** 

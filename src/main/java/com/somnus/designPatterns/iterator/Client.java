@@ -6,7 +6,7 @@ import java.util.List;
 public class Client {
 
     public static void main(String[] args) {
-        List<String> products = new ArrayList<String>();
+        List<Object> products = new ArrayList<Object>();
         products.add("倚天剑");
         products.add("屠龙刀");
         products.add("断肠草");

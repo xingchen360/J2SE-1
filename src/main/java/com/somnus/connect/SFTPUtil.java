@@ -22,6 +22,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import com.somnus.exception.BizException;
 
 /**
  * sftp工具。注意：构造方法有两个：分别是基于密码认证、基于秘钥认证。
@@ -111,7 +112,7 @@ public class SFTPUtil {
             log.info(String.format("sftp server host:[%s] port:[%s] is connect successfull", host, port));
         } catch (JSchException e) {
             log.error("Cannot connect to specified sftp server : {}:{} \n Exception message is: {}", new Object[]{host, port, e.getMessage()});
-            throw new RuntimeException(e);
+            throw new BizException(e.getMessage(),e);
         }
     }
 
@@ -142,29 +143,19 @@ public class SFTPUtil {
      *            sftp端文件名
      * @param in
      *            输入流
+     * @throws SftpException 
      * @throws Exception
      */
-    public void upload(String directory, String sftpFileName, InputStream input){
+    public void upload(String directory, String sftpFileName, InputStream input) throws SftpException{
         try {
             sftp.cd(directory);
         } catch (SftpException e) {
-            log.error(e.getMessage(), e);
             log.warn("directory is not exist");
-            try {
-                sftp.mkdir(directory);
-                sftp.cd(directory);
-            } catch (SftpException e2) {
-                log.error(e2.getMessage(), e2);
-                throw new RuntimeException(e2);
-            }
+            sftp.mkdir(directory);
+            sftp.cd(directory);
         }
-        try {
-            sftp.put(input, sftpFileName);
-            log.info("file:{} is upload successful" , sftpFileName);
-        } catch (SftpException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
+        sftp.put(input, sftpFileName);
+        log.info("file:{} is upload successful" , sftpFileName);
     }
 
     /**
@@ -175,9 +166,10 @@ public class SFTPUtil {
      * @param uploadFile
      *            要上传的文件,包括路径
      * @throws FileNotFoundException 
+     * @throws SftpException 
      * @throws Exception
      */
-    public void upload(String directory, String uploadFile) throws FileNotFoundException{
+    public void upload(String directory, String uploadFile) throws FileNotFoundException, SftpException{
         File file = new File(uploadFile);
         upload(directory, file.getName(), new FileInputStream(file));
     }
@@ -191,9 +183,10 @@ public class SFTPUtil {
      *            文件在sftp端的命名
      * @param byteArr
      *            要上传的字节数组
+     * @throws SftpException 
      * @throws Exception
      */
-    public void upload(String directory, String sftpFileName, byte[] byteArr){
+    public void upload(String directory, String sftpFileName, byte[] byteArr) throws SftpException{
         upload(directory, sftpFileName, new ByteArrayInputStream(byteArr));
     }
 
@@ -209,9 +202,10 @@ public class SFTPUtil {
      * @param charsetName
      *            sftp上的文件，按该字符编码保存
      * @throws UnsupportedEncodingException 
+     * @throws SftpException 
      * @throws Exception
      */
-    public void upload(String directory, String sftpFileName, String dataStr, String charsetName) throws UnsupportedEncodingException{
+    public void upload(String directory, String sftpFileName, String dataStr, String charsetName) throws UnsupportedEncodingException, SftpException{
         upload(directory, sftpFileName, new ByteArrayInputStream(dataStr.getBytes(charsetName)));
 
     }
@@ -225,49 +219,36 @@ public class SFTPUtil {
      *            下载的文件
      * @param saveFile
      *            存在本地的路径
+     * @throws SftpException 
+     * @throws FileNotFoundException 
      * @throws Exception
      */
-    public void download(String directory, String downloadFile, String saveFile){
-        try {
-            if (directory != null && !"".equals(directory)) {
-                sftp.cd(directory);
-            }
-            File file = new File(saveFile);
-            sftp.get(downloadFile, new FileOutputStream(file));
-            log.info("file:{} is download successful" , downloadFile);
-        } catch (FileNotFoundException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
-        } catch (SftpException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+    public void download(String directory, String downloadFile, String saveFile) throws SftpException, FileNotFoundException{
+    	if (directory != null && !"".equals(directory)) {
+            sftp.cd(directory);
         }
+        File file = new File(saveFile);
+        sftp.get(downloadFile, new FileOutputStream(file));
+        log.info("file:{} is download successful" , downloadFile);
     }
     /**
      * 下载文件
      * @param directory 下载目录
      * @param downloadFile 下载的文件名
      * @return 字节数组
+     * @throws SftpException 
+     * @throws IOException 
      * @throws Exception
      */
-    public byte[] download(String directory, String downloadFile){
-        byte[] fileData = null;
-        try {
-            if (directory != null && !"".equals(directory)) {
-                sftp.cd(directory);
-            }
-            InputStream is = sftp.get(downloadFile);
-            
-            fileData = IOUtils.toByteArray(is);
-            
-            log.info("file:{} is download successful" , downloadFile);
-        } catch (SftpException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+    public byte[] download(String directory, String downloadFile) throws SftpException, IOException{
+        if (directory != null && !"".equals(directory)) {
+            sftp.cd(directory);
         }
+        InputStream is = sftp.get(downloadFile);
+        
+        byte[] fileData = IOUtils.toByteArray(is);
+        
+        log.info("file:{} is download successful" , downloadFile);
         return fileData;
     }
 
@@ -278,16 +259,12 @@ public class SFTPUtil {
      *            要删除文件所在目录
      * @param deleteFile
      *            要删除的文件
+     * @throws SftpException 
      * @throws Exception
      */
-    public void delete(String directory, String deleteFile){
-        try {
-            sftp.cd(directory);
-            sftp.rm(deleteFile);
-        } catch (SftpException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
+    public void delete(String directory, String deleteFile) throws SftpException{
+    	sftp.cd(directory);
+        sftp.rm(deleteFile);
     }
 
     /**
@@ -303,7 +280,7 @@ public class SFTPUtil {
         return sftp.ls(directory);
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SftpException, IOException {
         SFTPUtil sftp = new SFTPUtil("somnus", "passw0rd", "192.168.1.100", 22);
         sftp.login();
         byte[] buff = sftp.download("./download", "abc.txt");

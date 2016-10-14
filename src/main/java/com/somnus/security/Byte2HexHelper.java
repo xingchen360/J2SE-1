@@ -16,7 +16,8 @@ public class Byte2HexHelper {
      * @param buff
      * @return
      */
-    private static String byte2hex(byte[] buff) {  
+    @SuppressWarnings("unused")
+	private static String byte2hex(byte[] buff) {  
         StringBuffer sb = new StringBuffer();  
         for (int i = 0; i < buff.length; ++i) {
             sb.append(Integer.toHexString((buff[i] & 0xFF) | 0x100).substring(1,3));  
@@ -30,7 +31,8 @@ public class Byte2HexHelper {
      * @param buff
      * @return
      */
-    private static String byte2hex2(byte[] buff) {
+    @SuppressWarnings("unused")
+	private static String byte2hex2(byte[] buff) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < buff.length; ++i) {
             final String HEX = "0123456789abcdef"; 
@@ -48,7 +50,8 @@ public class Byte2HexHelper {
      * @param buff
      * @return
      */
-    private static String byte2hex3(byte[] buff) {
+    @SuppressWarnings("unused")
+	private static String byte2hex3(byte[] buff) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < buff.length; i++) {
             String hex = Integer.toHexString(buff[i] & 0xFF);

@@ -22,7 +22,7 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
  */
 public class CommonsDbutils {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost:3306/demo";
 		String jdbcDriver = "com.mysql.jdbc.Driver";
@@ -40,8 +40,6 @@ public class CommonsDbutils {
 				Person p = (Person) results.get(i);
 				System.out.println("age:" + p.getAge() + ",name:" + p.getName());
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			DbUtils.closeQuietly(conn);
 		}
@@ -56,8 +54,6 @@ public class CommonsDbutils {
                 Map<String,Object> map = (Map<String,Object>) results.get(i);
 				System.out.println("age:" + map.get("age") + ",name:"+ map.get("name"));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			DbUtils.closeQuietly(conn);
 		}
