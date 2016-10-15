@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.net.SocketException;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -60,16 +60,14 @@ public class FTPClientHelper{
 			client.disconnect();
 			throw new SocketException("connection refused.");
 		}
-		if(StringUtils.isNotBlank(username)){
-			if(!client.login(username, password)){
-				client.disconnect();
-				throw new BizException(String.format("incorrect username[%s] or password[%s]", username, password));
-			}
-		}else{
-			throw new BizException("username is required.");
+		Validate.notEmpty(username, "username is required.");
+		
+		if(!client.login(username, password)){
+			client.disconnect();
+			throw new BizException(String.format("incorrect username[%s] or password[%s]", username, password));
 		}
+		
 	}
-	
 	
 	/**
 	 * @Description 判断文件是否存在
@@ -82,7 +80,7 @@ public class FTPClientHelper{
 			FTPFile[] files = client.listFiles(remoteFile);
 			return !ArrayUtils.isEmpty(files) && files.length > 0;
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
+			log.warn(remoteFile+"文件不存在");
 			return false;
 		}
 	}	
@@ -108,7 +106,7 @@ public class FTPClientHelper{
 		try{
 			return client.changeWorkingDirectory(remoteDirPath);   	
 		}catch(IOException e){
-			log.error(e.getMessage(), e);
+			log.warn(remoteDirPath+"目录不存在");
 			return false;
 		}
 	}
@@ -123,10 +121,7 @@ public class FTPClientHelper{
 	 * @throws IOException 
 	 */
 	public boolean upload(File localFile, String remoteFilePath, String remoteFileName) throws IOException{
-		if(remoteFilePath == null){
-			log.error("remoteFilePath file is required.");
-			throw new IOException("remoteFilePath file is required.");
-		}
+		Validate.notEmpty(remoteFilePath,"remoteFilePath file is required.");
 		//set ftp file transfer mode
 		client.setFileType(FTP.BINARY_FILE_TYPE);
 		//create directory
@@ -172,21 +167,6 @@ public class FTPClientHelper{
 	public void logout() throws IOException{
 		client.disconnect();
 	}
-	
-	/*public static void main(String[] args) {
-		FTPClientHelper ftpclient = new FTPClientHelper("192.168.12.216", "21", "tech", "tech123");
-		try{
-			ftpclient.login();
-			//ftpclient.upload(new File("c:/CreateMchtAccIn_20130521.zip"), "/home/tech/upload/aa", "CreateMchtAccIn_201305212.zip");
-			ftpclient.download("/home/tech/upload/CreateMchtAccIn_20130521.zip", new File("c:/bbb/bb.zip"));
-		}finally{
-			ftpclient.logout();
-			System.out.println("closed");
-		}
-		
-		
-	}*/
-	
 	
 	private transient Logger log = LoggerFactory.getLogger(FTPClientHelper.class);
 	
