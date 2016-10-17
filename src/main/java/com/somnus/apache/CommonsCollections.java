@@ -55,5 +55,6 @@ public class CommonsCollections {
 		map.put("b", 100);
 		System.out.println(MapUtils.getString(map, "a"));
 		System.out.println(MapUtils.getIntValue(map, "b"));
+		System.out.println(MapUtils.isNotEmpty(map));
 	}
 }

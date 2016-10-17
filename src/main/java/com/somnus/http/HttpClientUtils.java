@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -53,11 +54,7 @@ public class HttpClientUtils {
 	public static String doJsonPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
 		Validate.notNull(url, "url is required.");
 		Validate.notEmpty(param);
-		String resultString = "";
-		if(param!=null && !param.isEmpty()){
-			resultString = doJsonPost(url,JSON.toJSONString(param));
-		}
-		return resultString;
+		return doJsonPost(url,JSON.toJSONString(param));
 	}
 	
 	/**
@@ -100,14 +97,10 @@ public class HttpClientUtils {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             } 
         } finally{
-            try {
-            	if(httpResponse != null){
-            		httpResponse.close();
-            	}
-            	httpclient.close();
-			} catch (IOException e) {
-				log.error(e.getMessage(), e);
-			}
+        	if(httpResponse != null){
+        		httpResponse.close();
+        	}
+        	httpclient.close();
         }
 		return resultString;
     }
@@ -125,7 +118,6 @@ public class HttpClientUtils {
 	 */
 	public static String doGet(String url, Map<String,String> param) throws HttpHostConnectException, IOException, URISyntaxException{
 		Validate.notNull(url, "url is required.");
-		Validate.notEmpty(param);
 		//创建HttpClient对象
 		CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -133,7 +125,7 @@ public class HttpClientUtils {
         try {
         	//创建uri
         	URIBuilder builder = new URIBuilder(url);
-            if(param!=null && !param.isEmpty()){
+            if(MapUtils.isNotEmpty(param)){
             	for(String key :param.keySet()){
             		builder.addParameter(key, param.get(key));
             	}
@@ -163,14 +155,10 @@ public class HttpClientUtils {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             }
         } finally{
-            try {
-            	if(httpResponse != null){
-            		httpResponse.close();
-            	}
-            	httpclient.close();
-			} catch (IOException e) {
-				log.error(e.getMessage(), e);
-			}
+        	if(httpResponse != null){
+        		httpResponse.close();
+        	}
+        	httpclient.close();
         }
         return resultString;
     }
@@ -200,7 +188,6 @@ public class HttpClientUtils {
 	 */
 	public static String doPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
 		Validate.notNull(url, "url is required.");
-		Validate.notEmpty(param);
 		//创建HttpClient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -209,7 +196,7 @@ public class HttpClientUtils {
         	// 创建HttpPost对象
             HttpPost httpPost = new HttpPost(url);
             
-            if(param!=null && !param.isEmpty()){
+            if(MapUtils.isNotEmpty(param)){
             	List<NameValuePair> params = new ArrayList<NameValuePair>();
             	for(String key :param.keySet()){
             		params.add(new BasicNameValuePair(key, param.get(key)));
@@ -236,14 +223,10 @@ public class HttpClientUtils {
             	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
             } 
         } finally{
-            try {
-            	if(httpResponse != null){
-            		httpResponse.close();
-            	}
-            	httpclient.close();
-			} catch (IOException e) {
-				log.error(e.getMessage(), e);
-			}
+        	if(httpResponse != null){
+        		httpResponse.close();
+        	}
+        	httpclient.close();
         }
 		return resultString;
     }

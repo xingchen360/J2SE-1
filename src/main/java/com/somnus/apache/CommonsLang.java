@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.ArrayUtils;
@@ -180,6 +182,12 @@ public class CommonsLang {
         System.out.println(StringUtils.center("ab", 6, "*"));
         //截取()中间的字符串
         System.out.println(StringUtils.substringBetween("abc(123)cde", "(", ")"));
+        Map<String,String> map = new HashMap<String,String>();
+        System.out.println(map.get("abc"));
+        System.out.println(StringUtils.defaultString(map.get("abc")));
+        System.out.println(StringUtils.defaultString(map.get("abc"), "abc"));
+        System.out.println(StringUtils.defaultIfBlank(map.get("abc"), "abc"));
+        System.out.println(StringUtils.defaultIfEmpty(map.get("abc"), "abc"));
     }
     
     @Test
