@@ -262,13 +262,13 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 	<!-- 指定Maven仓库 -->
 	<repositories>
-		<!-- oschina的maven仓库 -->
 		<repository>
-			<id>oschinaRepository</id>
-			<name>local private nexus</name>
-			<url>http://maven.oschina.net/content/groups/public/</url>
+			<id>aliyun</id>
+			<name>aliyun maven</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -277,9 +277,5 @@
 			</snapshots>
 		</repository>
 
-		<!-- 官方maven仓库 -->
-		<!-- <repository> <id>maven</id> <name>Maven Repository Switchboard</name> 
-			<layout>default</layout> <url>http://repo1.maven.org/maven2</url> <snapshots> 
-			<enabled>true</enabled> </snapshots> </repository> -->
 	</repositories>
 </project>
