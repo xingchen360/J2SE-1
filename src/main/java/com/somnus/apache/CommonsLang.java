@@ -74,6 +74,8 @@ public class CommonsLang {
     
     @Test
     public void StringUtils(){
+    	//缩写省略字符串
+        System.out.println(StringUtils.abbreviate("abcdefghijklmno", -1, 10));
         // 截取从from开始字符串
         System.out.println(StringUtils.substringAfter("SELECT * FROM PERSON " , "FROM"));// PERSON 
         // 判断该字符串是不是为数字(0~9)组成，如果是，返回true 但该方法不识别有小数点和请注意

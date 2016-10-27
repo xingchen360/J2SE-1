@@ -73,6 +73,16 @@ public class FastJsonTestCase {
     }
 	
 	/**
+	 * 数组反序列化
+	 */
+	@Test
+    public void arrayDeserializeTest() {
+        String jsonStr = "[{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24},{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24}]";
+        List<User> list = JSON.parseArray(jsonStr, User.class);
+        System.out.println(list);
+    }
+	
+	/**
      * 泛型反序列化
      */
 	@Test
