@@ -38,7 +38,7 @@ public class CommonsDbutils {
 			List results = (List) qr.query(conn, "select id,name from person",new BeanListHandler(Person.class));
 			for (int i = 0; i < results.size(); i++) {
 				Person p = (Person) results.get(i);
-				System.out.println("age:" + p.getAge() + ",name:" + p.getName());
+				System.out.println(p);
 			}
 		} finally {
 			DbUtils.closeQuietly(conn);

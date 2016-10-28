@@ -37,11 +37,11 @@ public class ExcelTestCase {
     public void create() throws Exception{
         List<People> list = new ArrayList<People>();
         for(int i=0; i<500000; i++){
-       	 People people = new People("aaaa"+i,"aaaa"+i);
+       	 People people = new People("admin"+i,"password"+i,null,null);
        	 list.add(people);
        }
         ExcelWirter writer = new ExcelWirter();
-        byte[] buff = writer.exportExcel("测试例子", new String[]{"姓名","年龄"}, list, null);
+        byte[] buff = writer.exportExcel("测试例子", new String[]{"用户名","密码"}, list, null);
         OutputStream os = new FileOutputStream(new File("E:/Somnus.xlsx"));
         IOUtils.write(buff, os);
     }
@@ -55,11 +55,11 @@ public class ExcelTestCase {
     public void createMax() throws Exception{
         List<People> list = new ArrayList<People>();
         for(int i=0; i<500000; i++){
-        	 People people = new People("aaaa"+i,"aaaa"+i);
+        	 People people = new People("admin"+i,"password"+i,null,null);
         	 list.add(people);
         }
         MaxExcelWriter writer = new MaxExcelWriter();
-        byte[] buff = writer.exportExcel("测试例子", new String[]{"姓名","年龄"}, list, null);
+        byte[] buff = writer.exportExcel("测试例子", new String[]{"用户名","密码"}, list, null);
         OutputStream os = new FileOutputStream(new File("E:/mxSomnus.xlsx"));
         IOUtils.write(buff, os);
     }

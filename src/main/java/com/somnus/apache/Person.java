@@ -1,31 +1,63 @@
 package com.somnus.apache;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Person {
-	private String name;
-	private int age;
-	public Person() {
+	private String username;
+    private String password;
+    
+    private Date birthday;
+    private BigDecimal money;
+    
+    public Person() {
 		super();
 	}
-	public Person(String name, int age) {
+	
+	public Person(String username, String password, Date birthday,
+			BigDecimal money) {
 		super();
-		this.name = name;
-		this.age = age;
+		this.username = username;
+		this.password = password;
+		this.birthday = birthday;
+		this.money = money;
 	}
-	public String getName() {
-		return name;
+    
+	public String getUsername() {
+		return username;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public int getAge() {
-		return age;
+
+	public String getPassword() {
+		return password;
 	}
-	public void setAge(int age) {
-		this.age = age;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+
 	public String toString() {  
     	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
     }
