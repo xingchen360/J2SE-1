@@ -1,7 +1,6 @@
 package com.somnus.apache;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -10,14 +9,14 @@ public class People {
 	private String username;
     private String password;
     
-    private Date birthday;
+    private String birthday;
     private BigDecimal money;
     
 	public People() {
 		super();
 	}
 	
-	public People(String username, String password, Date birthday, 
+	public People(String username, String password, String birthday, 
 			BigDecimal money) {
 		super();
 		this.username = username;
@@ -42,11 +41,11 @@ public class People {
 		this.password = password;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 

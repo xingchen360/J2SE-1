@@ -1,6 +1,7 @@
 package com.somnus.apache;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +23,17 @@ import org.junit.Test;
  */
 public class CommonsBeanUtils {
 	
-	/*static{
+	static{
 		BigDecimalConverter bdc = new BigDecimalConverter(null);
 		ConvertUtils.register(bdc, java.math.BigDecimal.class);
 		
 		DateConverter dc = new DateConverter(null); 
+		dc.setPattern("yyyy-MM-dd");
+		//Date顺利被转换成String
+		ConvertUtils.register(dc, String.class);
+		//null可以用来正常转换
 		ConvertUtils.register(dc, java.util.Date.class);
-	}*/
+	}
     
     @Test
     public void cloneBean() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
@@ -53,16 +58,14 @@ public class CommonsBeanUtils {
         System.out.println("将map转化为一个Person对象>>" + person);
         /*通过上面的一行代码，此时person的属性就已经具有了上面所赋的值了。*/
         /*将一个Bean转化为一个Map对象了，如下：*/
-        Map<String, String> map2 = BeanUtils.describe(person);
+        Person person2 = new Person("admin","password",new Date(),null);
+        Map<String, String> map2 = BeanUtils.describe(person2);
         System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
     }
     
-    /*
-     * Date、BigDecimal为null进行copy需要类型转换
-     */
     @Test
     public void copyProperties() throws IllegalAccessException, InvocationTargetException{
-        Person person = new Person("admin","password",null,null);
+        Person person = new Person("admin","password",new Date(),null);
         /*拥有相同属性的对象转换*/
         People people = new People();
         BeanUtils.copyProperties(people, person);

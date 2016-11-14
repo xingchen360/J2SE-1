@@ -3,6 +3,8 @@ package com.somnus.regex;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Test;
+
 /**
  * @Description: TODO
  * @author Somnus
@@ -11,7 +13,8 @@ import java.util.regex.Pattern;
  */
 public class RegexMatches {
     
-    public static void main(String[] args) {
+	@Test
+    public void test1() {
         // 按指定模式在字符串查找
         String line = "2016-01-24,PAY000000192303   ,677824749  ,"
                 + "310000067575   ,2016-01-24 10:42:19,1  ,\"1,000,000.00\",01 ,   ,,Y ,";
@@ -28,4 +31,16 @@ public class RegexMatches {
            System.out.println("NO MATCH");
         }
     }
+	
+	@Test
+    public void test2() {
+		String  str = "银行业存款类金融机构协助查冻扣账户数量[3041900001#01]<=银行业存款类金融机构协助"
+				+ "查询账户数量[3041900001#b1]+银行业存款类金融机构协助冻结账户数量[3041900001#b2]+银行业"
+				+ "存款类金融机构协助扣划账户数量[3041900001#b3]";  
+        String reg = "[\u4e00-\u9fa5]";  
+        Pattern pat = Pattern.compile(reg);    
+        Matcher mat = pat.matcher(str);   
+        String repickStr = mat.replaceAll("");  
+        System.out.println("去中文后:"+repickStr);  
+	}
 }
