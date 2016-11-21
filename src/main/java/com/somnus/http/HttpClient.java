@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.http.conn.HttpHostConnectException;
 import org.junit.Test;
@@ -59,7 +60,8 @@ public class HttpClient {
     @Test
     public void doPathParamGet() {
         try {
-			String url = "http://restful.wozsz.com/service/com.somnus.resource.RestfulResource/getAccount3/admin/123456";
+        	String url = "http://www.baidu.com/s?wd=" + new Random().nextInt(5000);
+			System.out.println("body:" + HttpClientUtils.doGet(url));
 			System.out.println("body:" + HttpClientUtils.doGet(url));
 		} catch (HttpStatusException e){
 			log.error(e.getMessage(),e);

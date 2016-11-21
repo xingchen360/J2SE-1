@@ -15,7 +15,6 @@ import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +76,7 @@ public class HttpXMLUtils {
 	
 	public static String doXmlPost(String url, String xml) throws HttpHostConnectException, IOException{
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {

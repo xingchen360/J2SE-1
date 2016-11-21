@@ -22,7 +22,6 @@ import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -70,7 +69,7 @@ public class HttpClientUtils {
 		Validate.notNull(url, "url is required.");
 		Validate.notNull(json, "json is required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
@@ -119,7 +118,7 @@ public class HttpClientUtils {
 	public static String doGet(String url, Map<String,String> param) throws HttpHostConnectException, IOException, URISyntaxException{
 		Validate.notNull(url, "url is required.");
 		//创建HttpClient对象
-		CloseableHttpClient httpclient = HttpClients.createDefault();
+		CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
@@ -189,7 +188,7 @@ public class HttpClientUtils {
 	public static String doPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
 		Validate.notNull(url, "url is required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
