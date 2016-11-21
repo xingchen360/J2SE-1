@@ -2,6 +2,7 @@ package com.somnus.json;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +22,7 @@ public class FastJsonTestCase {
         user.setUsername("admin");
         user.setPassword("123");
         user.setAge(20);
-        User user2 = new User();
-        user2.setUsername("admin2");
-        user2.setPassword("123456");
-        user2.setAge(24);
+        user.setBirthday(new Date());
         List<Plot> list = Arrays.asList(new Plot("diudiu"),new Plot("dudu") );
         user.setList(list);
         /*Map<String,List<String>> map = new HashMap<String, List<String>>();

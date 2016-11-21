@@ -1,10 +1,13 @@
 package com.somnus.json;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class User {
 	private String username;
@@ -14,6 +17,9 @@ public class User {
 	private int age;
 	
 	private List<Plot> list;
+	
+	@JSONField (format="yyyy-MM-dd HH:mm:ss") 
+	private Date birthday;
 	
 	private Map<String,List<String>> map;
 	
@@ -57,6 +63,14 @@ public class User {
 		this.map = map;
 	}
 	
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
 	public String toString() {  
     	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
     } 
