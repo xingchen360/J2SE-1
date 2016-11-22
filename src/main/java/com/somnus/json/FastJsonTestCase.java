@@ -7,27 +7,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class FastJsonTestCase {
 	/**
      * 简单序列化
+     * 	QuoteFieldNames———-输出key时是否使用双引号,默认为true 
+     * 	WriteMapNullValue——–是否输出值为null的字段,默认为false 
+     * 	WriteNullNumberAsZero—-数值字段如果为null,输出为0,而非null 
+     * 	WriteNullListAsEmpty—–List字段如果为null,输出为[],而非null 
+     * 	WriteNullStringAsEmpty—字符类型字段如果为null,输出为"",而非null 
+     * 	WriteNullBooleanAsFalse–Boolean字段如果为null,输出为false,而非null
      */
 	@Test
     public void simpleTest() {
-        User user = new User();
-        user.setUsername("admin");
-        user.setPassword("123");
-        user.setAge(20);
+        User user = new User("admin",null,20);
         user.setBirthday(new Date());
         List<Plot> list = Arrays.asList(new Plot("diudiu"),new Plot("dudu") );
         user.setList(list);
-        /*Map<String,List<String>> map = new HashMap<String, List<String>>();
-        map.put("somnus",Arrays.asList("1","2"));
-        user.setMap(map);*/
         
         String jsonStr = JSON.toJSONString(user);
         System.out.println(jsonStr);
@@ -105,4 +108,92 @@ public class FastJsonTestCase {
             System.out.println("------------------");
         }
     }
+	
+	static class User {
+		/*@JSONField(serialize = false)*/
+		private String username;
+		
+		private String password;
+		
+		private int age;
+		
+		private List<Plot> list;
+		
+		@JSONField (format="yyyy-MM-dd HH:mm:ss") 
+		private Date birthday;
+		
+		private Map<String,List<String>> map;
+		
+		public User() {
+			super();
+		}
+		
+		public User(String username, String password, int age) {
+			super();
+			this.username = username;
+			this.password = password;
+			this.age = age;
+		}
+		public String getUsername() {
+			return username;
+		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		public int getAge() {
+			return age;
+		}
+		public void setAge(int age) {
+			this.age = age;
+		}
+		public List<Plot> getList() {
+			return list;
+		}
+		public void setList(List<Plot> list) {
+			this.list = list;
+		}
+		public Map<String, List<String>> getMap() {
+			return map;
+		}
+		public void setMap(Map<String, List<String>> map) {
+			this.map = map;
+		}
+		
+		public Date getBirthday() {
+			return birthday;
+		}
+
+		public void setBirthday(Date birthday) {
+			this.birthday = birthday;
+		}
+
+		public String toString() {  
+	    	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
+	    } 
+	}
+	
+	static class Plot{
+		
+		public Plot() {
+			super();
+		}
+		public Plot(String name){
+			this.name = name;
+		}
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+	}
 }
