@@ -36,7 +36,7 @@ public class JacksonJsonTestCase {
      */
     @Test
     public void simpleTest() throws JsonProcessingException{
-    	User user = new User("admin",null,20);
+    	User user = new User("admin",null);
         user.setBirthday(new Date());
         List<Plot> list = Arrays.asList(new Plot("diudiu"),new Plot("dudu") );
         user.setList(list);
@@ -132,7 +132,7 @@ public class JacksonJsonTestCase {
 		@JsonInclude(Include.NON_EMPTY)
 		private String password;
 		
-		@JsonInclude(Include.NON_EMPTY)
+		@JsonInclude(Include.NON_DEFAULT)
 		private int age;
 		
 		@JsonInclude(Include.NON_EMPTY)
@@ -149,11 +149,10 @@ public class JacksonJsonTestCase {
 			super();
 		}
 		
-		public User(String username, String password, int age) {
+		public User(String username, String password) {
 			super();
 			this.username = username;
 			this.password = password;
-			this.age = age;
 		}
 		public String getUsername() {
 			return username;
