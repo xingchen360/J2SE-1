@@ -8,22 +8,26 @@ public class FixedThreadPool {
 	public static void main(String[] args) {
 		/*创建可以容纳3个线程的线程池 */
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
-        for (int i = 1; i < 5; i++){
+        for (int i = 1; i <=10; i++){
             final int taskID = i;
             threadPool.execute(new Runnable(){
                 public void run(){
-                    for (int i = 1; i < 5; i++){
+                    for (int j = 1; j <= 10; j++){
                         try{
                             Thread.sleep(20);// 为了测试出效果，让每次任务执行都需要一定时间
                         }
                         catch (InterruptedException e){
                             e.printStackTrace();
                         }
-                        System.out.println("第" + taskID + "次任务的第" + i + "次执行");
+                        System.out.println(Thread.currentThread().getName() + " is looping of " + j + " for task of " + taskID);
                     }
                 }
             });
         }
+        /** 
+         * shutdown 允许之前已经提交但未执行或未完成的任务继续完成它，
+         * shutdownNow 阻止已经提交(但尚未运行的)的任务运行并且尝试停止正在运行的任务
+         */
         threadPool.shutdown();// 任务执行完毕，关闭线程池
 	}
 
