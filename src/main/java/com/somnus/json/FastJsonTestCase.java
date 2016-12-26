@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.PropertyFilter;
 
 public class FastJsonTestCase {
 	/**
@@ -32,7 +33,18 @@ public class FastJsonTestCase {
         List<Plot> list = Arrays.asList(new Plot("diudiu"),new Plot("dudu") );
         user.setList(list);
         
-        String jsonStr = JSON.toJSONString(user);
+        String jsonStr = JSON.toJSONString(user, new PropertyFilter(){
+  
+            @Override
+            public boolean apply(Object object, String name, Object value) {
+                if(name.equalsIgnoreCase("username")){
+                    //false表示username字段将被排除在外 
+                    return false;
+                }
+                return true;
+            }
+              
+        });
         System.out.println(jsonStr);
     }
 	

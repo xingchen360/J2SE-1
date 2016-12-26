@@ -238,10 +238,16 @@
         </dependency>
         <!-- HttpClient -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.1</version>
-        </dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>fluent-hc</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.5.2</version>
+		</dependency>
         
         <dependency>
     		<groupId>com.alibaba</groupId>
@@ -255,8 +261,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<target>1.7</target>
-					<resource>1.7</resource>
+					<target>1.8</target>
+					<resource>1.8</resource>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>

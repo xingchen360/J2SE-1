@@ -13,10 +13,12 @@ import org.junit.Test;
  */
 public class Grammar {
 	/*
-	 * 0%2=0 1%2=1 2%2=0
-	 * 0/2=0   1/2=0  2/2=1
+	 * 0%2=0 1%2=1[2%3=2] 2%2=0
+	 * 0/2=0 1/2=0[2/3=0] 2/2=1
 	 */
 	public static void main(String[] args) {
+		System.out.println(2%3);
+		System.out.println(2/3);
 		double num1 = 0d,num2 = 0;
 		float f1 = 0f;
 		//小数默认都是double型
