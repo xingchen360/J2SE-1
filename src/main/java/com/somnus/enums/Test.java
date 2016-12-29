@@ -54,7 +54,7 @@ public class Test {
         
         if(GenderEnum.MAN.getCode().equals("0")){
             System.out.println("true");
-            System.out.println(GenderEnum.getByCode("0").getSex());
+            System.out.println(GenderEnum.getByCode("0").getDesc());
         }
         
         System.out.println(GenderEnum.nameOf("man"));

@@ -11,20 +11,20 @@ public enum GenderEnum {
     
     public final String code;
     
-    public final String sex;
+    public final String desc;
 
     //构造器默认也只能是private, 从而保证构造函数只能在内部使用
-    private GenderEnum(String code,String sex) {
+    private GenderEnum(String code,String desc) {
         this.code = code;
-        this.sex = sex;
+        this.desc = desc;
     }
     
     public String getCode() {
         return code;
     }
     
-    public String getSex() {
-        return sex;
+    public String getDesc() {
+        return desc;
     }
     
     /**
@@ -47,6 +47,17 @@ public enum GenderEnum {
 		if (name != null){
 			for (GenderEnum type : GenderEnum.values()) {
 				if (type.name().equalsIgnoreCase(name))
+					genum = type;
+			}
+		}
+		return genum;
+	}
+    
+    public static GenderEnum descOf(String desc){
+    	GenderEnum genum = null;
+		if (desc != null){
+			for (GenderEnum type : GenderEnum.values()) {
+				if (type.desc.equalsIgnoreCase(desc))
 					genum = type;
 			}
 		}
