@@ -39,8 +39,13 @@ public class CheckedClient {
         try {
             demo = Class.forName(name);
         } catch (ClassNotFoundException e) {
-            log.error(e.getMessage(), e);
-            throw new BizException(e);
+        	/**
+        	 * 这句话看情况写，因为抛出去的是运行期异常，看顶层调用者会不会捕获了
+        	 * 如果能保证顶层调用者一定会捕获异常并打印就不要写了，否则会造成两次打印异常
+        	 * 如果保证不了，还是写吧，不然出了错，都不知道在什么位置
+        	 */
+            log.error("类：[{}]找不到，{}",name,"我是瞎填的", e);
+            throw new IllegalArgumentException(String.format("类：[%s]找不到，[%s]",name,"我是瞎填的", name,"我是瞎填的"),e);
         }
         System.out.println("&&&&&&&&&&&&&&&&&&&&&");
         return demo.getSimpleName();

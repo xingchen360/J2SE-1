@@ -22,7 +22,6 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
-import com.somnus.exception.BizException;
 
 /**
  * sftp工具。注意：构造方法有两个：分别是基于密码认证、基于秘钥认证。
@@ -30,7 +29,7 @@ import com.somnus.exception.BizException;
  * @see http://xliangwu.iteye.com/blog/1499764
  * @author Somnus
  */
-public class SFTPUtil {
+public class SFTPClientHelper {
     private transient Logger log = LoggerFactory.getLogger(this.getClass());
     
     private ChannelSftp sftp;
@@ -46,7 +45,6 @@ public class SFTPUtil {
     private String host;
     /** FTP 端口*/
     private int port;
-    
 
     /**
      * 构造基于密码认证的sftp对象
@@ -55,7 +53,7 @@ public class SFTPUtil {
      * @param host
      * @param port
      */
-    public SFTPUtil(String username, String password, String host, int port) {
+    public SFTPClientHelper(String username, String password, String host, int port) {
         this.username = username;
         this.password = password;
         this.host = host;
@@ -69,51 +67,47 @@ public class SFTPUtil {
      * @param port
      * @param keyFilePath
      */
-    public SFTPUtil(String username, String host, int port, String keyFilePath) {
+    public SFTPClientHelper(String username, String host, int port, String keyFilePath) {
         this.username = username;
         this.host = host;
         this.port = port;
         this.keyFilePath = keyFilePath;
     }
 
-    public SFTPUtil(){}
+    public SFTPClientHelper(){}
 
     /**
      * 连接sftp服务器
+     * @throws JSchException 
      * 
      * @throws Exception
      */
-    public void login(){
-        try {
-            JSch jsch = new JSch();
-            if (keyFilePath != null) {
-                jsch.addIdentity(keyFilePath);// 设置私钥
-                log.info("sftp connect,path of private key file：{}" , keyFilePath);
-            }
-            log.info("sftp connect by host:{} username:{}",host,username);
-
-            session = jsch.getSession(username, host, port);
-            log.info("Session is build");
-            if (password != null) {
-                session.setPassword(password);
-            }
-            Properties config = new Properties();
-            config.put("StrictHostKeyChecking", "no");
-            
-            session.setConfig(config);
-            session.connect();
-            log.info("Session is connected");
-            
-            Channel channel = session.openChannel("sftp");
-            channel.connect();
-            log.info("channel is connected");
-
-            sftp = (ChannelSftp) channel;
-            log.info(String.format("sftp server host:[%s] port:[%s] is connect successfull", host, port));
-        } catch (JSchException e) {
-            log.error("Cannot connect to specified sftp server : {}:{} \n Exception message is: {}", new Object[]{host, port, e.getMessage()});
-            throw new BizException(e.getMessage(),e);
+    public void login() throws JSchException{
+    	JSch jsch = new JSch();
+        if (keyFilePath != null) {
+            jsch.addIdentity(keyFilePath);// 设置私钥
+            log.info("sftp connect,path of private key file：{}" , keyFilePath);
         }
+        log.info("sftp connect by host:{} username:{}",host,username);
+
+        session = jsch.getSession(username, host, port);
+        log.info("Session is build");
+        if (password != null) {
+            session.setPassword(password);
+        }
+        Properties config = new Properties();
+        config.put("StrictHostKeyChecking", "no");
+        
+        session.setConfig(config);
+        session.connect();
+        log.info("Session is connected");
+        
+        Channel channel = session.openChannel("sftp");
+        channel.connect();
+        log.info("channel is connected");
+
+        sftp = (ChannelSftp) channel;
+        log.info("sftp server host:[{}] port:[{}] is connect successfull", host, port);
     }
 
     /**
@@ -280,8 +274,8 @@ public class SFTPUtil {
         return sftp.ls(directory);
     }
     
-    public static void main(String[] args) throws SftpException, IOException {
-        SFTPUtil sftp = new SFTPUtil("somnus", "passw0rd", "192.168.1.100", 22);
+    public static void main(String[] args) throws SftpException, IOException, JSchException {
+        SFTPClientHelper sftp = new SFTPClientHelper("somnus", "passw0rd", "192.168.1.100", 22);
         sftp.login();
         byte[] buff = sftp.download("./download", "abc.txt");
         System.out.println(Arrays.toString(buff));

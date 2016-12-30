@@ -1,7 +1,10 @@
 package com.somnus.xstream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -15,10 +18,10 @@ import com.somnus.xstream.PersonBean.Friends;
  * @date 2015年6月30日 下午5:56:47 
  * @version V1.0 
  */
-public class Client {
+public class XstreamClientTest {
     
     @Test
-    public void main() {
+    public void bean2Xml() {
         PersonBean per=new PersonBean();
         per.setFirstName("chen");
         per.setLastName("youlong");
@@ -53,13 +56,13 @@ public class Client {
         pet.setAnimalList(petList);
         per.setPet(pet);
          
-        String xml=XmlUtil.toXml(per);
+        String xml = XmlUtil.bean2Xml(per);
         System.out.println(xml);
 
     }
     
     @Test
-    public void main2(){
+    public void xml2Bean(){
         String xmlStr="<person>"+
                             "<firstName>chen</firstName>"+
                             "<lastName>youlong</lastName>"+
@@ -88,10 +91,20 @@ public class Client {
                              "</pets>"+
                          "</person>";
         
-      PersonBean person=XmlUtil.toBean(xmlStr, PersonBean.class);
+      PersonBean person = XmlUtil.xml2Bean(xmlStr, PersonBean.class);
       System.out.println("person=firstname=="+person.getFirstName());
       System.out.println("person==Friends==name1=="+person.getFriend().getName().get(0));
       System.out.println("person==Pets==name2=="+person.getPet().getAnimalList().get(1).getName());
+    }
+    
+    @Test
+    public void map2Xml() {
+    	Map<String,Object> param = new HashMap<String, Object>();
+		param.put("username", "admin");
+		param.put("password", "123456");
+		param.put("pets", Arrays.asList("cat","dog"));
+		String xml = XmlUtil.map2Xml(param);
+		System.out.println(xml);
     }
 
 }

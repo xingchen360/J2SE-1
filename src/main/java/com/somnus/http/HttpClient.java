@@ -50,15 +50,6 @@ public class HttpClient {
     }
     
     @Test
-    public void doXmlPost() throws HttpHostConnectException, IOException{
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount2";
-		Map<String,String> param = new HashMap<String, String>();
-		param.put("username", "admin");
-		param.put("password", "123456");
-		System.out.println("body:" + HttpXMLUtils.doXmlPost(url, param));
-    }
-    
-    @Test
     public void doPathParamGet() throws HttpHostConnectException, IOException, URISyntaxException {
     	String url = "http://www.baidu.com/";
 		System.out.println("body:" + HttpClientUtils.doGet(url));

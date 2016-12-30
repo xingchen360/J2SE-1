@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.SocketException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.Validate;
@@ -17,8 +16,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.somnus.exception.BizException;
 
 /**
  * 
@@ -52,19 +49,19 @@ public class FTPClientHelper{
 	 * @author Somnus
 	 * @throws IOException 
 	 */
-	public void login() throws IOException{
+	public void login() throws IOException {
 		client = new FTPClient();
 		client.connect(host, Integer.parseInt(port));
 		int replyCode = client.getReplyCode();
 		if(!FTPReply.isPositiveCompletion(replyCode)){
 			client.disconnect();
-			throw new SocketException("connection refused.");
+			log.error("connect to specified ftp server is refused : {}:{} ", new Object[]{host, port});
 		}
 		Validate.notEmpty(username, "username is required.");
-		
+		Validate.notEmpty(password, "password is required.");
 		if(!client.login(username, password)){
 			client.disconnect();
-			throw new BizException(String.format("incorrect username[%s] or password[%s]", username, password));
+			log.error("Cannot connect to specified ftp server : {}:{} ", new Object[]{host, port});
 		}
 		
 	}
