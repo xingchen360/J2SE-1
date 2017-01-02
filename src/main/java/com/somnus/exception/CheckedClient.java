@@ -45,7 +45,7 @@ public class CheckedClient {
         	 * 如果保证不了，还是写吧，不然出了错，都不知道在什么位置
         	 */
             log.error("类：[{}]找不到，{}",name,"我是瞎填的", e);
-            throw new IllegalArgumentException(String.format("类：[%s]找不到，[%s]",name,"我是瞎填的", name,"我是瞎填的"),e);
+            throw new IllegalArgumentException(String.format("类：[%s]找不到，[%s]",name,"我是瞎填的"),e);
         }
         System.out.println("&&&&&&&&&&&&&&&&&&&&&");
         return demo.getSimpleName();
