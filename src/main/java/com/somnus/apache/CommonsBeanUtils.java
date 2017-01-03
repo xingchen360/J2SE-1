@@ -43,9 +43,8 @@ public class CommonsBeanUtils {
         System.out.println("克隆对象>>" + person2);
     }
     
-    @SuppressWarnings("unchecked")
 	@Test
-    public void populate() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+    public void populate() throws IllegalAccessException, InvocationTargetException{
         Map<String, String> map = new HashMap<String, String>();
         map.put("username", "tom");
         map.put("password", "tom@");
@@ -56,12 +55,24 @@ public class CommonsBeanUtils {
         Person person = new Person();
         BeanUtils.populate(person, map);
         System.out.println("将map转化为一个Person对象>>" + person);
-        /*通过上面的一行代码，此时person的属性就已经具有了上面所赋的值了。*/
-        /*将一个Bean转化为一个Map对象了，如下：*/
+        
+    }
+	
+	@Test
+	public void describe() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
         Person person2 = new Person("admin","password",new Date(),null);
+        /*将一个Bean转化为一个Map对象了，如下：*/
         Map<String, String> map2 = BeanUtils.describe(person2);
         System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
-    }
+	}
+	
+	@Test
+	public void describe2() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+        Person person2 = new Person("admin","password",new Date(),null);
+        /*将一个Bean转化为一个Map对象了，如下：*/
+        Map<String, Object> map2 = PropertyUtils.describe(person2);
+        System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
+	}
     
     @Test
     public void copyProperties() throws IllegalAccessException, InvocationTargetException{

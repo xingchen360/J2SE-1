@@ -7,7 +7,6 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import com.somnus.xml.XmlDocument;
 
 /**
  * 
@@ -18,7 +17,7 @@ import com.somnus.xml.XmlDocument;
  * @date 2015年6月8日 上午11:31:28 
  * @version V1.0
  */
-public class SaxDemo implements XmlDocument{
+public class SaxDemo{
     
 	public void parserXml(String fileName) throws Exception{
 		//获得SAX解析器工厂实例

@@ -2,8 +2,8 @@ package com.somnus.apache;
 
 import java.util.Iterator;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration2.CompositeConfiguration;
+import org.apache.commons.configuration2.PropertiesConfiguration;
 
 /**
  * 
@@ -16,12 +16,16 @@ import org.apache.commons.configuration.PropertiesConfiguration;
  */
 public class CommonsConfiguration {
     
-    public void configuration() throws ConfigurationException {
+    public void configuration() {
     	String url = getClass().getClassLoader().getResource("info.properties").getPath();
         System.out.println(url);
-        PropertiesConfiguration config = new PropertiesConfiguration(url);
+        
+        CompositeConfiguration config = new CompositeConfiguration(); 
+        config.addConfiguration(new PropertiesConfiguration());
+        
+        /*PropertiesConfiguration config = new PropertiesConfiguration(url);
         config.setProperty("age", "22");
-        config.save();
+        config.save();*/
 
         Integer age = config.getInt("age");
         String password = config.getString("username");
