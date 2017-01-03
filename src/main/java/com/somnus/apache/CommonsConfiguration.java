@@ -2,8 +2,10 @@ package com.somnus.apache;
 
 import java.util.Iterator;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.junit.Test;
 
 /**
  * 
@@ -16,21 +18,18 @@ import org.apache.commons.configuration2.PropertiesConfiguration;
  */
 public class CommonsConfiguration {
     
-    public void configuration() {
+	@Test
+    public void properties() throws ConfigurationException {
     	String url = getClass().getClassLoader().getResource("info.properties").getPath();
         System.out.println(url);
         
-        CompositeConfiguration config = new CompositeConfiguration(); 
-        config.addConfiguration(new PropertiesConfiguration());
+        Configurations configs = new Configurations();
+        Configuration config = configs.properties(url);
         
-        /*PropertiesConfiguration config = new PropertiesConfiguration(url);
         config.setProperty("age", "22");
-        config.save();*/
-
-        Integer age = config.getInt("age");
-        String password = config.getString("username");
-        System.out.println(age);
-        System.out.println(password);
+        
+        System.out.println(config.getInt("age"));
+        System.out.println(config.getString("username"));
         
         for(Iterator<String> it = config.getKeys();it.hasNext();){
             String key = (String)it.next();
@@ -39,8 +38,4 @@ public class CommonsConfiguration {
         }
     }
 
-    public static void main(String[] args) throws ConfigurationException {
-        CommonsConfiguration config = new CommonsConfiguration();
-        config.configuration();
-    }
 }

@@ -195,8 +195,6 @@ public class CommonsLang {
     @Test
     public void DateUtils() throws ParseException{
         System.out.println(DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
-        //直接将日期格式化为内置的固定格式
-        System.out.println(DateFormatUtils.ISO_DATE_FORMAT.format(new Date()));
         //字符型日期转化为Date
         System.out.println(DateUtils.parseDate("2014-11-11 11:11:11", new String[] {"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd", "yyyy/MM/dd" }));
         System.out.println(DateUtils.parseDate("2014年11月11日", new String[] {"yyyy年MM月dd日","yyyy-MM-dd", "yyyy/MM/dd" }));
@@ -219,10 +217,6 @@ public class CommonsLang {
     
     @Test
     public void NumberUtils(){
-        /**判断字符串是否是数字*/
-        System.out.println(NumberUtils.isNumber("5.96"));//结果是true
-        System.out.println(NumberUtils.isNumber("s5"));//结果是false
-        System.out.println(NumberUtils.isNumber("0000000000596"));//结果是true
         /**判断字符串中是否全为数字*/
         System.out.println(NumberUtils.isDigits("0000000000.596"));//false
         System.out.println(NumberUtils.isDigits("0000000000596"));//true
