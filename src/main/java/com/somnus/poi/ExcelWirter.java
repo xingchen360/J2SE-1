@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -21,7 +25,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * 
  * @Description: 生成Excel2007
  * @author Somnus
  * @date 2015年11月6日 上午11:23:11
@@ -54,12 +57,12 @@ public class ExcelWirter {
 		XSSFCellStyle style = workbook.createCellStyle();
 		// 设置这些样式
 		style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
-		style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		style.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		style.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		style.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		style.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setBorderLeft(BorderStyle.THIN);
+		style.setBorderRight(BorderStyle.THIN);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		// 生成一个字体
 		XSSFFont font = workbook.createFont();
 		font.setColor(HSSFColor.VIOLET.index);
@@ -70,13 +73,13 @@ public class ExcelWirter {
 		// 生成并设置另一个样式
 		XSSFCellStyle style2 = workbook.createCellStyle();
 		style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
-		style2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		style2.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		style2.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		style2.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		style2.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		style2.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-		style2.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style2.setBorderBottom(BorderStyle.THIN);
+		style2.setBorderLeft(BorderStyle.THIN);
+		style2.setBorderRight(BorderStyle.THIN);
+		style2.setBorderTop(BorderStyle.THIN);
+		style2.setAlignment(HorizontalAlignment.CENTER);
+		style2.setVerticalAlignment(VerticalAlignment.CENTER);
 		// 生成另一个字体
 		XSSFFont font2 = workbook.createFont();
 		font2.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
@@ -191,6 +194,13 @@ public class ExcelWirter {
 			return baos.toByteArray();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				workbook.close();
+				baos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
