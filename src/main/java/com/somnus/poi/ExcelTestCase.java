@@ -28,24 +28,6 @@ public class ExcelTestCase {
         }
 	}
     
-	/**
-	 * 50W 数据量
-     * XSSFWorkbook
-     * @throws Exception
-     */
-    @Test
-    public void create() throws Exception{
-        List<People> list = new ArrayList<People>();
-        for(int i=0; i<500000; i++){
-       	 People people = new People("admin"+i,"password"+i,null,null);
-       	 list.add(people);
-       }
-        ExcelWirter writer = new ExcelWirter();
-        byte[] buff = writer.exportExcel("测试例子", new String[]{"用户名","密码"}, list, null);
-        OutputStream os = new FileOutputStream(new File("E:/Somnus.xlsx"));
-        IOUtils.write(buff, os);
-    }
-    
     /**
      * 50W 数据量
      * SXSSFWorkbook

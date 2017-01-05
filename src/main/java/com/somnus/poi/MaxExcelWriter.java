@@ -12,14 +12,16 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 public class MaxExcelWriter {
@@ -49,32 +51,32 @@ public class MaxExcelWriter {
 		CellStyle style = workbook.createCellStyle();
 		// 设置这些样式
 		style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
-		style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		style.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		style.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		style.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		style.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setBorderLeft(BorderStyle.THIN);
+		style.setBorderRight(BorderStyle.THIN);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		// 生成一个字体
 		Font font = workbook.createFont();
 		font.setColor(HSSFColor.VIOLET.index);
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		// 把字体应用到当前的样式
 		style.setFont(font);
 		// 生成并设置另一个样式
 		CellStyle style2 = workbook.createCellStyle();
 		style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
-		style2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		style2.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		style2.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		style2.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		style2.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		style2.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-		style2.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style2.setBorderBottom(BorderStyle.THIN);
+		style2.setBorderLeft(BorderStyle.THIN);
+		style2.setBorderRight(BorderStyle.THIN);
+		style2.setBorderTop(BorderStyle.THIN);
+		style2.setAlignment(HorizontalAlignment.CENTER);
+		style2.setVerticalAlignment(VerticalAlignment.CENTER);
 		// 生成另一个字体
 		Font font2 = workbook.createFont();
-		font2.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
+		font2.setBold(true);
 		// 把字体应用到当前的样式
 		style2.setFont(font2);
 		Sheet sheet = null;
@@ -92,33 +94,35 @@ public class MaxExcelWriter {
 			XSSFRichTextString text = new XSSFRichTextString(headers[i]);
 			cell.setCellValue(text);
 		}
-		// 生成表格具体数据行
-		while (it.hasNext()) {
-			index++;
-			// 如果数据大于5000行，生成下一个sheet
-			if (index > 50000) {
-				index = 0;
-				++sheetnum;
-				sheet = workbook.createSheet(title + sheetnum);
-				sheet.setDefaultColumnWidth(15);
-				row = sheet.createRow(0);
-				for (int i = 0; i < headers.length; i++) {
-					Cell cell = row.createCell(i);
-					cell.setCellStyle(style);
-					XSSFRichTextString text = new XSSFRichTextString(headers[i]);
-					cell.setCellValue(text);
+		ByteArrayOutputStream baos = null;
+		try {
+			// 生成表格具体数据行
+			while (it.hasNext()) {
+				index++;
+				// 如果数据大于5000行，生成下一个sheet
+				if (index > 50000) {
+					index = 0;
+					++sheetnum;
+					sheet = workbook.createSheet(title + sheetnum);
+					sheet.setDefaultColumnWidth(15);
+					row = sheet.createRow(0);
+					for (int i = 0; i < headers.length; i++) {
+						Cell cell = row.createCell(i);
+						cell.setCellStyle(style);
+						XSSFRichTextString text = new XSSFRichTextString(headers[i]);
+						cell.setCellValue(text);
+					}
 				}
-			}
-			row = sheet.createRow(index);
-			T t = (T) it.next();
-			// 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
-			Field[] fields = t.getClass().getDeclaredFields();
-			for (int i = 0; i < fields.length; i++) {
-				Cell cell = row.createCell(i);
-				cell.setCellStyle(style2);
-				Field field = fields[i];
-				String fieldName = field.getName();
-				try {
+				row = sheet.createRow(index);
+				T t = (T) it.next();
+				// 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
+				Field[] fields = t.getClass().getDeclaredFields();
+				for (int i = 0; i < fields.length; i++) {
+					Cell cell = row.createCell(i);
+					cell.setCellStyle(style2);
+					Field field = fields[i];
+					String fieldName = field.getName();
+
 					Object value = PropertyUtils.getProperty(t, fieldName);
 					// 判断值的类型后进行强制类型转换
 					String textValue = null;
@@ -174,19 +178,21 @@ public class MaxExcelWriter {
 							cell.setCellValue(richString);
 						}
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException(e);
+				
 				}
 			}
-		}
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
+			baos = new ByteArrayOutputStream();
 			workbook.write(baos);
-			return baos.toByteArray();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException("poi处理出错");
+		} finally{
+			try {
+				workbook.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return null;
+		return baos.toByteArray();
 	}
 }
