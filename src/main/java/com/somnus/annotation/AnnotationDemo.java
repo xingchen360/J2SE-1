@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.somnus.annotation.MethodInfo.FontColor;
+
 /** 
  * @Title: AnnotationDemo.java 
  * @Package com.somnus.annotation 
@@ -15,7 +17,7 @@ import java.util.List;
 public class AnnotationDemo {
     
     @Override
-    @MethodInfo(author = "Somnus", comments = "Main method", date = "June 12 2015", revision = 1)
+    @MethodInfo(author = "Somnus", comments = "Main method", date = "June 12 2015", revision = 1,fontColor=FontColor.BLUE)
     public String toString() {
         return "Overriden toString method";
     }

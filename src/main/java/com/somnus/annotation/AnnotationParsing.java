@@ -17,6 +17,7 @@ public class AnnotationParsing {
         for (Method method : AnnotationDemo.class.getMethods()) {
             // checks if MethodInfo annotation is present for the method
             if (method.isAnnotationPresent(MethodInfo.class)) {
+            	System.out.println("===================");
                 try {
                     // iterates all the annotations available in the method
                     for (Annotation anno : method.getDeclaredAnnotations()) {

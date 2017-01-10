@@ -19,7 +19,6 @@ public class Base64Helper {
      * @return 
      * @throws Exception 
      */  
-    @SuppressWarnings("restriction")
 	public static byte[] decryptBASE64(String key) throws Exception {  
         return (new sun.misc.BASE64Decoder()).decodeBuffer(key);  
     }  
