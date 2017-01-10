@@ -39,12 +39,13 @@ public class UnCheckedClient {
      */
     public int defined(int parameter){
         if(parameter<0){
-            /*
-             * 在处理业务逻辑的时候需要new出这种异常的时候 ，最好前面加个error日志
-             * 加log的原因是要告诉开发者现有的流程有问题，不应该走下去了，并且把异常产生的条件(参数)打印出来
-             */
-            log.error("number:{}",parameter);
-            throw new BizException("传输的数字不应该是个负数");
+        	/**
+        	 * 这句话看情况写，因为抛出去的是运行期异常，看顶层调用者会不会捕获了
+        	 * 如果能保证顶层调用者一定会捕获异常并打印就不要写了，否则会造成两次打印异常
+        	 * 如果保证不了，还是写吧，不然出了错，都不知道在什么位置
+        	 */
+            log.error("传输的数字{}不应该是个负数",parameter);
+            throw new IllegalArgumentException(String.format("传输的数字[%s]不应该是个负数", parameter));
         }
         System.out.println("&&&&&&&&&&&&&&&&&&&&");
         return parameter;

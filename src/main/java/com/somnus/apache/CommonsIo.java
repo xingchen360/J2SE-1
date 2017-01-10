@@ -30,11 +30,11 @@ public class CommonsIo {
     public void readLinesByIS() throws MalformedURLException, IOException{
         InputStream is = new URL("https://www.baidu.com/").openStream();
         /**
-         * readLines(InputStream input)
+         * readLines(InputStream input, "UTF-8")
          * readLines(InputStream input, String encoding)
-         * readLines(Reader input)
+         * readLines(Reader input, "UTF-8")
          */
-        List<String> lines = IOUtils.readLines(is);
+        List<String> lines = IOUtils.readLines(is, "UTF-8");
         for(String line:lines){
             System.out.println(line);
         }
@@ -58,13 +58,11 @@ public class CommonsIo {
         InputStream is = new URL("https://www.baidu.com/").openStream();
         try {
             /**读取文件
-             * toString(InputStream input)
              * toString(InputStream input, String encoding)
              * toString(Reader input)
-             * [toString(byte[] input)]
              * [toString(byte[] input, String encoding)]
              */
-            System.out.println(IOUtils.toString(is));
+            System.out.println(IOUtils.toString(is, "UTF-8"));
         } finally {
             IOUtils.closeQuietly(is);
         }
@@ -73,11 +71,11 @@ public class CommonsIo {
     @Test
     public void readLinesByFile() throws IOException{
         File file = new File("src/main/resources/build.xml");
-        List<String> lines = FileUtils.readLines(file/*, "UTF-8"*/);
+        List<String> lines = FileUtils.readLines(file, "UTF-8");
         for(String line:lines){
             System.out.println(line);
         }
-        String result = FileUtils.readFileToString(file/*, "UTF-8"*/);
+        String result = FileUtils.readFileToString(file, "UTF-8");
         System.out.println(result);
     }
     
@@ -140,7 +138,7 @@ public class CommonsIo {
              * toCharArray(InputStream is, String encoding)
              * toCharArray(Reader input)
              */
-            char[] buff = IOUtils.toCharArray(is);
+            char[] buff = IOUtils.toCharArray(is, "UTF-8");
             System.out.println(Arrays.toString(buff));
         } finally{
             IOUtils.closeQuietly(is);
@@ -155,7 +153,7 @@ public class CommonsIo {
          * toInputStream(CharSequence input)
          * toInputStream(CharSequence input, String encoding)
          */
-        InputStream is = IOUtils.toInputStream("https://www.baidu.com/");
+        InputStream is = IOUtils.toInputStream("https://www.baidu.com/", "UTF-8");
         byte[] buf = new byte[128];
         int len = 0;
         while((len = is.read(buf))!=-1){
@@ -182,7 +180,7 @@ public class CommonsIo {
              * write(String data, OutputStream output)
              * write(String data, OutputStream output, String encoding)
              */
-            IOUtils.write("Somnus罂粟花", os);
+            IOUtils.write("Somnus罂粟花", os, "UTF-8");
         } finally{
             IOUtils.closeQuietly(os);
         }

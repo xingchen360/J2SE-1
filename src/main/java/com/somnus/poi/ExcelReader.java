@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -66,17 +65,18 @@ public class ExcelReader {
         return list;
     }
     
-    private static String[] cellArray(Row row) {
+    @SuppressWarnings("deprecation")
+	private static String[] cellArray(Row row) {
         String[] cellArray = new String[row.getPhysicalNumberOfCells()];
         for (int index = 0; index < row.getPhysicalNumberOfCells(); index++) {
             String value = "";
             Cell cell = row.getCell(index);
             if (cell != null) {
-                switch (cell.getCellType()) {
-                    case HSSFCell.CELL_TYPE_STRING :
+                switch (cell.getCellTypeEnum()) {
+                    case STRING :
                         value = cell.getStringCellValue();
                         break;
-                    case HSSFCell.CELL_TYPE_NUMERIC :
+                    case NUMERIC :
                         if (HSSFDateUtil.isCellDateFormatted(cell)) {
                             Date date = cell.getDateCellValue();
                             if (date != null) {
@@ -89,19 +89,19 @@ public class ExcelReader {
                                     format(cell.getNumericCellValue());
                         }
                         break;
-                    case HSSFCell.CELL_TYPE_FORMULA :
+                    case FORMULA :
                         try{
                             value = String.valueOf(cell.getNumericCellValue());
                         } catch(IllegalStateException e){
                             value = String.valueOf(cell.getRichStringCellValue());
                         }
                         break;
-                    case HSSFCell.CELL_TYPE_BLANK :
+                    case BLANK :
                         break;
-                    case HSSFCell.CELL_TYPE_ERROR :
+                    case ERROR :
                         value = "";
                         break;
-                    case HSSFCell.CELL_TYPE_BOOLEAN :
+                    case BOOLEAN :
                         value = (cell.getBooleanCellValue() == true ? "Y" : "N");
                         break;
                     default :

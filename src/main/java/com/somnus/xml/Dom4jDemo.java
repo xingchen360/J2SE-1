@@ -4,10 +4,12 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.junit.Test;
+
 import java.util.Iterator;
-import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -20,89 +22,39 @@ import java.io.FileOutputStream;
  * @date 2015年6月8日 上午11:32:03 
  * @version V1.0
  */
-public class Dom4jDemo implements XmlDocument{
-    
+public class Dom4jDemo {
+	
 	@SuppressWarnings("unchecked")
-	public void parserXml(String fileName) throws Exception{
+	@Test
+	public void test1() throws DocumentException{
 		SAXReader reader = new SAXReader();
-		
-		Document document = reader.read(new File(fileName));
-		
+		Document document = reader.read(getClass().getClassLoader().getResourceAsStream("user.xml"));
 		Element root = document.getRootElement();
-		//**************************1*********************************************
+		/*Iterator<Element> it = root.elements().iterator();*/
+		/*List<Element> list = root.elements("Account");*/
 		for (Iterator<Element> it = root.elementIterator(); it.hasNext();) 
 		{
 			Element element = it.next();
 			
-			if ("Account".equals(element.getName())) 
-			{
-				String account = element.getName();
-				System.out.println("account:"+account);
-				System.out.println("属性-所属区域: " + element.attributeValue("type"));
-				//*************************
-				//获取单个
-				//*************************
-				System.out.println(element.elementText("code"));
-				System.out.println(element.element("code").getText());
-				
-				for(Iterator<Element> child = element.elementIterator(); child.hasNext();)
-				{
-					Element el = child.next();
-					if ("code".equals(el.getName())) // 输出code
-					{
-						System.out.println("卡号: " + el.getText());
-					}
-					else if ("pass".equals(el.getName())) // 输出pass
-					{
-						System.out.println("密码: " + el.getText());
-					}
-					else if ("name".equals(el.getName())) // 输出name
-					{
-						System.out.println("姓名: " + el.getText());
-					}
-					else if ("money".equals(el.getName())) // 输出money
-					{
-						System.out.println("余额: " + el.getText());
-					}
-				}
-				System.out.println();
-			}
-		}
-		//**************************2*********************************************
-		List<Element> accountList = root.elements("Account");//特指就传参
-		for (Iterator<Element> it = accountList.iterator(); it.hasNext();) 
-		{
-			Element element = it.next();
-
 			String account = element.getName();
 			System.out.println("account:"+account);
 			System.out.println("属性-所属区域: " + element.attributeValue("type"));
+			//*************************
+			//获取单个
+			//*************************
+			System.out.println(element.elementText("code"));
+			System.out.println(element.element("code").getText());
 			
-			List<Element> list = element.elements();//不特指就为空
-			for(Iterator<Element> child = list.iterator(); child.hasNext();)
+			for(Iterator<Element> child = element.elementIterator(); child.hasNext();)
 			{
 				Element el = child.next();
-				if ("code".equals(el.getName())) // 输出code
-				{
-					System.out.println("卡号: " + el.getText());
-				}
-				else if ("pass".equals(el.getName())) // 输出pass
-				{
-					System.out.println("密码: " + el.getText());
-				}
-				else if ("name".equals(el.getName())) // 输出name
-				{
-					System.out.println("姓名: " + el.getText());
-				}
-				else if ("money".equals(el.getName())) // 输出money
-				{
-					System.out.println("余额: " + el.getText());
-				}
+				System.out.println(el.getName() + " : " + el.getText());
 			}
-			System.out.println();
+			System.out.println("*************************************");
 		}
 	}
-
+	
+    
 	public void createXml(String filename) throws Exception{
 		//创建文档并设置文档的根元素节点：第一种方式
 //		Document document = DocumentHelper.createDocument();

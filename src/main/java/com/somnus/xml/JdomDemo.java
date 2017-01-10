@@ -1,16 +1,19 @@
 package com.somnus.xml;
 
-import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
 import org.jdom2.Attribute;
 import org.jdom2.Comment;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.junit.Test;
 
 /**
  * 
@@ -21,59 +24,33 @@ import org.jdom2.output.XMLOutputter;
  * @date 2015年6月8日 上午11:32:50 
  * @version V1.0
  */
-public class JdomDemo implements XmlDocument{
-    
-	public void parserXml(String fileName) throws Exception{
+public class JdomDemo {
+	
+	@Test
+	public void test1() throws JDOMException, IOException{
 		SAXBuilder bulider = new SAXBuilder();
-		
-		Document doc = bulider.build(new File(fileName));
+		Document doc = bulider.build(getClass().getClassLoader().getResourceAsStream("user.xml"));
 		//获得根节点
 		Element root = doc.getRootElement();
-		
-		System.out.println("根元素: "+root.getName());
-		
-		//获得Account元素
-	    /*Element account = root.getChild("Account");*/
-		
-		List<Element> accountList = root.getChildren("Account");//特指就传参
-		for(Iterator<Element> iter = accountList.iterator(); iter.hasNext();)
-		{
-			Element account = iter.next();
-			
-			System.out.println("属性-所属区域: "+ account.getAttributeValue("type"));
-			
-			List<Attribute> listatr = account.getAttributes();
+		/*List<Element> list = root.getChildren("Account");*/
+		for(Iterator<Element> it = root.getChildren().iterator(); it.hasNext();){
+			Element element = it.next();
+			System.out.println("属性-所属区域: "+ element.getAttributeValue("type"));
+			List<Attribute> listatr = element.getAttributes();
 			//循环遍历属性
 			for(Attribute data:listatr)
 			{
-				System.out.println("属性:"+data.getName()+" = "+data.getValue());
+				System.out.println("属性:" + data.getName()+" = " + data.getValue());
 			}
-			
-			List<Element> listele = account.getChildren();//不特指就为空
-			
-			for (Element data:listele) { // 遍历<Accounts>下的节点
-				
-				if ("code".equals(data.getName())) // 输出code
-				{
-					System.out.println("卡号: " + data.getText());
-				}
-				else if ("pass".equals(data.getName())) // 输出pass
-				{
-					System.out.println("密码: " + data.getText());
-				}
-				else if ("name".equals(data.getName())) // 输出name
-				{
-					System.out.println("姓名: " + data.getText());
-				}
-				else if ("money".equals(data.getName())) // 输出money
-				{
-					System.out.println("余额: " + data.getText());
-				}
+			for(Iterator<Element> child = element.getChildren().iterator(); child.hasNext();)
+			{
+				Element el = child.next();
+				System.out.println(el.getName() + " : " + el.getText());
 			}
-			System.out.println();
+			System.out.println("*************************************");
 		}
 	}
-	
+    
 	public void createXml(String fileName)  throws Exception{
 		Document document = new Document();
 		
