@@ -71,8 +71,17 @@ public class FilePath {
         System.out.println(path);
     }
     
+    public static void print66(){
+    	/**
+    	 * /E:/github/J2SE/target/classes/excel/80034.xls
+    	 */
+        String path = Thread.currentThread().getContextClassLoader().getResource("excel/80034.xls").getPath();
+        System.out.println(path);
+    }
+    
     @Test
     public void print6(){
+    	print66();
     	/**
     	 * /E:/github/J2SE/target/classes/excel/80034.xls
     	 */

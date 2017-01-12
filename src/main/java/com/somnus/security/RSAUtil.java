@@ -236,8 +236,8 @@ public class RSAUtil {
      * @throws Exception 
      */  
     public static Map<String, Object> initKey() throws Exception{
-        InputStream in1 = RSAUtil.class.getClassLoader().getResourceAsStream(PUBLIC_KEY_PATH);
-        InputStream in2 = RSAUtil.class.getClassLoader().getResourceAsStream(PRIVATE_KEY_PATH);
+        InputStream in1 = Thread.currentThread().getContextClassLoader().getResourceAsStream(PUBLIC_KEY_PATH);
+        InputStream in2 = Thread.currentThread().getContextClassLoader().getResourceAsStream(PRIVATE_KEY_PATH);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
             /*生成公钥*/

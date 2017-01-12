@@ -1,8 +1,6 @@
-package com.somnus.http;
+package com.somnus.https;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +11,12 @@ import org.apache.commons.lang3.Validate;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,6 +27,8 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.somnus.exception.HttpStatusException;
+import com.somnus.https.HttpClientManager;
+import com.somnus.https.KeyStoreMaterial;
 
 /**
  * @ClassName:     HttpClientUtils.java
@@ -37,44 +37,77 @@ import com.somnus.exception.HttpStatusException;
  * @version        V1.0  
  * @Date           2016年10月13日 下午3:40:17
  */
-public class HttpClientUtils {
+public class HttpClientUtil {
 	
-	private transient static Logger log = LoggerFactory.getLogger(HttpClientUtils.class);
+	private transient static Logger log = LoggerFactory.getLogger(HttpClientUtil.class);
+	
+	private static RequestConfig requestConfig;
+	
+	private static final int MAX_TIMEOUT = 10000;
+	
+	static{
+		RequestConfig.Builder configBuilder = RequestConfig.custom();
+		// 设置连接超时
+		configBuilder.setConnectTimeout(MAX_TIMEOUT);
+		// 设置读取超时
+		configBuilder.setSocketTimeout(MAX_TIMEOUT);
+		// 设置从连接池获取连接实例的超时
+		configBuilder.setConnectionRequestTimeout(MAX_TIMEOUT);
+	}
 	
 	/**
+	 * Content-type : application/json
 	 * @param url
 	 * @param param
 	 * @return
-	 * @throws HttpHostConnectException
-	 * 				连接不可用
-	 * @throws IOException
-	 * 				网络传输出错
+	 * @throws Exception
 	 */
-	public static String doJsonPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
-		Validate.notNull(url, "url is required.");
-		Validate.notEmpty(param);
+	public static String doJsonPost(String url, Map<String,String> param)  throws Exception{
 		return doJsonPost(url,JSON.toJSONString(param));
 	}
 	
 	/**
+	 * Content-type : application/json
+	 * @param url
+	 * @param param
+	 * @param ks
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doJsonPost(String url, Map<String,String> param, KeyStoreMaterial ks)  throws Exception{
+		return doJsonPost(url,JSON.toJSONString(param),ks);
+	}
+	
+	/**
+	 * Content-type : application/json
 	 * @param url
 	 * @param json
 	 * @return
-	 * @throws HttpHostConnectException
-	 * 				连接不可用
-	 * @throws IOException
-	 * 				网络传输出错
+	 * @throws Exception
 	 */
-	public static String doJsonPost(String url, String json) throws HttpHostConnectException, IOException{
-		Validate.notNull(url, "url is required.");
-		Validate.notNull(json, "json is required.");
+	public static String doJsonPost(String url, String json)  throws Exception{
+		return doJsonPost(url,json,null);
+	}
+	
+	/**
+	 * Content-type : application/json
+	 * @param url
+	 * @param json
+	 * @param ks
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doJsonPost(String url, String json, KeyStoreMaterial ks)  throws Exception{
+		Validate.notNull(url, "url must be required.");
+		Validate.notNull(json, "json must be required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
         	// 创建HttpPost对象
             HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(requestConfig);
             httpPost.setEntity(new StringEntity(json,ContentType.APPLICATION_JSON));
             
             // 开始执行http请求
@@ -105,20 +138,49 @@ public class HttpClientUtils {
     }
 	
 	/**
+	 * Content-type : text/html
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doGet(String url) throws Exception{
+		return doGet(url, null, null);
+	}
+	
+	/**
+	 * Content-type : text/html
+	 * @param url
+	 * @param ks
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doGet(String url, KeyStoreMaterial ks) throws Exception{
+		return doGet(url, null, ks);
+	}
+	
+	/**
+	 * Content-type : text/html
 	 * @param url
 	 * @param param
 	 * @return
-	 * @throws HttpHostConnectException
-	 * 				连接不可用
-	 * @throws IOException
-	 * 				网络传输出错
-	 * @throws URISyntaxException
-	 * 				URI格式出错
+	 * @throws Exception
 	 */
-	public static String doGet(String url, Map<String,String> param) throws HttpHostConnectException, IOException, URISyntaxException{
-		Validate.notNull(url, "url is required.");
+	public static String doGet(String url, Map<String,String> param) throws Exception{
+		return doGet(url, param, null);
+	}
+	
+	/**
+	 * Content-type : text/html
+	 * @param url
+	 * @param param
+	 * @param ks
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doGet(String url, Map<String,String> param, KeyStoreMaterial ks) throws Exception{
+		Validate.notNull(url, "url must be required.");
 		//创建HttpClient对象
-		CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
+		CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
@@ -132,6 +194,7 @@ public class HttpClientUtils {
             URI uri = builder.build();
             // 创建httpGet请求
             HttpGet httpGet = new HttpGet(uri);
+            httpGet.setConfig(requestConfig);
             
             // 开始执行http请求
             long startTime = System.currentTimeMillis();
@@ -163,38 +226,33 @@ public class HttpClientUtils {
     }
 	
 	/**
-	 * @param url
-	 * @return
-	 * @throws HttpHostConnectException
-	 * 				连接不可用
-	 * @throws IOException
-	 * 				网络传输出错
-	 * @throws URISyntaxException
-	 * 				URI格式出错
-	 */
-	public static String doGet(String url) throws HttpHostConnectException, IOException, URISyntaxException{
-		return doGet(url,null);
-	}
-	
-	/**
+	 * Content-type : application/x-www-form-urlencoded
 	 * @param url
 	 * @param param
 	 * @return
-	 * @throws HttpHostConnectException
-	 * 				连接不可用
-	 * @throws IOException
-	 * 				网络传输出错
+	 * @throws Exception
 	 */
-	public static String doPost(String url, Map<String,String> param) throws HttpHostConnectException, IOException{
-		Validate.notNull(url, "url is required.");
+	public static String doPost(String url, Map<String,String> param) throws Exception{
+		return doPost(url, param, null);
+	}
+	
+	/**
+	 * Content-type : application/x-www-form-urlencoded
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doPost(String url, Map<String,String> param, KeyStoreMaterial ks) throws Exception{
+		Validate.notNull(url, "url must be required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpConnectionManager.getHttpClient();
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(null);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
         	// 创建HttpPost对象
             HttpPost httpPost = new HttpPost(url);
-            
+            httpPost.setConfig(requestConfig);
             if(MapUtils.isNotEmpty(param)){
             	List<NameValuePair> params = new ArrayList<NameValuePair>();
             	for(String key :param.keySet()){
@@ -212,6 +270,65 @@ public class HttpClientUtils {
             int statusCode = httpResponse.getStatusLine().getStatusCode();  
             log.info("statusCode:" + statusCode);  
             log.info("调用API花费时间(单位：毫秒)：" + (endTime - startTime));
+            
+            // 取出应答字符串
+            HttpEntity httpEntity = httpResponse.getEntity();
+            resultString = EntityUtils.toString(httpEntity,Charset.forName("UTF-8"));
+            
+            // 判断返回状态是否为200
+            if (statusCode != HttpStatus.SC_OK) {
+            	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
+            } 
+        } finally{
+        	if(httpResponse != null){
+        		httpResponse.close();
+        	}
+        	httpclient.close();
+        }
+		return resultString;
+    }
+	
+	/**
+	 * Content-type : application/xml
+	 * @param url
+	 * @param xml
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doXmlPost(String url, String xml) throws Exception{
+		return doXmlPost(url, xml, null);
+	}
+	
+	/**
+	 * Content-type : application/xml
+	 * @param url
+	 * @param json
+	 * @param ks
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doXmlPost(String url, String xml, KeyStoreMaterial ks) throws Exception{
+		Validate.notNull(url, "url must be required.");
+		Validate.notNull(xml, "xml must be required.");
+		//创建HttpClient对象
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
+        String resultString = "";
+        CloseableHttpResponse httpResponse = null;
+        try {
+        	// 创建HttpPost对象
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(requestConfig);
+            httpPost.setEntity(new StringEntity(xml,ContentType.APPLICATION_XML));
+            
+            // 开始执行http请求
+            long startTime = System.currentTimeMillis();  
+            httpResponse = httpclient.execute(httpPost);
+            long endTime = System.currentTimeMillis();
+            
+            // 获得响应状态码
+            int statusCode = httpResponse.getStatusLine().getStatusCode();  
+            log.info("statusCode:" + statusCode);  
+            log.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
             
             // 取出应答字符串
             HttpEntity httpEntity = httpResponse.getEntity();
