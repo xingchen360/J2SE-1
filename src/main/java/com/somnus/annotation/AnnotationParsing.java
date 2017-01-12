@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 /** 
  * @Title: AnnotationParsing.java 
  * @Package com.somnus.annotation 
- * @Description: TODO
+ * @Description: 注解代码分析功能测试
  * @author Somnus
  * @date 2015年6月12日 上午9:56:01 
  * @version V1.0 

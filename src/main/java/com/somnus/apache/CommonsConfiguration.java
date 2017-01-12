@@ -24,9 +24,9 @@ public class CommonsConfiguration {
         config.save();
 
         Integer age = config.getInt("age");
-        String password = config.getString("username");
+        String username = config.getString("username");
         System.out.println(age);
-        System.out.println(password);
+        System.out.println(username);
         
         for(Iterator<String> it = config.getKeys();it.hasNext();){
             String key = (String)it.next();

@@ -9,7 +9,7 @@ import com.somnus.annotation.MethodInfo.FontColor;
 /** 
  * @Title: AnnotationDemo.java 
  * @Package com.somnus.annotation 
- * @Description: TODO
+ * @Description: 自定义注解使用测试
  * @author Somnus
  * @date 2015年6月12日 上午9:48:54 
  * @version V1.0 

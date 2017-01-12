@@ -178,18 +178,18 @@ public class CommonsLang {
         String[] s5 = StringUtils.split(str5, ",", 3);
         System.out.println(ArrayUtils.toString(s5));//{"aaa","bbb","ccc,ddd,eee"}
         //生成n*String或n*char长度的字符串
-        System.out.println(StringUtils.repeat("ab", 5));
+        System.out.println(StringUtils.repeat("ab", 5));//ababababab
         //两边填充
-        System.out.println(StringUtils.center("ab", 4));
-        System.out.println(StringUtils.center("ab", 6, "*"));
+        System.out.println(StringUtils.center("ab", 4));// ab 
+        System.out.println(StringUtils.center("ab", 6, "*"));//**ab**
         //截取()中间的字符串
-        System.out.println(StringUtils.substringBetween("abc(123)cde", "(", ")"));
+        System.out.println(StringUtils.substringBetween("abc(123)cde", "(", ")"));//123
         Map<String,String> map = new HashMap<String,String>();
-        System.out.println(map.get("abc"));
-        System.out.println(StringUtils.defaultString(map.get("abc")));
-        System.out.println(StringUtils.defaultString(map.get("abc"), "abc"));
-        System.out.println(StringUtils.defaultIfBlank(map.get("abc"), "abc"));
-        System.out.println(StringUtils.defaultIfEmpty(map.get("abc"), "abc"));
+        System.out.println(map.get("abc"));//null
+        System.out.println(StringUtils.defaultString(map.get("abc")));//
+        System.out.println(StringUtils.defaultString(map.get("abc"), "abc"));//abc
+        System.out.println(StringUtils.defaultIfBlank(map.get("abc"), "abc"));//abc
+        System.out.println(StringUtils.defaultIfEmpty(map.get("abc"), "abc"));//abc
     }
     
     @Test
