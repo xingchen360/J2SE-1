@@ -13,8 +13,9 @@ public class ScheduledThreadPool {
             public void run() {  
                 System.out.println("爆炸");  
             }  
-        }, 5, TimeUnit.SECONDS);  // 5秒后执行任务，以后每2秒执行一次  
+        }, 5, TimeUnit.SECONDS);  
         
+		// 5秒后执行任务，以后每2秒执行一次  
 		executor.scheduleAtFixedRate(new Runnable() {  
             @Override  
             public void run() {  

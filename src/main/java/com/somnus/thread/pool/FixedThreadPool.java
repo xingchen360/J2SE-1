@@ -28,7 +28,10 @@ public class FixedThreadPool {
             });
         }
         /** 
-         * shutdown 允许之前已经提交但未执行或未完成的任务继续完成它，
+         * shutdown 允许之前已经提交但未执行或未完成的任务继续完成它，平滑的关闭ExecutorService，
+         * 当此方法被调用时，ExecutorService停止接收新的任务并且等待已经提交的任务（包含提交正在执行和提交未执行）执行完成。
+         * 当所有提交任务执行完毕，线程池即被关闭。
+         * 
          * shutdownNow 阻止已经提交(但尚未运行的)的任务运行并且尝试停止正在运行的任务
          */
         executor.shutdown();// 任务执行完毕，关闭线程池
