@@ -1,4 +1,5 @@
 package com.somnus.array;
+
 /**
  * 冒泡排序
  * @author Compaq
@@ -40,5 +41,4 @@ public class BubbleSort{
 		int[] array = {7,3,9,5,6,8,1};
 		bubbleSort(array);
 	}
-
 }

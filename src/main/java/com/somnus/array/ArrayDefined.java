@@ -20,6 +20,9 @@ public class ArrayDefined{
 		byte[] array3 = new byte[]{1,2,3,4};
 		
 		System.out.println(Arrays.toString(array3));
+		
+		String[] strs1 = {"1","2","3"};
+		String[] strs2 = new String[]{"1","2","3","4"};
+		String[] strs3 = new String[10];
 	}
-
 }
