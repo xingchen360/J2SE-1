@@ -1,5 +1,9 @@
 package com.somnus.json;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,9 +16,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.ObjectSerializer;
+import com.alibaba.fastjson.serializer.SerializeWriter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class FastJsonTestCase {
 	/**
@@ -28,23 +37,11 @@ public class FastJsonTestCase {
      */
 	@Test
     public void simpleTest() {
-        User user = new User("admin",null,20);
+        User user = new User("admin",null,20,new BigDecimal("20.2"));
         user.setBirthday(new Date());
-        List<Plot> list = Arrays.asList(new Plot("diudiu"),new Plot("dudu") );
-        user.setList(list);
+        user.setPlots(Arrays.asList(new Plot("diudiu"), new Plot("dudu")));
         
-        String jsonStr = JSON.toJSONString(user, new PropertyFilter(){
-  
-            @Override
-            public boolean apply(Object object, String name, Object value) {
-                if(name.equalsIgnoreCase("username")){
-                    //false表示username字段将被排除在外 
-                    return false;
-                }
-                return true;
-            }
-              
-        });
+        String jsonStr = JSON.toJSONString(user/*,SerializerFeature.PrettyFormat*/);
         System.out.println(jsonStr);
     }
 	
@@ -80,9 +77,23 @@ public class FastJsonTestCase {
      */
 	@Test
     public void simpleDeserializeTest() {
-        String jsonStr = "{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24}";
+        String jsonStr = "{\"age\":20,\"birthday\":\"2017-01-23 17:19:04\",\"blance\":20.20,\"flag\":false,\"plots\":[{\"name\":\"diudiu\"},{\"name\":\"dudu\"}],\"address\":{\"province\":\"jiangxi\",\"city\":\"jiujiang\"}}";
         User user = JSON.parseObject(jsonStr, User.class);
         System.out.println(user);
+        
+        JSONObject jo = JSON.parseObject(jsonStr);
+        System.out.println(jo.getString("age"));
+        System.out.println(jo.getString("birthday"));
+        System.out.println(jo.getBigDecimal("blance"));
+        System.out.println(jo.getBooleanValue("blance"));
+        JSONArray array = jo.getJSONArray("plots");
+        for (Object no : array) {
+            JSONObject job = (JSONObject) no;
+            System.out.println(job.getString("name"));
+        }
+        JSONObject child = jo.getJSONObject("address");
+        System.out.println(child.getString("province"));
+        System.out.println(child.getString("city"));
     }
 	
 	/**
@@ -93,6 +104,12 @@ public class FastJsonTestCase {
         String jsonStr = "[{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24},{\"username\":\"owen\",\"password\":\"passw0rd\", \"age\":24}]";
         List<User> list = JSON.parseArray(jsonStr, User.class);
         System.out.println(list);
+        
+        JSONArray array = JSON.parseArray(jsonStr);
+        for (Object no : array) {
+            JSONObject job = (JSONObject) no;
+            System.out.println(job.get("username").toString());
+        }
     }
 	
 	/**
@@ -121,15 +138,21 @@ public class FastJsonTestCase {
         }
     }
 	
-	static class User {
-		/*@JSONField(serialize = false)*/
+	public static class User {
+		@JSONField(serialize = false)
 		private String username;
 		
 		private String password;
 		
 		private int age;
 		
-		private List<Plot> list;
+		@JSONField(serializeUsing = BigDecimalSerializer.class)
+		private BigDecimal blance;
+		
+		@JSONField(serialzeFeatures ={SerializerFeature.WriteNullBooleanAsFalse})
+		private boolean flag;
+		
+		private List<Plot> plots;
 		
 		@JSONField (format="yyyy-MM-dd HH:mm:ss") 
 		private Date birthday;
@@ -140,11 +163,12 @@ public class FastJsonTestCase {
 			super();
 		}
 		
-		public User(String username, String password, int age) {
+		public User(String username, String password, int age, BigDecimal blance) {
 			super();
 			this.username = username;
 			this.password = password;
 			this.age = age;
+			this.blance = blance;
 		}
 		public String getUsername() {
 			return username;
@@ -164,11 +188,11 @@ public class FastJsonTestCase {
 		public void setAge(int age) {
 			this.age = age;
 		}
-		public List<Plot> getList() {
-			return list;
+		public List<Plot> getPlots() {
+			return plots;
 		}
-		public void setList(List<Plot> list) {
-			this.list = list;
+		public void setPlots(List<Plot> plots) {
+			this.plots = plots;
 		}
 		public Map<String, List<String>> getMap() {
 			return map;
@@ -176,13 +200,23 @@ public class FastJsonTestCase {
 		public void setMap(Map<String, List<String>> map) {
 			this.map = map;
 		}
-		
+		public BigDecimal getBlance() {
+			return blance;
+		}
+		public void setBlance(BigDecimal blance) {
+			this.blance = blance;
+		}
 		public Date getBirthday() {
 			return birthday;
 		}
-
 		public void setBirthday(Date birthday) {
 			this.birthday = birthday;
+		}
+		public boolean isFlag() {
+			return flag;
+		}
+		public void setFlag(boolean flag) {
+			this.flag = flag;
 		}
 
 		public String toString() {  
@@ -190,7 +224,7 @@ public class FastJsonTestCase {
 	    } 
 	}
 	
-	static class Plot{
+	public static class Plot{
 		
 		public Plot() {
 			super();
@@ -208,4 +242,33 @@ public class FastJsonTestCase {
 		}
 		
 	}
+	
+	public static class BigDecimalSerializer implements ObjectSerializer{
+
+		@Override
+		public void write(JSONSerializer serializer, Object object,
+				Object fieldName, Type fieldType, int features) throws IOException {
+			SerializeWriter out = serializer.getWriter();
+
+	        if (object == null) {
+	            if (out.isEnabled(SerializerFeature.WriteNullNumberAsZero)) {
+	                out.write('0');
+	            } else {
+	                out.writeNull();
+	            }
+	            return;
+	        }
+
+	        BigDecimal val = (BigDecimal) object;
+	        DecimalFormat fmt = new DecimalFormat("0.00");
+	        out.write(fmt.format(val));
+
+	        if (out.isEnabled(SerializerFeature.WriteClassName) && fieldType != BigDecimal.class && val.scale() == 0) {
+	            out.write('.');
+	        }
+			
+		}
+
+	}
 }
+

@@ -1,54 +1,40 @@
 package com.somnus.math;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import org.junit.Test;
 
 public class NumeralUtil {
-    public static final String FORMAT_ONE = "###,###.##";
-    public static final String FORMAT_TWO = "0.00";
-    public static final String FORMAT_THREE = "0.00%";
-
-    public static String numeralToString(double num, String format) {
-        DecimalFormat formater = new DecimalFormat(format);
-
-        String str = formater.format(num);
-
-        return str;
-    }
-
-    public static String numeralToString(long num, String format) {
-        DecimalFormat formater = new DecimalFormat(format);
-
-        String str = formater.format(num);
-
-        return str;
-    }
-
-    public static String extractNumeric(String data) {
-        String str = "";
-        if (data != null && !"".equals(data)) {
-            for (int i = 0; i < data.length(); i++) {
-                if (data.charAt(i) >= 48 && data.charAt(i) <= 57) {
-                    str += data.charAt(i);
-                }
-            }
-        }
-        return str;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(NumeralUtil.numeralToString(222212.123, NumeralUtil.FORMAT_ONE));
-        System.out.println(NumeralUtil.numeralToString(222212, NumeralUtil.FORMAT_ONE));
-
-        System.out.println(NumeralUtil.numeralToString(222212.123, NumeralUtil.FORMAT_TWO));
-        System.out.println(NumeralUtil.numeralToString(0, NumeralUtil.FORMAT_TWO));
-
-        System.out.println(NumeralUtil.numeralToString(0.7654, NumeralUtil.FORMAT_TWO));
-
-        System.out.println(NumeralUtil.numeralToString((50.0 / 13113), NumeralUtil.FORMAT_THREE));
-
-        System.out.println(Double.valueOf(NumeralUtil.numeralToString(50, NumeralUtil.FORMAT_TWO)));
-
-        System.out.println(NumeralUtil.extractNumeric("abcd13579xyz24680"));
-    }
+    
+	/*
+	 * 0.47以百分数输出
+	 */
+	@Test
+	public void test1(){
+		NumberFormat nf = NumberFormat.getPercentInstance();
+		System.out.println(nf.format(0.47));
+	}
+	
+	//#表示没有则为空，0表示如果没有则该位补0
+	@Test
+	public void test2(){
+		double pi = Math.PI;
+		System.out.println(pi);
+		System.out.println("取一位整数:"+new DecimalFormat("0").format(pi));
+		System.out.println("取一位整数和两位小数:"+new DecimalFormat("0.00").format(pi));
+		System.out.println("取两位整数和三位小数，整数不足部分以0填补:"+new DecimalFormat("00.000").format(pi));
+		
+	}
+	
+	@Test
+	public void test3(){
+		double pi = Math.PI;
+		System.out.println(pi);
+		System.out.println("取所有整数部分:"+new DecimalFormat("#").format(pi));
+		System.out.println("取一位整数和两位小数:"+new DecimalFormat("#.##").format(pi));
+		System.out.println(new DecimalFormat("##.###").format(pi));
+		
+	}
 
 }
