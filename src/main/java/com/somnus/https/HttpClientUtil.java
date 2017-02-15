@@ -246,7 +246,7 @@ public class HttpClientUtil {
 	public static String doPost(String url, Map<String,String> param, KeyStoreMaterial ks) throws Exception{
 		Validate.notNull(url, "url must be required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(null);
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {

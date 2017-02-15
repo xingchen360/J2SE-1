@@ -1,13 +1,18 @@
 package com.somnus.apache;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.UniquePredicate;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 /**
  * 
@@ -19,10 +24,10 @@ import org.apache.commons.collections4.MapUtils;
  * @version V1.0
  */
 public class CommonsCollections {
-    
-	public static void main(String[] args) {
-
-		List<String> emptyList = new ArrayList<String>();
+	
+	@Test
+	public void CollectionUtils(){
+		List<String> emptyList = Collections.emptyList();
 		
 		/*集合判断： 
 		例1: 判断集合是否为空:*/
@@ -50,6 +55,17 @@ public class CommonsCollections {
 				Arrays.asList("2", "3", "5"), 
 				Arrays.asList("1", "2", "3")));//list1与list2的差{1}
 		
+		System.out.println(CollectionUtils.select(Arrays.asList("2", "3", "5", "5"), new UniquePredicate<String>()));
+		System.out.println(CollectionUtils.select(Arrays.asList("2", "3", "5", ""), new Predicate<String>(){
+			@Override
+			public boolean evaluate(String object) {
+				return StringUtils.isNotEmpty(object);
+			}
+		}));
+	}
+	
+	@Test
+	public void MapUtils(){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("a", "dddd");
 		map.put("b", 100);
@@ -57,4 +73,14 @@ public class CommonsCollections {
 		System.out.println(MapUtils.getIntValue(map, "b"));
 		System.out.println(MapUtils.isNotEmpty(map));
 	}
+	
+	@Test
+	public void ListUtils(){
+		System.out.println(ListUtils.sum(Arrays.asList("1", "2", "3"), Arrays.asList("2", "3", "5")));
+	}
+	
+	
+	
+	
+    
 }
