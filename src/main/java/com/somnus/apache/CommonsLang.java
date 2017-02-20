@@ -190,6 +190,10 @@ public class CommonsLang {
         System.out.println(StringUtils.defaultString(map.get("abc"), "abc"));
         System.out.println(StringUtils.defaultIfBlank(map.get("abc"), "abc"));
         System.out.println(StringUtils.defaultIfEmpty(map.get("abc"), "abc"));
+        
+        System.out.println(StringUtils.replaceEachRepeatedly("123987", 
+				new String[]{"1","2","3","4","5","6","7","8","9"}, 
+				new String[]{"壹","贰","叁","肆","伍","陆","柒","捌","玖"}));
     }
     
     @Test
