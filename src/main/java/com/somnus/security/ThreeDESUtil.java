@@ -1,5 +1,7 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -28,7 +30,7 @@ public class ThreeDESUtil {
     // 算法名称 
     public static final String KEY_ALGORITHM = "desede";
     // 算法名称/加密模式/填充方式 
-    public static final String CIPHER_ALGORITHM = "desede/CBC/NoPadding";
+    public static final String CIPHER_ALGORITHM = "desede/CBC/NoPadding";//DESede
     
     /** 
      *   
@@ -122,8 +124,9 @@ public class ThreeDESUtil {
         System.out.println(key+"size:"+Base64.decodeBase64(key).length);
         byte[] keyiv = { 1, 2, 3, 4, 5, 6, 7, 8 };
         
-        String source = "Somnusss";
-        System.out.println("原文: " + source);
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String source = bf.readLine();
+        System.out.println("加密前的字符串:" + source);
         
         String encryptData = encrypt(key, keyiv, source);
         System.out.println("加密后: " + encryptData);

@@ -1,5 +1,7 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -134,8 +136,9 @@ public class DESUtil {
         String key = initKey();
         System.out.println(key+"size:"+Base64.decodeBase64(key).length);
         
-        String source = "Somnus";
-        System.out.println("原文: " + source);
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String source = bf.readLine();
+        System.out.println("加密前的字符串:" + source);
         
         String encryptData = encrypt(source, key);
         System.out.println("加密后: " + encryptData);

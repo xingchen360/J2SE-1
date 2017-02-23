@@ -1,5 +1,7 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -166,7 +168,9 @@ public class DSAUtil {
     }
     
     public static void main(String[] args) throws Exception {
-        String data = "Somnus";
+    	BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String source = bf.readLine();
+        System.out.println("加密前的字符串:" + source);
         // 构建密钥  
         Map<String, Object> keyMap = initKey();  
         // 获得密钥  
@@ -176,11 +180,11 @@ public class DSAUtil {
         System.out.println("私钥:\r" + privateKey);  
   
         // 产生签名  
-        String sign = sign(data, privateKey);  
+        String sign = sign(source, privateKey);  
         System.out.println("签名:" + sign);  
   
         // 验证签名  
-        boolean status = verify(data, publicKey, sign);  
+        boolean status = verify(source, publicKey, sign);  
         System.out.println("状态:" + status);  
 	}
 }

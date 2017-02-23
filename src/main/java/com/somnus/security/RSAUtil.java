@@ -1,7 +1,9 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -287,16 +289,18 @@ public class RSAUtil {
         System.out.println("私钥:\r" + privateKey); 
         
         System.out.println("公钥加密————————————————————私钥解密");  
-        String data = "Somnus"; 
-        System.out.println("原文: " + data);
-        String encryptData = encryptByPublicKey(data);
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String source = bf.readLine();
+        System.out.println("加密前的字符串:" + source);
+        System.out.println("原文: " + source);
+        String encryptData = encryptByPublicKey(source);
         System.out.println("加密后: " + encryptData);
         String decryptData = decryptByPrivateKey(encryptData); 
         System.out.println("解密后: " + decryptData);
         
         System.out.println("私钥加密————————————————————公钥解密");   
-        System.out.println("原文: " + data);
-        String encryptData2 = encryptByPrivateKey(data);
+        System.out.println("原文: " + source);
+        String encryptData2 = encryptByPrivateKey(source);
         System.out.println("加密后: " + encryptData2);
         String decryptData2 = decryptByPublicKey(encryptData2); 
         System.out.println("解密后: " + decryptData2);

@@ -1,5 +1,8 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /** 
  * @Title: Base64Helper.java 
  * @Package com.somnus.cipher 
@@ -39,10 +42,11 @@ public class Base64Helper {
     }  
   
     public static void main(String[] args) throws Exception {
-        String inputStr = "简单加密";  
-        System.out.println("原文:" + inputStr);  
+    	BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String source = bf.readLine();
+        System.out.println("加密前的字符串:" + source); 
         
-        String code = Base64Helper.encryptBASE64(inputStr.getBytes());  
+        String code = Base64Helper.encryptBASE64(source.getBytes());  
         System.out.println("BASE64加密后:" + code);
         
         byte[] output = Base64Helper.decryptBASE64(code);  

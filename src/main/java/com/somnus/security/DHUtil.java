@@ -1,5 +1,7 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -214,19 +216,21 @@ public class DHUtil {
         System.out.println("乙方公钥:\r" + bPublicKey);  
         System.out.println("乙方私钥:\r" + bPrivateKey);  
           
-        String data = "Somnus ";  
-        System.out.println("原文: " + data);  
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String source = bf.readLine();
+        System.out.println("加密前的字符串:" + source);
+        System.out.println("原文: " + source);  
         // 由甲方公钥，乙方私钥构建密文  
-        String encryptData = encrypt(data, aPublicKey,bPrivateKey);  
+        String encryptData = encrypt(source, aPublicKey,bPrivateKey);  
         System.out.println("加密后: " + encryptData);
         // 由乙方公钥，甲方私钥解密  
         String decryptData = decrypt(encryptData, bPublicKey, aPrivateKey);  
         System.out.println("解密后: " + decryptData);  
   
         System.out.println(" ===============反过来加密解密================== ");  
-        System.out.println("原文: " + data);  
+        System.out.println("原文: " + source);  
         // 由乙方公钥，甲方私钥构建密文  
-        String encryptData2 = encrypt(data, bPublicKey,aPrivateKey);
+        String encryptData2 = encrypt(source, bPublicKey,aPrivateKey);
         System.out.println("加密后: " + encryptData2);
         // 由甲方公钥，乙方私钥解密  
         String decryptData2 = decrypt(encryptData2, aPublicKey, bPrivateKey);  

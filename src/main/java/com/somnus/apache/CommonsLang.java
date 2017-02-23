@@ -41,7 +41,8 @@ public class CommonsLang {
         String[] s1 = new String[] {"1", "2", "3" };
         String[] s2 = new String[] {"a", "b", "c" };
         String[] s = (String[]) ArrayUtils.addAll(s1, s2);
-        System.out.println(ArrayUtils.toString(s));
+        System.out.println("ArrayUtils.toString---->" + ArrayUtils.toString(s));
+        System.out.println("Arrays.toString-------->" + Arrays.toString(s));
         /**移除*/
         String[] s3 = new String[] {"","", "a","", "b", "c" };
         for (int i = 0; i < s3.length; i++){

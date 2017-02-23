@@ -1,5 +1,7 @@
 package com.somnus.security;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Random;
@@ -112,18 +114,19 @@ public class PBEUtil {
    }
    
    public static void main(String[] args) throws Exception {
-	   String inputStr = "Somnus";  
-       System.out.println("原文: " + inputStr);  
+	   BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+       String source = bf.readLine();
+       System.out.println("加密前的字符串:" + source);
  
-       String pwd = "efg";  
-       System.out.println("密码: " + pwd);  
+       String pwd = "efg";
+       System.out.println("密码: " + pwd);
  
-       byte[] salt = initSalt();  
+       byte[] salt = initSalt();
  
-       String encryptData = encrypt(inputStr, pwd, salt);  
-       System.out.println("加密后: " + encryptData);  
+       String encryptData = encrypt(source, pwd, salt);
+       System.out.println("加密后: " + encryptData);
  
-       String decryptData = decrypt(encryptData, pwd, salt);  
-       System.out.println("解密后: " + decryptData);  
+       String decryptData = decrypt(encryptData, pwd, salt);
+       System.out.println("解密后: " + decryptData);
    }
 }
