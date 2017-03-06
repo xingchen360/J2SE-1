@@ -1,8 +1,10 @@
 package com.somnus.array;
+
+import java.util.Arrays;
+
 /**
  * 二分查找法
  * @author Compaq
- *
  */
 public class BinarySearch{
 	public static int binarySearch(int[] array, int value){
@@ -18,7 +20,6 @@ public class BinarySearch{
 					System.out.print("$$  ");
 				}
 			}
-			System.out.println();
 			if(array[middle] == value){
 				return middle;
 			}
@@ -37,12 +38,15 @@ public class BinarySearch{
 	 * @param args
 	 */
 	public static void main(String[] args){
+		
 		int[] array = {7,3,9,5,6,8,1};
 		int[] array1 = BubbleSort.bubbleSort(array);
-		
+		System.out.println("=============");
+		//modify-noteshare:可以直接使用Arrays的二分查找方法
+		System.out.println(Arrays.binarySearch(array1, 3));
+		System.out.println("=============");
 		int index = binarySearch(array1,1);
 		System.out.println("所在的位置:"+index);
-
 	}
 
 }
