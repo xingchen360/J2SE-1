@@ -14,6 +14,7 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -29,6 +30,13 @@ import org.junit.Test;
  * @version V1.0
  */
 public class CommonsLang {
+	
+	@Test
+	public void SerializationUtils(){
+		Person person = new Person("admin","password",new Date(),null);
+		System.out.println(person);
+		System.out.println(SerializationUtils.clone(person));
+	}
     
     @Test
     public void ArrayUtils(){
