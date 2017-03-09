@@ -15,6 +15,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang.SerializationUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -254,4 +255,8 @@ public class CommonsLang {
     	System.out.println(RandomStringUtils.randomAscii(4));
     }
     
+    @Test
+    public void RandomUtils(){
+    	System.out.println(RandomUtils.nextInt(5, 10));
+    }
 }
