@@ -252,4 +252,6 @@ public class CommonsLang {
     	System.out.println(RandomUtils.nextInt(5, 10));
     }
     
+    public void a(){}
+    
 }
