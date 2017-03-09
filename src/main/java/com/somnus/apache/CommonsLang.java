@@ -14,6 +14,7 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -232,7 +233,7 @@ public class CommonsLang {
     
     @Test
     public void RandomStringUtils(){
-    	//产生5位长度的随机字符串，中文环境下是乱码
+    	//产生5位长度的随机字符串，中文环境下是乱码 --------------譅ᄚ䩠
     	System.out.println(RandomStringUtils.random(5));
     	//使用指定的字符生成5位长度的随机字符串
     	System.out.println(RandomStringUtils.random(5, new char[]{'a','b','c','d','e','f', '1', '2', '3'}));
@@ -244,6 +245,11 @@ public class CommonsLang {
     	System.out.println(RandomStringUtils.randomAlphabetic(5));
     	//生成从ASCII 32到126组成的随机字符串 
     	System.out.println(RandomStringUtils.randomAscii(4));
+    }
+    
+    @Test
+    public void RandomUtils(){
+    	System.out.println(RandomUtils.nextInt(5, 10));
     }
     
 }
