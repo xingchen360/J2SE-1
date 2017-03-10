@@ -18,6 +18,7 @@ import org.junit.Test;
  * @date 2015年6月8日 上午11:37:52 
  * @version V1.0
  */
+//a
 public class UniqueList {
 	/**
 	 * List 去掉重复的值，并保持原先List顺序
