@@ -204,6 +204,8 @@ public class CommonsLang {
         System.out.println(StringUtils.replaceEachRepeatedly("123987", 
 				new String[]{"1","2","3","4","5","6","7","8","9"}, 
 				new String[]{"壹","贰","叁","肆","伍","陆","柒","捌","玖"}));
+        //统计某字符在一个字符串中的出现次数
+        System.out.println(StringUtils.countMatches("11112222", "1"));
     }
     
     @Test
@@ -259,4 +261,5 @@ public class CommonsLang {
     public void RandomUtils(){
     	System.out.println(RandomUtils.nextInt(5, 10));
     }
+    
 }
