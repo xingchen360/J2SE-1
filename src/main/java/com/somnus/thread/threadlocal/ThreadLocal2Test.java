@@ -21,7 +21,7 @@ public class ThreadLocal2Test {
 	};
 
 	public static void main(String[] args) throws InterruptedException {
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < 10; j++) {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {

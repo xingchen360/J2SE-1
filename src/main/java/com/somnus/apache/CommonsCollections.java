@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.UniquePredicate;
@@ -37,7 +38,6 @@ public class CommonsCollections {
 		/*例2: 判断集合是否不为空:*/
 		System.out.println(CollectionUtils.isNotEmpty(emptyList));
 		System.out.println(CollectionUtils.isNotEmpty(Arrays.asList("1", "2", "3")));
-
 		
 		System.out.println(CollectionUtils.union(
 				Arrays.asList("1", "2", "3"), 
@@ -62,6 +62,12 @@ public class CommonsCollections {
 				return StringUtils.isNotEmpty(object);
 			}
 		}));
+		System.out.println(CollectionUtils.select(Arrays.asList(2, 3, 5, 6), new Predicate<Integer>(){
+			@Override
+			public boolean evaluate(Integer object) {
+				return object.intValue() <= 5;
+			}
+		}));
 	}
 	
 	@Test
@@ -79,8 +85,9 @@ public class CommonsCollections {
 		System.out.println(ListUtils.sum(Arrays.asList("1", "2", "3"), Arrays.asList("2", "3", "5")));
 	}
 	
-	
-	
-	
+	@Test
+	public void SetUtils(){
+		System.out.println(SetUtils.emptySortedSet());
+	}
     
 }
