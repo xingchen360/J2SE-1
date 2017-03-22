@@ -1,14 +1,12 @@
 package com.somnus.designPatterns.singleton;
-/**
- * 如何选用
- * 	单例对象 占用资源少，不需要延时加载
- * 		枚举式 好于 饿汉式
- * 	单例对象 占用资源多，需要延时加载
- * 		静态内部类 式 好于 懒汉式
- */
 
-//懒汉式1【线程安全，调用效率不高，但是，可以延时加载】
-public class Singleton{
+import java.io.Serializable;
+
+//懒汉式本身是非线程安全的，为了实现线程安全有几种写法，分别是下面的2、3，
+public class Singleton implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private static Singleton instance ;
 	
 	private Singleton(){}
@@ -21,7 +19,7 @@ public class Singleton{
 	}
 }
 
-//懒汉式2
+//懒汉式-升级写法
 class Singleton2{
 	private static Singleton2 instance ;
   
@@ -35,7 +33,7 @@ class Singleton2{
 	}
 }
 
-//懒汉式3
+//懒汉式-进一步升级写法
 class Singleton3{
 	private static Singleton3 instance ;
   
@@ -49,6 +47,27 @@ class Singleton3{
 		}
 		return instance;
 	}
+}
+//懒汉式的最终升级版变种到了双重检测锁
+//双重检测锁【在JDK1.5之后，双重检查锁定才能够正常达到单例效果。】
+class Singleton4{
+  private static Singleton4 instance ;
+  
+  private Singleton4(){}
+  
+  public static Singleton4 getInstance(){
+      //第一重判断  
+      if (instance == null) {
+          //锁定代码块  
+          synchronized (Singleton4.class) {
+              //第二重判断  
+              if (instance == null) {
+                  instance = new Singleton4(); //创建单例实例  
+              }
+          }
+      }
+      return instance;
+  }
 }
 
 //静态(static)内部类【线程安全，调用效率高，但是，可以延时加载】
@@ -67,6 +86,7 @@ class Singleton6{
 //饿汉式【线程安全，调用效率不高，但是，不能延时加载】
 class Singleton5{
 	//类初始化时，立即加载这个对象（没有延时加载的优势），加载类时，天然是线程安全的
+	//饿汉式在类创建的同时就已经创建好一个静态的对象供系统使用，以后不再改变，所以天生是线程安全的。
 	private static Singleton5 instance = new Singleton5();
 	
 	private Singleton5(){}
@@ -87,26 +107,4 @@ enum Singleton7{
 	public void opreate(){
 		
 	}
-}
-
-
-//双重检测锁【由于JVM底层内部模型原因，偶尔会出现问题，不建议使用】
-class Singleton4{
-    private static Singleton4 instance ;
-    
-    private Singleton4(){}
-    
-    public static Singleton4 getInstance(){
-        //第一重判断  
-        if (instance == null) {
-            //锁定代码块  
-            synchronized (Singleton4.class) {
-                //第二重判断  
-                if (instance == null) {
-                    instance = new Singleton4(); //创建单例实例  
-                }
-            }
-        }
-        return instance;
-    }
 }
