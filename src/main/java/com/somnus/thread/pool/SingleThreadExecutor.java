@@ -3,8 +3,18 @@ package com.somnus.thread.pool;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * @description: 
+ * @author: Somnus
+ * @version: 1.0
+ * @createDate: 2017年4月4日 下午10:59:32
+ * Modification  History:
+ *    Date        Author        Version        Description
+ * -----------------------------------------------------------------------------------
+ * 2017年4月4日             Somnus         1.0             初始化
+ 
+ */
 public class SingleThreadExecutor {
 	
 	public static Random random = new Random();

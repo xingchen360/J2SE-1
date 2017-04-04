@@ -4,6 +4,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @description: 
+ * @author: Somnus
+ * @version: 1.0
+ * @createdate: 2017年4月4日 下午11:21:25
+ * Modification  History:
+ *    Date        Author        Version        Description
+ * -----------------------------------------------------------------------------------
+ * 2017年4月4日             Somnus         1.0             初始化
+ */
 public class ScheduledThreadPool {
 	
 	public static void main(String[] args) {

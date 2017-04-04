@@ -4,12 +4,23 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * @description: 
+ * @author: Somnus
+ * @version: 1.0
+ * @createDate: 2017年4月4日 下午11:20:36
+ * Modification  History:
+ *    Date        Author        Version        Description
+ * -----------------------------------------------------------------------------------
+ * 2017年4月4日             Somnus         1.0             初始化
+ */
 public class CachedThreadPool {
 	
 	public static Random random = new Random();
 
 	public static void main(String[] args) {
-		/*线程池的大小会根据执行的任务数动态分配 */
+		/*返回一个可根据实际情况调整线程个数的线程池，不限制最大线程数量，若用空闲的线程则执行任务，
+		 * 若无任务则不创建线程。并且每一个空闲线程会在60s后自动回收*/
         ExecutorService executor = Executors.newCachedThreadPool();
         for (int i = 1; i <=10; i++){
             final int taskID = i;

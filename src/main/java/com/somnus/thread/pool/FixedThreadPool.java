@@ -4,12 +4,23 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * @description: 
+ * @author: Somnus
+ * @version: 1.0
+ * @createdate: 2017年4月4日 下午10:56:14
+ * Modification  History:
+ *    Date        Author        Version        Description
+ * -----------------------------------------------------------------------------------
+ * 2017年4月4日             Somnus         1.0             初始化
+ */
 public class FixedThreadPool {
 	
 	public static Random random = new Random();
 
 	public static void main(String[] args) {
-		/*创建可以容纳3个线程的线程池 */
+		/*该方法返回一个固定数量的线程池，该方法的线程池数始终不变，当有一个任务提交时，
+		 * 若线程池中空闲，则立即执行，若没有，则会被暂缓在一个任务队列总等待有空闲的线程去执行 */
         ExecutorService executor = Executors.newFixedThreadPool(3);
         for (int i = 1; i <=10; i++){
             final int taskID = i;
