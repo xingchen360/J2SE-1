@@ -34,9 +34,20 @@ public class CommonsLang {
 	
 	@Test
 	public void SerializationUtils(){
+		System.out.println(this.getClass().getName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Person person = new Person("admin","password",new Date(),null);
 		System.out.println(person);
 		System.out.println(SerializationUtils.clone(person));
+		somnus();
+	}
+	
+	public static void somnus(){
+		System.out.println(Thread.currentThread().getStackTrace()[1].getClassName()
+				+ "\n" 
+				+ Thread.currentThread().getStackTrace()[1].getMethodName() 
+				+ "\n" 
+				+ Thread.currentThread().getStackTrace()[1].getLineNumber());
 	}
     
     @Test

@@ -69,12 +69,21 @@ public class JodaDate {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(DateTime.now().toDate());
         System.out.println(calendar.get(Calendar.YEAR));
+        
+        DateTime dateTime = new DateTime(calendar.getTime());
+        System.out.println(dateTime.toString("yyyy-MM-dd"));
     }
     
     @Test
     public void getDayOfMonth(){
         //在当月第几天
         System.out.println(DateTime.now().getDayOfMonth());
+    }
+    
+    @Test
+    public void getHourOfDay(){
+        //在当天中第几个小时
+        System.out.println(DateTime.now().getHourOfDay());
     }
     
 }

@@ -39,7 +39,7 @@ class People {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		Person other = (Person) obj;
+		People other = (People) obj;
 		if (age == other.age)
 			return true;
 		return false;

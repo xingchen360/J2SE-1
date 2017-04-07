@@ -6,7 +6,6 @@ package com.somnus.thread;
  * 
  * 另一个会导致线程暂停的方法就是Thread类的sleep方法，它会导致线程睡眠指定的毫秒数，
  * 但线程在睡眠的过程中是不会释放掉对象的锁的。
- *
  */
 public class ThreadTest15{
 	public static void main(String[] args){
@@ -37,7 +36,7 @@ class Math{
 	private int num;
 
 	public synchronized void increase(){
-		if(num != 0){//while(num != 0)
+		while(num != 0){//if(num != 0)
 			try{
 				wait();
 			}
@@ -50,7 +49,7 @@ class Math{
 		notify();
 	}
 	public synchronized void decrease(){
-		if(num == 0){//while(num == 0)
+		while(num == 0){//if(num == 0)
 			try{
 				wait();
 			}
