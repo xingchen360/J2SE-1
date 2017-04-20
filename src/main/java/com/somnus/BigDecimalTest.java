@@ -6,6 +6,21 @@ import java.math.RoundingMode;
 import org.junit.Test;
 
 public class BigDecimalTest {
+	
+	@Test
+	public void dou(){
+		System.out.println(0.06+0.01);
+        System.out.println(1.0-0.42);
+        System.out.println(4.015*100);
+        System.out.println(303.1/1000);
+	}
+	
+	@Test
+	public void error() {
+		BigDecimal a = new BigDecimal(2.23);
+		BigDecimal b = new BigDecimal(1.93);
+		System.out.println(a.add(b));
+	}
 
 	@Test
 	public void add() {
