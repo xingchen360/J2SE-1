@@ -24,7 +24,33 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+/**
+String jsonStr = JSON.toJSONString(user, new PropertyFilter(){
+  
+	@Override
+	public boolean apply(Object object, String name, Object value) {
+		if(name.equalsIgnoreCase("username")){
+			//false表示username字段将被排除在外 
+			return false;
+		}
+		return true;
+	}
+              
+});
 
+String jsonStr = JSON.toJSONString(user, new ValueFilter(){
+  
+	@Override
+	public Object process(Object object, String name, Object value) {
+		if (value instanceof BigDecimal) {
+			return new BigDecimal(String.format("%.2f", new BigDecimal(value.toString())));
+		} else {
+			return value;
+		}
+	}
+              
+});
+ */
 public class FastJsonTestCase {
 	/**
      * 简单序列化
