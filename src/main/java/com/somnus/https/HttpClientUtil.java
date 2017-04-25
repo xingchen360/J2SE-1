@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.somnus.exception.HttpStatusException;
 import com.somnus.https.HttpClientManager;
-import com.somnus.https.KeyStoreMaterial;
 
 /**
  * @ClassName:     HttpClientUtils.java
@@ -74,8 +73,8 @@ public class HttpClientUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doJsonPost(String url, Map<String,String> param, KeyStoreMaterial ks)  throws Exception{
-		return doJsonPost(url,JSON.toJSONString(param),ks);
+	public static String doJsonPost(String url, Map<String,String> param, String path, String password)  throws Exception{
+		return doJsonPost(url,JSON.toJSONString(param),path,password);
 	}
 	
 	/**
@@ -86,7 +85,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doJsonPost(String url, String json)  throws Exception{
-		return doJsonPost(url,json,null);
+		return doJsonPost(url,json,null,null);
 	}
 	
 	/**
@@ -97,11 +96,11 @@ public class HttpClientUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doJsonPost(String url, String json, KeyStoreMaterial ks)  throws Exception{
+	public static String doJsonPost(String url, String json, String path, String password)  throws Exception{
 		Validate.notNull(url, "url must be required.");
 		Validate.notNull(json, "json must be required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(path, password);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
@@ -144,7 +143,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doGet(String url) throws Exception{
-		return doGet(url, null, null);
+		return doGet(url, null, null, null);
 	}
 	
 	/**
@@ -154,8 +153,8 @@ public class HttpClientUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doGet(String url, KeyStoreMaterial ks) throws Exception{
-		return doGet(url, null, ks);
+	public static String doGet(String url, String path, String password) throws Exception{
+		return doGet(url, null, null, null);
 	}
 	
 	/**
@@ -166,7 +165,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doGet(String url, Map<String,String> param) throws Exception{
-		return doGet(url, param, null);
+		return doGet(url, param, null, null);
 	}
 	
 	/**
@@ -177,10 +176,10 @@ public class HttpClientUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doGet(String url, Map<String,String> param, KeyStoreMaterial ks) throws Exception{
+	public static String doGet(String url, Map<String,String> param, String path, String password) throws Exception{
 		Validate.notNull(url, "url must be required.");
 		//创建HttpClient对象
-		CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
+		CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(path, password);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
@@ -233,7 +232,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doPost(String url, Map<String,String> param) throws Exception{
-		return doPost(url, param, null);
+		return doPost(url, param, null, null);
 	}
 	
 	/**
@@ -243,10 +242,10 @@ public class HttpClientUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doPost(String url, Map<String,String> param, KeyStoreMaterial ks) throws Exception{
+	public static String doPost(String url, Map<String,String> param, String path, String password) throws Exception{
 		Validate.notNull(url, "url must be required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(path, password);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
@@ -296,7 +295,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doXmlPost(String url, String xml) throws Exception{
-		return doXmlPost(url, xml, null);
+		return doXmlPost(url, xml, null, null);
 	}
 	
 	/**
@@ -307,11 +306,11 @@ public class HttpClientUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doXmlPost(String url, String xml, KeyStoreMaterial ks) throws Exception{
+	public static String doXmlPost(String url, String xml, String path, String password) throws Exception{
 		Validate.notNull(url, "url must be required.");
 		Validate.notNull(xml, "xml must be required.");
 		//创建HttpClient对象
-        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(ks);
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(path, password);
         String resultString = "";
         CloseableHttpResponse httpResponse = null;
         try {
