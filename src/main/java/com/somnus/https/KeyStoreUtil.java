@@ -7,6 +7,8 @@ import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * ClassName:KeyStoreUtil <br/>
  * Function: 证书工具类. <br/>
@@ -31,6 +33,9 @@ public class KeyStoreUtil {
 	 * @since JDK 1.7
 	 */
 	public static KeyStoreMaterial getKeyStore(String path, String password) {
+		if(StringUtils.isEmpty(path) || StringUtils.isEmpty(password)){
+			return null;
+		}
 		String key = formatKey(new String[] { path, password });
 		KeyStoreMaterial result = keystores.get(key);
 		if (result == null) {
