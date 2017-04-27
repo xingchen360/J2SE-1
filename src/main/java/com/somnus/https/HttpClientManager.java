@@ -51,6 +51,7 @@ public class HttpClientManager {
 			LOGGER.info("默认SSL连接,不携带客户端证书初始化完毕");
 		} catch (Exception e) {
 			e.printStackTrace();
+			LOGGER.error("初始化建立连接异常:{}", e.getMessage(), e );
 		}
 	}
 	
@@ -106,7 +107,7 @@ public class HttpClientManager {
 						sslConnManager.put(keyStore, cm);
 					} catch (Exception e) {
 						e.printStackTrace();
-						LOGGER.error(e.getMessage() + "path:{},password:{}", e , path, password);
+						LOGGER.error("path:{},password:{}建立连接异常:{}", path, password , e.getMessage(), e );
 					}
 				}
 			}
