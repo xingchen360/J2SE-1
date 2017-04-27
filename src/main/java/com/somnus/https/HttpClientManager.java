@@ -137,6 +137,18 @@ public class HttpClientManager {
 		
 		return connManager;
 	}
+	
+	/**
+	 * getSSLHttpClient:获取默认的SSL,不携带客户端证书<br/>
+	 * 
+	 * @author chengyun.quan@cimc.com
+	 * @return
+	 * @throws Exception
+	 * @since JDK 1.7
+	 */
+	public static CloseableHttpClient getSSLHttpClient() throws Exception {
+		return getSSLHttpClient("", "");
+	}
 
 	/**
 	 * getSSLHttpClient:client/server certification<br/>
@@ -148,27 +160,27 @@ public class HttpClientManager {
 	 * @since JDK 1.7
 	 */
 	public static CloseableHttpClient getSSLHttpClient(String path, String password) throws Exception {
-		KeyStoreMaterial keyStore = KeyStoreUtil.getKeyStore(path, password);
-		
-		PoolingHttpClientConnectionManager connManager = getSSLConnManager(keyStore);
-		if (connManager == null) {
-			return null;
+		KeyStoreMaterial keyStore = null;
+		if(StringUtils.isNotEmpty(path) && !StringUtils.isNotEmpty(password)){
+			keyStore = KeyStoreUtil.getKeyStore(path, password);
 		}
-		
-		CloseableHttpClient client =  HttpClients.custom().setConnectionManager(connManager).build();
-		
-		return client;
+		return getSSLHttpClient(keyStore);
 	}
 
 	/**
-	 * getSSLHttpClient:获取默认的SSL,不携带客户端证书<br/>
+	 * getSSLHttpClient:根据keyStore获取一个httpclient <br/>
 	 * 
+	 * @param keyStore
 	 * @return
 	 * @throws Exception
 	 * @since JDK 1.7
 	 */
-	public static CloseableHttpClient getSSLHttpClient() throws Exception {
-		return getSSLHttpClient("", "");
+	private static CloseableHttpClient getSSLHttpClient(KeyStoreMaterial keyStore) throws Exception {
+		PoolingHttpClientConnectionManager connManager = getSSLConnManager(keyStore);
+		if (connManager == null) {
+			return null;
+		}
+		return HttpClients.custom().setConnectionManager(connManager).build();
 	}
 
 }

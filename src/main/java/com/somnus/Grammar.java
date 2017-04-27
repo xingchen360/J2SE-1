@@ -1,5 +1,7 @@
 package com.somnus;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 /**
@@ -77,5 +79,28 @@ public class Grammar {
 		    }
 		}
 		System.out.println("本语句永远不会有机会执行到");
+	}
+	
+	@Test
+	public void testWhile(){
+		boolean flag = true;
+		while(flag){
+			System.out.println("while循环。。。。。。");
+			if(new Random().nextInt(5) == 2){
+				flag = false;
+			}
+		}
+		System.out.println("最后执行");
+	}
+	
+	@Test
+	public void testWhile2(){
+		while(true){
+			System.out.println("while循环。。。。。。");
+			if(new Random().nextInt(5) == 2){
+				break;
+			}
+		}
+		System.out.println("最后执行");
 	}
 }

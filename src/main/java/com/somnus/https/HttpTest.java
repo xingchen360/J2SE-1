@@ -17,7 +17,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.junit.Test;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * @Description: TODO
@@ -30,22 +30,22 @@ public class HttpTest {
     @Test
     public void doJsonPost() throws Exception{
     	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount";
-		Map<String,String> param = new HashMap<String, String>();
+		JSONObject param = new JSONObject();
 		param.put("username", "admin");
 		param.put("password", "123456");
-		System.out.println("body:" + HttpClientUtil.doJsonPost(url, param));
+		System.out.println("body:" + HttpClientUtil.doJsonPost(url, param.toJSONString()));
     }
     
     @Test
     public void doJsonPostByFluent() throws ClientProtocolException, IOException {
     	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount";
-    	Map<String,String> param = new HashMap<String, String>();
+    	JSONObject param = new JSONObject();
 		param.put("username", "admin");
 		param.put("password", "123456");
     	String response = Request.Post(url)
     						.connectTimeout(1000)
     						.socketTimeout(1000)  
-    						.bodyString(JSON.toJSONString(param),ContentType.APPLICATION_JSON)
+    						.bodyString(param.toJSONString(),ContentType.APPLICATION_JSON)
     						.execute()
     						.returnContent()
     						.asString();

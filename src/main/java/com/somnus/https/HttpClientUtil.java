@@ -25,7 +25,6 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.somnus.exception.HttpStatusException;
 import com.somnus.https.HttpClientManager;
 
@@ -57,35 +56,12 @@ public class HttpClientUtil {
 	/**
 	 * Content-type : application/json
 	 * @param url
-	 * @param param
-	 * @return
-	 * @throws Exception
-	 */
-	public static String doJsonPost(String url, Map<String,String> param)  throws Exception{
-		return doJsonPost(url,JSON.toJSONString(param));
-	}
-	
-	/**
-	 * Content-type : application/json
-	 * @param url
-	 * @param param
-	 * @param ks
-	 * @return
-	 * @throws Exception
-	 */
-	public static String doJsonPost(String url, Map<String,String> param, String path, String password)  throws Exception{
-		return doJsonPost(url,JSON.toJSONString(param),path,password);
-	}
-	
-	/**
-	 * Content-type : application/json
-	 * @param url
 	 * @param json
 	 * @return
 	 * @throws Exception
 	 */
 	public static String doJsonPost(String url, String json)  throws Exception{
-		return doJsonPost(url,json,null,null);
+		return doJsonPost(url, json, null, null);
 	}
 	
 	/**
@@ -143,7 +119,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doGet(String url) throws Exception{
-		return doGet(url, null, null, null);
+		return doGet(url, null, null);
 	}
 	
 	/**
@@ -154,7 +130,7 @@ public class HttpClientUtil {
 	 * @throws Exception
 	 */
 	public static String doGet(String url, String path, String password) throws Exception{
-		return doGet(url, null, null, null);
+		return doGet(url, null, path, password);
 	}
 	
 	/**
