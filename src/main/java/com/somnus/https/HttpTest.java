@@ -29,7 +29,7 @@ public class HttpTest {
 	
     @Test
     public void doJsonPost() throws Exception{
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount";
+    	String url = "https://httpbin.org/post";
 		JSONObject param = new JSONObject();
 		param.put("username", "admin");
 		param.put("password", "123456");
@@ -38,7 +38,7 @@ public class HttpTest {
     
     @Test
     public void doJsonPostByFluent() throws ClientProtocolException, IOException {
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount";
+    	String url = "https://httpbin.org/post";
     	JSONObject param = new JSONObject();
 		param.put("username", "admin");
 		param.put("password", "123456");
@@ -54,21 +54,20 @@ public class HttpTest {
     
     @Test
     public void doPathParamGet() throws Exception {
-    	String url = "https://www.baidu.com/";
-		System.out.println("body:" + HttpClientUtil.doGet(url));
+    	String url = "https://httpbin.org/html";
 		System.out.println("body:" + HttpClientUtil.doGet(url));
     }
     
     @Test
     public void doPathParamGetByFluent() throws ClientProtocolException, IOException {
-    	String response = Request.Get("https://www.baidu.com/").execute()
+    	String response = Request.Get("https://httpbin.org/html").execute()
 				.returnContent().asString();
 		System.out.println(response);
     }
 
     @Test
     public void doQueryParamGet() throws Exception {
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount4";
+    	String url = "https://httpbin.org/cookies/set";
 		Map<String,String> param = new HashMap<String, String>();
 		param.put("username", "admin");
 		param.put("password", "123456");
@@ -77,7 +76,7 @@ public class HttpTest {
     
     @Test
     public void doQueryParamGetByFluent() throws ClientProtocolException, IOException, URISyntaxException {
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount4";
+    	String url = "https://httpbin.org/cookies/set";
     	String response = Request.Get(new URIBuilder(url)
     									.addParameter("username", "admin")
     									.addParameter("password", "123456")
@@ -89,19 +88,19 @@ public class HttpTest {
 
     @Test
     public void doFormParamPost() throws Exception{
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount5";
+    	String url = "https://httpbin.org/post";
 		Map<String,String> param = new HashMap<String, String>();
-		param.put("username", "admin");
-		param.put("password", "123456");
+		param.put("custname", "admin");
+		param.put("custtel", "123456");
 		System.out.println("body:" + HttpClientUtil.doPost(url, param));
     }
     
     @Test
     public void doFormParamPostByFluent() throws ClientProtocolException, IOException{
-    	String url = "http://localhost:8080/restful/service/com.somnus.resource.RestfulResource/getAccount5";
+    	String url = "https://httpbin.org/post";
     	String response = Request.Post(url).bodyForm(Form.form()
-    									.add("username", "admin")
-    									.add("password", "123456")
+    									.add("custname", "admin")
+    									.add("custtel", "123456")
     									.build()
     							)
     					.execute().returnContent().asString();
@@ -120,7 +119,7 @@ public class HttpTest {
     
     @Test
     public void doDownload() throws ClientProtocolException, IOException, URISyntaxException {
-    	String url = "https://love-somnus.github.io/jQuery/banner/img/e01.jpg";
+    	String url = "https://httpbin.org/image/jpeg";
     	byte[] buff = Request.Get(new URIBuilder(url).build()).execute().returnContent().asBytes();
     	OutputStream os = new FileOutputStream(new File("target/classes/e01.jpg"));
     	try {

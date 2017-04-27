@@ -161,7 +161,7 @@ public class HttpClientManager {
 	 */
 	public static CloseableHttpClient getSSLHttpClient(String path, String password) throws Exception {
 		KeyStoreMaterial keyStore = null;
-		if(StringUtils.isNotEmpty(path) && !StringUtils.isNotEmpty(password)){
+		if(StringUtils.isNotEmpty(path) && StringUtils.isNotEmpty(password)){
 			keyStore = KeyStoreUtil.getKeyStore(path, password);
 		}
 		return getSSLHttpClient(keyStore);
