@@ -41,11 +41,11 @@ public class HttpClientManager {
 			SSLContext sslcontext = SSLContexts.custom()
 					//忽略掉对服务器端证书的校验
 					.loadTrustMaterial(new TrustStrategy() {
-	                    @Override
-	                    public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-	                        return true;
-	                    }
-	                })
+						@Override
+						public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+							return true;
+						}
+					})
 					.build();
 			defaultSSLConnManager = getSSLContextConnManager(sslcontext);
 			LOGGER.info("默认SSL连接,不携带客户端证书初始化完毕");
