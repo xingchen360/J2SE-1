@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.ArrayUtils;
@@ -18,6 +20,7 @@ import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 
@@ -217,6 +220,9 @@ public class CommonsLang {
 				new String[]{"壹","贰","叁","肆","伍","陆","柒","捌","玖"}));
         //统计某字符在一个字符串中的出现次数
         System.out.println(StringUtils.countMatches("11112222", "1"));
+        String baidu = "1\n2\n3\n4";
+        System.out.println(baidu);
+        System.out.println(StringUtils.normalizeSpace(baidu));
     }
     
     @Test
@@ -271,6 +277,18 @@ public class CommonsLang {
     @Test
     public void RandomUtils(){
     	System.out.println(RandomUtils.nextInt(5, 10));
+    }
+    
+    @Test
+    public void stopWatch() throws InterruptedException{
+    	StopWatch sw = new StopWatch();
+    	sw.start();
+    	
+    	TimeUnit.SECONDS.sleep(new Random().nextInt(10));
+    	
+    	sw.stop();
+    	
+    	System.out.println(sw.getTime());
     }
     
 }

@@ -71,7 +71,10 @@ class Singleton4{
 }
 
 //静态(static)内部类【线程安全，调用效率高，但是，可以延时加载】
-class Singleton6{
+class Singleton6 implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Singleton6(){}
 
 	private static class HolderClass {
@@ -107,4 +110,21 @@ enum Singleton7{
 	public void opreate(){
 		
 	}
+}
+
+/** ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※*/
+
+class Singleton8{
+	private static ThreadLocal<Singleton8> instance = new ThreadLocal<Singleton8>();
+	
+	private Singleton8(){}
+	
+	public static Singleton8 getInstance(){
+		Singleton8 context = instance.get();
+    	if(context == null){
+    		context = new Singleton8();
+    		instance.set(context);
+    	}
+        return context;
+    }
 }

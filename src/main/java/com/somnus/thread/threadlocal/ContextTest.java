@@ -30,7 +30,7 @@ public class ContextTest {
 	}
 }
 class ActionContext{
-	private static ActionContext instance ;
+	private static ThreadLocal<ActionContext> actionContext = new ThreadLocal<ActionContext>();
 	
 	private static final ThreadLocal<Index> 		local = new ThreadLocal<Index>();
 
@@ -44,17 +44,12 @@ class ActionContext{
 	private ActionContext(){}
 	
 	public static ActionContext getInstance(){
-        //第一重判断  
-        if (instance == null) {  
-            //锁定代码块  
-            synchronized (ActionContext.class) {  
-                //第二重判断  
-                if (instance == null) {  
-                    instance = new ActionContext(); //创建单例实例  
-                }  
-            }  
-        }  
-        return instance;
+		ActionContext context = actionContext.get();
+    	if(context == null){
+    		context = new ActionContext();
+    		actionContext.set(context);
+    	}
+        return context;
     }
 	
 	public void remove(){

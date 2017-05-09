@@ -53,5 +53,27 @@ public class BigDecimalTest {
 		System.out.println(a.divide(b, 3, RoundingMode.HALF_UP));// 四舍五入 如果是5则向上舍
 		System.out.println(a.divide(b, 3, RoundingMode.HALF_DOWN));// 四舍五入 如果是5则向下舍
 	}
+	
+	public static void passByValue(BigDecimal v){
+		v = v.add(BigDecimal.TEN);
+	}
+	
+	public static void main(String[] args) {
+		BigDecimal p = BigDecimal.ONE;
+		passByValue(p);
+		System.out.println(p);
+		
+		System.out.println(BigDecimal.ZERO);
+		System.out.println(new BigDecimal(0));
+		System.out.println(new BigDecimal("0"));
+		System.out.println(new BigDecimal(0.0));
+		System.out.println(new BigDecimal("0.0"));
+		
+		System.out.println(new BigDecimal(0.0).compareTo(new BigDecimal("0.0")));
+		
+		System.out.println(new BigDecimal("0.10"));
+		System.out.println(new BigDecimal("0.10").doubleValue());
+		
+	}
 
 }

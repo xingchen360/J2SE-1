@@ -33,6 +33,7 @@ public class ThreadLocal1Test {
 					// 重新设置累加后的本地变量
 					container.set(num);
 					System.out.println(Thread.currentThread().getName() + " : " + container.get());
+					container.remove();
 				}
 			}, "Thread-" + j).start();
 		}

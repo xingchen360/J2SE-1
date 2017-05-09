@@ -1,6 +1,8 @@
 package com.somnus.date;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -15,7 +17,12 @@ public class JodaDate {
     
     @Test
     public void now(){
-        System.out.println(DateTime.now().toString("yyyy-MM-dd"));
+    	System.out.println(new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date()));
+    	System.out.println(new SimpleDateFormat("yyyyMMddHHmmssSS").format(new Date()));
+    	System.out.println(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
+    	System.out.println(DateTime.now().toString("yyyyMMddHHmmssS"));
+        System.out.println(DateTime.now().toString("yyyyMMddHHmmssSS"));
+        System.out.println(DateTime.now().toString("yyyyMMddHHmmssSSS"));
     }
     
     @Test
@@ -70,8 +77,9 @@ public class JodaDate {
         calendar.setTime(DateTime.now().toDate());
         System.out.println(calendar.get(Calendar.YEAR));
         
-        DateTime dateTime = new DateTime(calendar.getTime());
+        DateTime dateTime = new DateTime(new Date());
         System.out.println(dateTime.toString("yyyy-MM-dd"));
+        System.out.println(dateTime.getDayOfMonth());
     }
     
     @Test
