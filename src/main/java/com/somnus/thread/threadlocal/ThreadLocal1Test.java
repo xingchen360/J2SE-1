@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.somnus.thread.threadlocal;
 
 /**
@@ -19,8 +16,8 @@ public class ThreadLocal1Test {
 			return 0;
 		}
 	};
-
-	public static void main(String[] args) throws InterruptedException {
+	
+	public void execute(){
 		for (int j = 0; j < 10; j++) {
 			new Thread(new Runnable() {
 				@Override
@@ -37,5 +34,10 @@ public class ThreadLocal1Test {
 				}
 			}, "Thread-" + j).start();
 		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		ThreadLocal1Test test = new ThreadLocal1Test();
+		test.execute();
 	}
 }

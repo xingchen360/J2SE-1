@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.somnus.thread.threadlocal;
 
 /**
@@ -13,35 +10,29 @@ package com.somnus.thread.threadlocal;
  */
 public class ThreadLocal2Test {
 	// 创建一个Integer型的线程本地变量
-	public static final ThreadLocal<Index> container = new ThreadLocal<Index>() {
-		@Override
-		protected Index initialValue() {
-			return new Index();
-		}
-	};
-
-	public static void main(String[] args) throws InterruptedException {
+	public static final ThreadLocal<Integer> container = new ThreadLocal<Integer>();
+	
+	public void execute(){
 		for (int j = 0; j < 10; j++) {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					// 获取当前线程的本地变量，然后累加1000次
-					Index index = container.get();
+					int num = container.get();
 					for (int i = 0; i < 1000; i++) {
-						index.increase();
+						num++;
 					}
 					// 重新设置累加后的本地变量
-					container.set(index);
-					System.out.println(Thread.currentThread().getName() + " : " + index.num);
+					container.set(num);
+					System.out.println(Thread.currentThread().getName() + " : " + container.get());
+					container.remove();
 				}
 			}, "Thread-" + j).start();
 		}
 	}
-}
-class Index {
-	int num;
 
-	public void increase() {
-		num++;
+	public static void main(String[] args) throws InterruptedException {
+		ThreadLocal1Test test = new ThreadLocal1Test();
+		test.execute();
 	}
 }

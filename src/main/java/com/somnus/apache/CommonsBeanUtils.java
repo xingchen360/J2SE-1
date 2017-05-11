@@ -61,7 +61,7 @@ public class CommonsBeanUtils {
 	@Test
 	public void describe() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
         Person person2 = new Person("admin","password",new Date(),null);
-        /*将一个Bean转化为一个Map对象了，如下：*/
+        /*将一个Bean转化为一个Map对象了，如下：key是对象的属性名，value是属性取值对象所得到的字符串，不能进行深层复制*/
         Map<String, String> map2 = BeanUtils.describe(person2);
         System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
 	}
@@ -69,17 +69,32 @@ public class CommonsBeanUtils {
 	@Test
 	public void describe2() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
         Person person2 = new Person("admin","password",new Date(),null);
-        /*将一个Bean转化为一个Map对象了，如下：*/
+        /*将一个Bean转化为一个Map对象了，如下：key是对象的属性名，value仍然是属性的原始取值，不做字符串转换。换句话说，它是可以进行深层对象复制转换的*/
         Map<String, Object> map2 = PropertyUtils.describe(person2);
         System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
 	}
     
+	/** 
+	 * 	org.springframework.beans.BeanUtils.copyProperties 是一个Spring提供的名称相同的工具类
+	 *  但它不支持类型自动转换，如果某个类型属性不同，则不予转换那个属性
+	 */
     @Test
     public void copyProperties() throws IllegalAccessException, InvocationTargetException{
         Person person = new Person("admin","password",new Date(),null);
-        /*拥有相同属性的对象转换*/
+        /*拥有相同属性的对象转换-->支持属性类型自动转换的功能*/
         People people = new People();
+        /*BeanUtils在对Bean赋值时会进行类型转化 */
         BeanUtils.copyProperties(people, person);
+        System.out.println("拥有相同属性的对象转换>>" + people);
+    }
+    
+    @Test
+    public void copyProperties2() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+        Person person = new Person("admin","password",new Date(),null);
+        /*拥有相同属性的对象转换-->不支持属性类型自动转换的功能*/
+        People people = new People();
+        /*PropertyUtils不会对类型进行转化，如果类型不同则会抛出异常 */
+        PropertyUtils.copyProperties(people, person);
         System.out.println("拥有相同属性的对象转换>>" + people);
     }
     

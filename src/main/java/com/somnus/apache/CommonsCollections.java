@@ -1,11 +1,16 @@
 package com.somnus.apache;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.SetUtils;
@@ -68,6 +73,34 @@ public class CommonsCollections {
 				return object.intValue() <= 5;
 			}
 		}));
+	}
+	
+	public <E> List<E> unique(List<E> param, String property){
+    	Set<Object> iSet = new HashSet<Object>();
+    	List<E> result = (List<E>) CollectionUtils.select(param, new Predicate<E>(){
+			@Override
+			public boolean evaluate(E object) {
+				Object val = null;
+				try {
+					val = PropertyUtils.getProperty(object, property);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return iSet.add(val);
+			}
+		});
+    	return result;
+    }
+    
+    public static void main(String[] args) {
+    	List<Person> param = new ArrayList<Person>();
+    	param.add(new Person("admin","password",new Date(),null));
+    	param.add(new Person("admin","password2",new Date(),null));
+    	param.add(new Person("admin3","password3",new Date(),null));
+    	param.add(new Person("admin","password4",new Date(),null));
+    	
+    	CommonsCollections util = new CommonsCollections();
+    	System.out.println(util.unique(param, "username"));
 	}
 	
 	@Test

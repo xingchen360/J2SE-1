@@ -14,15 +14,14 @@ public class ContextTest {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					ActionContext.getInstance().setIndex(new Index());
 					// 获取当前线程的本地变量，然后累加1000次
-					Index index = ActionContext.getInstance().getIndex();
+					Integer index = ActionContext.getInstance().getInteger();
 					for (int i = 0; i < 1000; i++) {
-						index.increase();
+						index++;
 					}
 					// 重新设置累加后的本地变量
-					ActionContext.getInstance().setIndex(index);
-					System.out.println(Thread.currentThread().getName() + " : " + index.num);
+					ActionContext.getInstance().setInteger(index);
+					System.out.println(Thread.currentThread().getName() + " : " + index);
 					ActionContext.getInstance().remove();
 				}
 			}, "Thread-" + j).start();
@@ -30,15 +29,20 @@ public class ContextTest {
 	}
 }
 class ActionContext{
-	private static ThreadLocal<ActionContext> actionContext = new ThreadLocal<ActionContext>();
+	private static ThreadLocal<ActionContext>	actionContext = new ThreadLocal<ActionContext>();
 	
-	private static final ThreadLocal<Index> 		local = new ThreadLocal<Index>();
+	private static ThreadLocal<Integer>			container = new ThreadLocal<Integer>() {
+		@Override
+		protected Integer initialValue() {
+			return 0;
+		}
+	};
 
-	public Index getIndex() {
-		return local.get();
+	public Integer getInteger() {
+		return container.get();
 	}
-	public void setIndex(Index index){
-		local.set(index);
+	public void setInteger(Integer num){
+		container.set(num);
 	}
 	
 	private ActionContext(){}
@@ -53,6 +57,6 @@ class ActionContext{
     }
 	
 	public void remove(){
-		local.remove();
+		container.remove();
 	}
 }
