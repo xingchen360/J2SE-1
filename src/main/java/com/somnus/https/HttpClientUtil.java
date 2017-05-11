@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -86,14 +87,15 @@ public class HttpClientUtil {
             httpPost.setEntity(new StringEntity(json,ContentType.APPLICATION_JSON));
             
             // 开始执行http请求
-            long startTime = System.currentTimeMillis();  
+            StopWatch sw = new StopWatch();
+        	sw.start();
             httpResponse = httpclient.execute(httpPost);
-            long endTime = System.currentTimeMillis();
+            sw.stop();
             
             // 获得响应状态码
             int statusCode = httpResponse.getStatusLine().getStatusCode();  
             log.info("statusCode:" + statusCode);  
-            log.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+            log.info("调用API 花费时间(单位：毫秒)：" + sw.getTime());
             
             // 取出应答字符串
             HttpEntity httpEntity = httpResponse.getEntity();
@@ -172,14 +174,15 @@ public class HttpClientUtil {
             httpGet.setConfig(requestConfig);
             
             // 开始执行http请求
-            long startTime = System.currentTimeMillis();
+            StopWatch sw = new StopWatch();
+        	sw.start();
             httpResponse = httpclient.execute(httpGet);
-            long endTime = System.currentTimeMillis();
+            sw.stop();
             
             // 获得响应状态码
             int statusCode = httpResponse.getStatusLine().getStatusCode();  
             log.info("statusCode:" + statusCode);  
-            log.info("调用API花费时间(单位：毫秒)：" + (endTime - startTime));
+            log.info("调用API花费时间(单位：毫秒)：" + sw.getTime());
             
             // 取出应答字符串
             HttpEntity httpEntity = httpResponse.getEntity();
@@ -237,14 +240,15 @@ public class HttpClientUtil {
             }
             
             // 开始执行http请求
-            long startTime = System.currentTimeMillis();  
+            StopWatch sw = new StopWatch();
+        	sw.start(); 
             httpResponse = httpclient.execute(httpPost);
-            long endTime = System.currentTimeMillis();
+            sw.stop();
             
             // 获得响应状态码
             int statusCode = httpResponse.getStatusLine().getStatusCode();  
             log.info("statusCode:" + statusCode);  
-            log.info("调用API花费时间(单位：毫秒)：" + (endTime - startTime));
+            log.info("调用API花费时间(单位：毫秒)：" + sw.getTime());
             
             // 取出应答字符串
             HttpEntity httpEntity = httpResponse.getEntity();
@@ -296,14 +300,15 @@ public class HttpClientUtil {
             httpPost.setEntity(new StringEntity(xml,ContentType.APPLICATION_XML));
             
             // 开始执行http请求
-            long startTime = System.currentTimeMillis();  
+            StopWatch sw = new StopWatch();
+        	sw.start();
             httpResponse = httpclient.execute(httpPost);
-            long endTime = System.currentTimeMillis();
+            sw.stop();
             
             // 获得响应状态码
             int statusCode = httpResponse.getStatusLine().getStatusCode();  
             log.info("statusCode:" + statusCode);  
-            log.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+            log.info("调用API 花费时间(单位：毫秒)：" + sw.getTime());
             
             // 取出应答字符串
             HttpEntity httpEntity = httpResponse.getEntity();
