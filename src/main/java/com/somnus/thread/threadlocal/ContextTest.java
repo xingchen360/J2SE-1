@@ -31,18 +31,13 @@ public class ContextTest {
 class ActionContext{
 	private static ThreadLocal<ActionContext>	actionContext = new ThreadLocal<ActionContext>();
 	
-	private static ThreadLocal<Integer>			container = new ThreadLocal<Integer>() {
-		@Override
-		protected Integer initialValue() {
-			return 0;
-		}
-	};
+	private int integer ;
 
-	public Integer getInteger() {
-		return container.get();
+	public int getInteger() {
+		return integer;
 	}
-	public void setInteger(Integer num){
-		container.set(num);
+	public void setInteger(int integer){
+		this.integer = integer;
 	}
 	
 	private ActionContext(){}
@@ -55,6 +50,28 @@ class ActionContext{
     	}
         return context;
     }
+	
+	public void remove(){
+		actionContext.remove();
+	}
+}
+
+class ActionContext2{
+	
+	private static ThreadLocal<Integer>	container = new ThreadLocal<Integer>() {
+		@Override
+		protected Integer initialValue() {
+			return 0;
+		}
+	};
+
+	public static Integer getInteger() {
+		return container.get();
+	}
+	
+	public static  void setInteger(Integer num){
+		container.set(num);
+	}
 	
 	public void remove(){
 		container.remove();

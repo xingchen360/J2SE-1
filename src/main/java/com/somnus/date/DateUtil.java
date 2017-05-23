@@ -330,4 +330,33 @@ public class DateUtil {
 		System.out
 				.println("指定日期与当前日期的差：" + DateUtil.yearDiffCurr("2013-01-01"));
 	}
+	
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	public static  String formatDate(Date date){
+		return sdf.format(date);
+	}
+
+	public static Date parse(String strDate) throws ParseException {
+		return sdf.parse(strDate);
+	}
+}
+class DateUtilTest{
+	public static void main(String[] args) {
+		for(int i = 0; i < 3; i++){
+            new Join().start();
+        }
+	}
+}
+class Join extends Thread{
+    @Override
+    public void run() {
+    	while (true) {
+            try {
+                System.out.println(Thread.currentThread().getName() + ":" + DateUtil.parse("2016-09-13 22:00:00"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
