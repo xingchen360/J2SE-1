@@ -139,7 +139,7 @@ public class HttpClientManager {
 		
 		PoolingHttpClientConnectionManager connManager = getSSLConnManager(path, password);
 		
-		return HttpClients.custom().setConnectionManager(connManager).build();
+		return HttpClients.custom().setConnectionManager(connManager).setConnectionManagerShared(true).build();
 	}
 
 
