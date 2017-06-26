@@ -18,27 +18,22 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.parser.PdfImageObject;
 /**
- * 
  * @ClassName			: CompressPDF 
  * @Description			: 压缩pdf里面的图片资源
  * @author 				： NoteShare 
  * @date 				： 2017年3月1日 下午9:30:43
  */
 public class CompressPDF {
-
 	/** The resulting PDF file. */
 	// public static String RESULT =
 	// "results/part4/chapter16/resized_image.pdf";
 	/** The multiplication factor for the image. */
-	public static float FACTOR = 0.5f;
+	public static float FACTOR = 2f;
 
 	/**
 	 * Manipulates a PDF file src with the file dest as result
-	 * 
-	 * @param src
-	 *            the original PDF
-	 * @param dest
-	 *            the resulting PDF
+	 * @param src the original PDF
+	 * @param dest the resulting PDF
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
@@ -48,6 +43,7 @@ public class CompressPDF {
 		// Read the file
 		PdfReader reader = new PdfReader(src);
 		int n = reader.getXrefSize();
+		System.out.println("输出getXrefSize：" + n);
 		PdfObject object;
 		PRStream stream;
 		// Look for image and manipulate image stream
@@ -58,7 +54,7 @@ public class CompressPDF {
 			stream = (PRStream) object;
 			// if (value.equals(stream.get(key))) {
 			PdfObject pdfsubtype = stream.get(PdfName.SUBTYPE);
-			System.out.println(stream.type());
+			System.out.println("输出pdfsubtype：" + pdfsubtype + ";PdfName.IMAGE.toString():" + PdfName.IMAGE.toString());
 			if (pdfsubtype != null && pdfsubtype.toString().equals(PdfName.IMAGE.toString())) {
 				PdfImageObject image = new PdfImageObject(stream);
 				BufferedImage bi = image.getBufferedImage();
@@ -98,8 +94,6 @@ public class CompressPDF {
 	 */
 	public static void main(String[] args) throws IOException, DocumentException {
 		// createPdf(RESULT);
-		new CompressPDF().manipulatePdf("D:\\文档在线预览解决方案(仿百度文库).pdf",
-				"D:\\文档在线预览解决方案(仿百度文库)_new.pdf");
+		new CompressPDF().manipulatePdf("D:\\省直征求意见函(2.27).pdf","D:\\省直征求意见函(2.27)_new2.pdf");
 	}
-
 }
