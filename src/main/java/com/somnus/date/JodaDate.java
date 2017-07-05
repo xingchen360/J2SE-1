@@ -94,4 +94,16 @@ public class JodaDate {
         System.out.println(DateTime.now().getHourOfDay());
     }
     
+    @Test
+    public void compare(){
+    	//Date vs Date
+    	System.out.println(new Date().before(new Date()));
+    	System.out.println(new Date().after(new Date()));
+    	
+    	System.out.println(new Date().compareTo(new Date()));
+    	
+    	//String vs String
+    	System.out.println(DateTime.now().toString("yyyy-MM-dd").compareTo(DateTime.now().toString("yyyy-MM-dd")));
+    }
+    
 }

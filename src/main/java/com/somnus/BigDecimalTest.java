@@ -40,8 +40,8 @@ public class BigDecimalTest {
 	public void multiply() {
 		BigDecimal a = new BigDecimal("2.23");
 		BigDecimal b = new BigDecimal("1.93");
-		System.out.println(a.multiply(b));
-		System.out.println(a.multiply(b));
+		System.out.println(a.multiply(b).setScale(2, RoundingMode.HALF_UP));
+		System.out.println(a.multiply(b).setScale(2, RoundingMode.HALF_UP));
 	}
 
 	@Test

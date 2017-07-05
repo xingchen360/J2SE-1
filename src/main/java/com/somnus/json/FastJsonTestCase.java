@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -43,7 +44,8 @@ String jsonStr = JSON.toJSONString(user, new ValueFilter(){
 	@Override
 	public Object process(Object object, String name, Object value) {
 		if (value instanceof BigDecimal) {
-			return new BigDecimal(String.format("%.2f", new BigDecimal(value.toString())));
+			DecimalFormat fmt = new DecimalFormat("0.00");
+			return fmt.format(value);
 		} else {
 			return value;
 		}
@@ -63,11 +65,11 @@ public class FastJsonTestCase {
      */
 	@Test
     public void simpleTest() {
-        User user = new User("admin",null,20,new BigDecimal("20.2"));
+        User user = new User("admin",null,20,new BigDecimal("20.2"),new BigDecimal("0.08400"));
         user.setBirthday(new Date());
         user.setPlots(Arrays.asList(new Plot("diudiu"), new Plot("dudu")));
         
-        String jsonStr = JSON.toJSONString(user/*,SerializerFeature.PrettyFormat*/);
+        String jsonStr = JSON.toJSONString(user);
         System.out.println(jsonStr);
     }
 	
@@ -175,6 +177,9 @@ public class FastJsonTestCase {
 		@JSONField(serializeUsing = BigDecimalSerializer.class)
 		private BigDecimal blance;
 		
+		@JSONField(serializeUsing = ZeroDealSerializer.class)
+		private BigDecimal weight;
+		
 		@JSONField(serialzeFeatures ={SerializerFeature.WriteNullBooleanAsFalse})
 		private boolean flag;
 		
@@ -189,12 +194,13 @@ public class FastJsonTestCase {
 			super();
 		}
 		
-		public User(String username, String password, int age, BigDecimal blance) {
+		public User(String username, String password, int age, BigDecimal blance, BigDecimal weight) {
 			super();
 			this.username = username;
 			this.password = password;
 			this.age = age;
 			this.blance = blance;
+			this.weight = weight;
 		}
 		public String getUsername() {
 			return username;
@@ -231,6 +237,12 @@ public class FastJsonTestCase {
 		}
 		public void setBlance(BigDecimal blance) {
 			this.blance = blance;
+		}
+		public BigDecimal getWeight() {
+			return weight;
+		}
+		public void setWeight(BigDecimal weight) {
+			this.weight = weight;
 		}
 		public Date getBirthday() {
 			return birthday;
@@ -287,6 +299,34 @@ public class FastJsonTestCase {
 
 	        BigDecimal val = (BigDecimal) object;
 	        DecimalFormat fmt = new DecimalFormat("0.00");
+	        out.write(fmt.format(val));
+
+	        if (out.isEnabled(SerializerFeature.WriteClassName) && fieldType != BigDecimal.class && val.scale() == 0) {
+	            out.write('.');
+	        }
+			
+		}
+
+	}
+	
+	public static class ZeroDealSerializer implements ObjectSerializer{
+
+		@Override
+		public void write(JSONSerializer serializer, Object object,
+				Object fieldName, Type fieldType, int features) throws IOException {
+			SerializeWriter out = serializer.getWriter();
+
+	        if (object == null) {
+	            if (out.isEnabled(SerializerFeature.WriteNullNumberAsZero)) {
+	                out.write('0');
+	            } else {
+	                out.writeNull();
+	            }
+	            return;
+	        }
+
+	        BigDecimal val = (BigDecimal) object;
+	        NumberFormat fmt = NumberFormat.getInstance();
 	        out.write(fmt.format(val));
 
 	        if (out.isEnabled(SerializerFeature.WriteClassName) && fieldType != BigDecimal.class && val.scale() == 0) {
