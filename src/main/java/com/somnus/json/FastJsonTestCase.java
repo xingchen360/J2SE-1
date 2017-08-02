@@ -105,11 +105,12 @@ public class FastJsonTestCase {
      */
 	@Test
     public void simpleDeserializeTest() {
-        String jsonStr = "{\"age\":20,\"birthday\":\"2017-01-23 17:19:04\",\"blance\":20.20,\"flag\":false,\"plots\":[{\"name\":\"diudiu\"},{\"name\":\"dudu\"}],\"address\":{\"province\":\"jiangxi\",\"city\":\"jiujiang\"}}";
+        String jsonStr = "{\"username\":\"lucy\",\"age\":20,\"birthday\":\"2017-01-23 17:19:04\",\"blance\":20.20,\"flag\":false,\"plots\":[{\"name\":\"diudiu\"},{\"name\":\"dudu\"}],\"address\":{\"province\":\"jiangxi\",\"city\":\"jiujiang\"}}";
         User user = JSON.parseObject(jsonStr, User.class);
         System.out.println(user);
         
         JSONObject jo = JSON.parseObject(jsonStr);
+        System.out.println(jo.getString("username"));
         System.out.println(jo.getString("age"));
         System.out.println(jo.getString("birthday"));
         System.out.println(jo.getBigDecimal("blance"));

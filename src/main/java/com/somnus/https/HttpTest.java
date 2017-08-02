@@ -20,7 +20,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * @Description: TODO
+ * @Description: https://api-vip1.huadata.com/result
  * @author Somnus
  * @date 2015年12月16日 下午2:37:26
  * @version V1.0

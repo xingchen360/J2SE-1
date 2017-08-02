@@ -75,8 +75,8 @@ public class CommonsCollections {
 		}));
 	}
 	
-	public <E> List<E> unique(List<E> param, String property){
-    	Set<Object> iSet = new HashSet<Object>();
+	public <E> List<E> unique(List<E> param, final String property){
+    	final Set<Object> iSet = new HashSet<Object>();
     	List<E> result = (List<E>) CollectionUtils.select(param, new Predicate<E>(){
 			@Override
 			public boolean evaluate(E object) {

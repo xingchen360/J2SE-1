@@ -61,18 +61,18 @@ public class BigDecimalTest {
 	public static void main(String[] args) {
 		BigDecimal p = BigDecimal.ONE;
 		passByValue(p);
-		System.out.println(p);
+		System.out.println("1-->" + p);
 		
-		System.out.println(BigDecimal.ZERO);
-		System.out.println(new BigDecimal(0));
-		System.out.println(new BigDecimal("0"));
-		System.out.println(new BigDecimal(0.0));
-		System.out.println(new BigDecimal("0.0"));
+		System.out.println("2-->" + BigDecimal.ZERO);
+		System.out.println("3-->" + new BigDecimal(0));
+		System.out.println("4-->" + new BigDecimal("0"));
+		System.out.println("5-->" + new BigDecimal(0.0));
+		System.out.println("6-->" + new BigDecimal("0.0"));
 		
-		System.out.println(new BigDecimal(0.0).compareTo(new BigDecimal("0.0")));
+		System.out.println("7-->" + new BigDecimal(0.0).compareTo(new BigDecimal("0.0")));
 		
-		System.out.println(new BigDecimal("0.10"));
-		System.out.println(new BigDecimal("0.10").doubleValue());
+		System.out.println("8-->" + new BigDecimal("0.10"));
+		System.out.println("9-->" + new BigDecimal("0.10").doubleValue());
 		
 	}
 
