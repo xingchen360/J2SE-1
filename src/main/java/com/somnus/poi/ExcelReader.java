@@ -34,7 +34,7 @@ public class ExcelReader {
      * @return
      */
     public static List<String[]> readExcel(String filePath){
-        String fullPath = ExcelReader.class.getClassLoader().getResource(filePath).getPath();
+        String fullPath = Thread.currentThread().getContextClassLoader().getResource(filePath).getPath();
         Workbook wb = null;
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(fullPath));
