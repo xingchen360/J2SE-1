@@ -135,6 +135,8 @@ public class CommonsLang {
         System.out.println(StringUtils.deleteWhitespace("   ab  c  "));//abc
         // 判断是否包含这个字符 
         System.out.println(StringUtils.contains("abc", "ba"));//false
+        System.out.println(StringUtils.containsAny("abc", 'a', 'd'));//true
+        System.out.println(StringUtils.containsAny("abc", "ab", "bd"));//true
         // 表示左边两个字符 
         System.out.println(StringUtils.left("abc", 2));//ab
         // 表示左边两个字符 

@@ -80,6 +80,10 @@ public class JodaDate {
         DateTime dateTime = new DateTime(new Date());
         System.out.println(dateTime.toString("yyyy-MM-dd"));
         System.out.println(dateTime.getDayOfMonth());
+        
+        DateTime dateTime2 = new DateTime("2017-03-31").minusMonths(1);
+        System.out.println(dateTime2.toString("yyyy-MM-dd"));
+        System.out.println(dateTime2.getDayOfMonth());
     }
     
     @Test
@@ -103,7 +107,9 @@ public class JodaDate {
     	System.out.println(new Date().compareTo(new Date()));
     	
     	//String vs String
-    	System.out.println(DateTime.now().toString("yyyy-MM-dd").compareTo(DateTime.now().toString("yyyy-MM-dd")));
+    	System.out.println(new DateTime("2017-03-31").isBefore(new DateTime("2017-08-31")));
+    	System.out.println(new DateTime("2017-03-31").isBeforeNow());
+    	System.out.println(new DateTime("2017-03-31").isAfterNow());
     }
     
 }

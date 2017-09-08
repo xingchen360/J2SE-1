@@ -3,6 +3,7 @@ package com.somnus.apache;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,6 +34,17 @@ public class CommonsCollections {
 	
 	@Test
 	public void CollectionUtils(){
+		System.out.println(Collections.min(Arrays.asList(1, 2, 3)));
+		
+		System.out.println(Collections.max(Arrays.asList(4, 8, 3, 9, 5), new Comparator<Integer>(){
+
+            @Override
+            public int compare(Integer i1, Integer i2) {
+                return i1.compareTo(i2);
+            }
+            
+        }));
+		
 		List<String> emptyList = Collections.emptyList();
 		
 		/*集合判断： 
