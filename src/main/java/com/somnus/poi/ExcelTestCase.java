@@ -3,6 +3,7 @@ package com.somnus.poi;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,8 +37,8 @@ public class ExcelTestCase {
     @Test
     public void createMax() throws Exception{
         List<People> list = new ArrayList<People>();
-        for(int i=0; i<500000; i++){
-        	 People people = new People("admin"+i,"password"+i,null,null);
+        for(int i=0; i<5000; i++){
+        	 People people = new People("admin"+i,"password"+i,null,BigDecimal.ONE);
         	 list.add(people);
         }
         MaxExcelWriter writer = new MaxExcelWriter();

@@ -3,6 +3,7 @@ package com.somnus.thread.pool;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: 
@@ -16,8 +17,6 @@ import java.util.concurrent.Executors;
  */
 public class FixedThreadPool {
 	
-	public static Random random = new Random();
-
 	public static void main(String[] args) {
 		/*该方法返回一个固定数量的线程池，该方法的线程池数始终不变，当有一个任务提交时，
 		 * 若线程池中空闲，则立即执行，若没有，则会被暂缓在一个任务队列总等待有空闲的线程去执行 */
@@ -28,7 +27,7 @@ public class FixedThreadPool {
                 public void run(){
                     for (int j = 1; j <= 10; j++){
                         try{
-                            Thread.sleep(random.nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
+                        	TimeUnit.SECONDS.sleep(new Random().nextInt(10));// 为了测试出效果，让每次任务执行都需要一定时间
                         }
                         catch (InterruptedException e){
                             e.printStackTrace();

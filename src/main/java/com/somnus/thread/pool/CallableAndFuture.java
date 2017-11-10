@@ -11,8 +11,6 @@ import java.util.concurrent.TimeoutException;
 
 public class CallableAndFuture {
 	
-	public static Random random = new Random();
-
 	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
 		/* 创建单个线程的线程池，如果当前线程在执行任务时突然中断，则会创建一个新的线程替代它继续执行任务 */
 		ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -22,7 +20,7 @@ public class CallableAndFuture {
 				int sum = 0;
 				for (int j = 1; j <= 10; j++) {
 					try {
-						Thread.sleep(random.nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
+						TimeUnit.SECONDS.sleep(new Random().nextInt(10));// 为了测试出效果，让每次任务执行都需要一定时间
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

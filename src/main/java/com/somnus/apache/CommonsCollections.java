@@ -34,6 +34,8 @@ public class CommonsCollections {
 	
 	@Test
 	public void CollectionUtils(){
+		System.out.println(Collections.singletonList(1));
+		System.out.println(Collections.singletonMap("a", "1"));
 		System.out.println(Collections.min(Arrays.asList(1, 2, 3)));
 		
 		System.out.println(Collections.max(Arrays.asList(4, 8, 3, 9, 5), new Comparator<Integer>(){

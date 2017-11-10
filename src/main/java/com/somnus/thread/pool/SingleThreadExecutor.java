@@ -3,6 +3,7 @@ package com.somnus.thread.pool;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: 
@@ -17,8 +18,6 @@ import java.util.concurrent.Executors;
  */
 public class SingleThreadExecutor {
 	
-	public static Random random = new Random();
-	
 	public static void main(String[] args) throws InterruptedException {
 		/*创建单个线程的线程池，如果当前线程在执行任务时突然中断，则会创建一个新的线程替代它继续执行任务*/
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -28,7 +27,7 @@ public class SingleThreadExecutor {
                 public void run(){
                     for (int j = 1; j <= 10; j++){
                         try{
-                            Thread.sleep(random.nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
+                        	TimeUnit.SECONDS.sleep(new Random().nextInt(10));// 为了测试出效果，让每次任务执行都需要一定时间
                         }
                         catch (InterruptedException e){
                             e.printStackTrace();
