@@ -1,5 +1,6 @@
 package com.somnus.https;
 
+import java.io.File;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -63,6 +65,71 @@ public class HttpClientUtil {
 	 */
 	public static String doJsonPost(String url, String json)  throws Exception{
 		return doJsonPost(url, json, null, null);
+	}
+	
+	/**
+	 * Content-type : text/html
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doGet(String url) throws Exception{
+		return doGet(url, null, null);
+	}
+	
+	/**
+	 * Content-type : text/html
+	 * @param url
+	 * @param ks
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doGet(String url, String path, String password) throws Exception{
+		return doGet(url, null, path, password);
+	}
+	
+	/**
+	 * Content-type : text/html
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doGet(String url, Map<String,String> param) throws Exception{
+		return doGet(url, param, null, null);
+	}
+	
+	/**
+	 * Content-type : multipart/form-data
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doUploadPost(String url, File file) throws Exception{
+		return doUploadPost(url, file, null, null);
+	}
+	
+	/**
+	 * Content-type : application/x-www-form-urlencoded
+	 * @param url
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doPost(String url, Map<String,String> param) throws Exception{
+		return doPost(url, param, null, null);
+	}
+	
+	/**
+	 * Content-type : application/xml
+	 * @param url
+	 * @param xml
+	 * @return
+	 * @throws Exception
+	 */
+	public static String doXmlPost(String url, String xml) throws Exception{
+		return doXmlPost(url, xml, null, null);
 	}
 	
 	/**
@@ -113,38 +180,6 @@ public class HttpClientUtil {
         }
 		return resultString;
     }
-	
-	/**
-	 * Content-type : text/html
-	 * @param url
-	 * @return
-	 * @throws Exception
-	 */
-	public static String doGet(String url) throws Exception{
-		return doGet(url, null, null);
-	}
-	
-	/**
-	 * Content-type : text/html
-	 * @param url
-	 * @param ks
-	 * @return
-	 * @throws Exception
-	 */
-	public static String doGet(String url, String path, String password) throws Exception{
-		return doGet(url, null, path, password);
-	}
-	
-	/**
-	 * Content-type : text/html
-	 * @param url
-	 * @param param
-	 * @return
-	 * @throws Exception
-	 */
-	public static String doGet(String url, Map<String,String> param) throws Exception{
-		return doGet(url, param, null, null);
-	}
 	
 	/**
 	 * Content-type : text/html
@@ -204,14 +239,50 @@ public class HttpClientUtil {
     }
 	
 	/**
-	 * Content-type : application/x-www-form-urlencoded
+	 * Content-type : multipart/form-data
 	 * @param url
 	 * @param param
 	 * @return
 	 * @throws Exception
 	 */
-	public static String doPost(String url, Map<String,String> param) throws Exception{
-		return doPost(url, param, null, null);
+	public static String doUploadPost(String url, File file, String path, String password) throws Exception{
+        Validate.notNull(url, "url must be required.");
+		//创建HttpClient对象
+        CloseableHttpClient httpclient = HttpClientManager.getSSLHttpClient(path, password);
+        String resultString = "";
+        CloseableHttpResponse httpResponse = null;
+        try {
+        	// 创建HttpPost对象
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(requestConfig);
+            httpPost.setEntity(MultipartEntityBuilder.create().addBinaryBody("file", file).build());
+            
+            // 开始执行http请求
+            StopWatch sw = new StopWatch();
+        	sw.start(); 
+            httpResponse = httpclient.execute(httpPost);
+            sw.stop();
+            
+            // 获得响应状态码
+            int statusCode = httpResponse.getStatusLine().getStatusCode();  
+            log.info("statusCode:" + statusCode);  
+            log.info("调用API花费时间(单位：毫秒)：" + sw.getTime());
+            
+            // 取出应答字符串
+            HttpEntity httpEntity = httpResponse.getEntity();
+            resultString = EntityUtils.toString(httpEntity,Charset.forName("UTF-8"));
+            
+            // 判断返回状态是否为200
+            if (statusCode != HttpStatus.SC_OK) {
+            	throw new HttpStatusException(String.format("\n\tStatus:%s\n\tError Message:%s", statusCode,resultString));
+            } 
+        } finally{
+        	if(httpResponse != null){
+        		httpResponse.close();
+        	}
+        	httpclient.close();
+        }
+		return resultString;
 	}
 	
 	/**
@@ -266,17 +337,6 @@ public class HttpClientUtil {
         }
 		return resultString;
     }
-	
-	/**
-	 * Content-type : application/xml
-	 * @param url
-	 * @param xml
-	 * @return
-	 * @throws Exception
-	 */
-	public static String doXmlPost(String url, String xml) throws Exception{
-		return doXmlPost(url, xml, null, null);
-	}
 	
 	/**
 	 * Content-type : application/xml

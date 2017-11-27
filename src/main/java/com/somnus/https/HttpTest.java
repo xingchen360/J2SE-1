@@ -108,9 +108,16 @@ public class HttpTest {
     }
     
     @Test
-    public void doUpload() throws ClientProtocolException, IOException{
+    public void doUpload() throws Exception {
     	String url = "http://localhost:8080/SpringMVC/databind/doUpload";
-    	String path = getClass().getClassLoader().getResource("excel/80034.xls").getPath();
+    	String path = Thread.currentThread().getContextClassLoader().getResource("excel/80034.xls").getPath();
+    	System.out.println("body:" + HttpClientUtil.doUploadPost(url, new File(path)));
+    }
+    
+    @Test
+    public void doUploadByFluent() throws ClientProtocolException, IOException{
+    	String url = "http://localhost:8080/SpringMVC/databind/doUpload";
+    	String path = Thread.currentThread().getContextClassLoader().getResource("excel/80034.xls").getPath();
     	String response = Request.Post(url)
     					.body(MultipartEntityBuilder.create().addBinaryBody("file", new File(path)).build())
     					.execute().returnContent().asString();

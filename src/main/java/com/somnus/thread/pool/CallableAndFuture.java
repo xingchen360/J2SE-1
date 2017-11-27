@@ -20,7 +20,7 @@ public class CallableAndFuture {
 				int sum = 0;
 				for (int j = 1; j <= 10; j++) {
 					try {
-						TimeUnit.SECONDS.sleep(new Random().nextInt(10));// 为了测试出效果，让每次任务执行都需要一定时间
+						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

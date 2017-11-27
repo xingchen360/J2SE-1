@@ -61,12 +61,19 @@ public class JodaDate {
     
     @Test
     public void dayOfYear(){
-     // 当前年的第一天和最后一天  
+        // 当前年的第一天和最后一天  
         System.out.println(String.format(  
                 "min:%s, max:%s",  
                 DateTime.now().dayOfYear().withMinimumValue()  
                         .toString("yyyy-MM-dd"),  
                 DateTime.now().dayOfYear().withMaximumValue()  
+                        .toString("yyyy-MM-dd"))); 
+        
+        System.out.println(String.format(  
+                "min:%s, max:%s",  
+                new DateTime("2017-03").dayOfMonth().withMinimumValue()  
+                        .toString("yyyy-MM-dd"),  
+                        new DateTime("2017-03").dayOfMonth().withMaximumValue()  
                         .toString("yyyy-MM-dd"))); 
     }
     
