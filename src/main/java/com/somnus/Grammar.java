@@ -82,6 +82,22 @@ public class Grammar {
 	}
 	
 	@Test
+	public void testReturn2(){
+		for(int i=0;i<3;i++){
+			body(i);
+		}
+		System.out.println("本语句永远不会有机会执行到");
+	}
+	
+	public static void body(int i){
+		if(i==2){
+			System.out.println("return"+i+"返回,但并不影响调用者的执行");
+			return;
+		}
+		System.out.println("body" + i + "执行结束");
+	}
+	
+	@Test
 	public void testWhile(){
 		boolean flag = true;
 		while(flag){

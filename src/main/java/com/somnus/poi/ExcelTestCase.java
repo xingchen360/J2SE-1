@@ -22,7 +22,7 @@ import com.somnus.apache.People;
 public class ExcelTestCase {
 	
 	@Test
-	public void read(){
+	public void read() throws Exception{
 		List<String[]> list = ExcelReader.readExcel("excel/80034.xls");
         for(String[] arr:list){
             System.out.println(Arrays.toString(arr));

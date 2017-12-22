@@ -2,8 +2,6 @@ package com.somnus.poi;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -12,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -32,23 +29,15 @@ public class ExcelReader {
      * 读取两种格式使用    import org.apache.poi.ss.usermodel.*    包的内容，例如：Workbook
      * @param filePath
      * @return
+     * @throws Exception 
      */
-    public static List<String[]> readExcel(String filePath){
+    public static List<String[]> readExcel(String filePath) throws Exception{
         String fullPath = Thread.currentThread().getContextClassLoader().getResource(filePath).getPath();
-        Workbook wb = null;
-        try {
-            InputStream in = new BufferedInputStream(new FileInputStream(fullPath));
-            wb = WorkbookFactory.create(in); 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        
+        InputStream in = new BufferedInputStream(new FileInputStream(fullPath));
+        
+        Workbook wb = WorkbookFactory.create(in); 
+        
         List<String[]> list = new ArrayList<String[]>();
         for (int sheetIndex = 0; sheetIndex < wb.getNumberOfSheets(); sheetIndex++){
             Sheet st = wb.getSheetAt(sheetIndex);
