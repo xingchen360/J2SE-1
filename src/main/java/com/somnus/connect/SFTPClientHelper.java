@@ -234,13 +234,21 @@ public class SFTPClientHelper {
      * @throws IOException 
      * @throws Exception
      */
-    public byte[] download(String directory, String downloadFile) throws SftpException, IOException{
+    public byte[] download(String directory, String downloadFile) throws SftpException, IOException {
         if (directory != null && !"".equals(directory)) {
             sftp.cd(directory);
         }
-        InputStream is = sftp.get(downloadFile);
         
-        byte[] fileData = IOUtils.toByteArray(is);
+        InputStream is = null;
+        byte[] fileData = null;
+        
+		try {
+			is = sftp.get(downloadFile);
+			
+			fileData = IOUtils.toByteArray(is);
+		} finally{
+			IOUtils.closeQuietly(is);
+		}
         
         log.info("file:{} is download successful" , downloadFile);
         return fileData;
