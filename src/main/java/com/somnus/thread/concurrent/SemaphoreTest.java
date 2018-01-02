@@ -19,35 +19,34 @@ import java.util.concurrent.TimeUnit;
    当2个人中任意一个人买好票离开之后，等待的8个人中又会有一个人可以占用窗口买票。
  */
 public class SemaphoreTest {
-	
-	public static void main(String[] args) {
-		/** 定义窗口个数 **/
-		Semaphore semaphore = new Semaphore(2);
-		
-		ExecutorService executor = Executors.newCachedThreadPool();
-		/** 模拟10个用户 **/
-		for (int i = 1; i <= 10; i++) {
-			final int offset = i;
-			executor.execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						/** 获取信号量许可 **/
-						semaphore.acquire();
-						System.out.println("用户【" + offset+ "】进入窗口，准备买票");
-						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println("用户【" + offset+ "】买票完成，即将离开");
-						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println("用户【" + offset+ "】离开售票窗口");
-						System.out.println(Thread.currentThread().getName() + " for offset of " + offset);
-						semaphore.release();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				
-			});
-		}
-		executor.shutdown();
-	}
+	 
+    public static void main(String[] args) {
+        /** 定义窗口个数 **/
+        final Semaphore semaphore = new Semaphore(2);
+ 
+        ExecutorService executor = Executors.newCachedThreadPool();
+        /** 模拟10个用户 **/
+        for (int i = 1; i <= 10; i++) {
+            final int offset = i;
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        /** 获取信号量许可 **/
+                        semaphore.acquire();
+                        System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】进入窗口，准备买票");
+                        TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+                        System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】买票完成，即将离开");
+                        TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+                        System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】离开售票窗口-->还有"+ semaphore.getQueueLength() +"个人在等待排队");
+                        semaphore.release();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+ 
+            });
+        }
+        executor.shutdown();
+    }
 }
