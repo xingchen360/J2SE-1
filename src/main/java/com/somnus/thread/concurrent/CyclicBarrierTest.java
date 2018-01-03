@@ -27,7 +27,7 @@ public class CyclicBarrierTest {
 
 			@Override
 			public void run() {
-				System.out.println("人员全部到齐了，各自拍照留念。。。");
+				System.out.println("人员全部到齐了，各自拍照留念，拍照结束，就开始吃饭。。。。");
 			}
 			
 		});
@@ -41,14 +41,11 @@ public class CyclicBarrierTest {
 				public void run() {
 					try {
 						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println(offset + "到达聚餐地点，当前已有" + (cb.getNumberWaiting()+1) + "人到达");
+						System.out.println(Thread.currentThread().getName() + "->" + offset + "到达聚餐地点，当前已有" + (cb.getNumberWaiting()+1) + "人到达");
 						//阻塞
 						cb.await();
-						if(offset == 10) {
-							System.out.println("拍照结束，开始吃饭。。。。");
-						}
 						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println(offset + "吃完饭了，准备回家。。。。");
+						System.out.println(Thread.currentThread().getName() + "->" + offset + "吃完饭了，准备回家。。。。");
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} catch (BrokenBarrierException e) {

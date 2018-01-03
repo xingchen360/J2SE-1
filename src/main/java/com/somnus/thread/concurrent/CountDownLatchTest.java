@@ -15,13 +15,15 @@ import java.util.concurrent.TimeUnit;
  *    Date        Author        Version        Description
  * -----------------------------------------------------------------------------------
  * 2017年12月30日             Somnus         1.0             初始化
- * 
+ * 有5个运动员赛跑，开跑之前，裁判需要等待5个运动员都准备好才能发令，并且5个运动员准备好之后也都需要等待裁判发令才能开跑。
  */
 public class CountDownLatchTest {
 
 	public static void main(String[] args) throws InterruptedException {
-		
-		final CountDownLatch latch = new CountDownLatch(10);
+		// 用于判断发令之前运动员是否已经完全进入准备状态，需要等待5个运动员，所以参数为10
+		final CountDownLatch runner = new CountDownLatch(10);
+		// 用于判断裁判是否已经发令，只需要等待一个裁判，所以参数为1
+		final CountDownLatch referee = new CountDownLatch(1);
 		
 		ExecutorService executor = Executors.newCachedThreadPool();
 		
@@ -31,10 +33,11 @@ public class CountDownLatchTest {
 				@Override
 				public void run() {
 					try {
-						System.out.println("任务【" + offset+ "】正在执行任务" + Thread.currentThread().getName() + " for offset of " + offset);
 						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println("任务【" + offset+ "】执行完毕" + Thread.currentThread().getName() + " for offset of " + offset);
-						latch.countDown();
+						System.out.println("运动员【" + offset+ "】准备完毕" + Thread.currentThread().getName());
+						runner.countDown();
+						referee.await();
+						System.out.println("运动员【" + offset+ "】开跑。。。" + Thread.currentThread().getName());
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -43,9 +46,10 @@ public class CountDownLatchTest {
 			});
 		}
 		
-		System.out.println("等待其它子任务执行完毕，主线程才开始执行任务");
-		latch.await();
-		System.out.println("主线程开始执行任务。。。。");
+		runner.await();
+		referee.countDown();
+        System.out.println("裁判：所有运动员准备完毕，开始...");
+        
 		executor.shutdown();
 	}
 
