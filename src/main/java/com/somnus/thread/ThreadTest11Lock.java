@@ -23,17 +23,9 @@ public class ThreadTest11Lock{
 	public static void main(String[] args){
 		final Outputter1 output = new Outputter1();
 
-		new Thread(){
-			public void run(){
-				output.output("abcdefghijklmnopqrstuvwxyz");
-			};
-		}.start();
+		new Thread(() -> output.output("abcdefghijklmnopqrstuvwxyz")).start();
 
-		new Thread(){
-			public void run(){
-				output.output("0123456789");
-			};
-		}.start();
+		new Thread(() -> output.output("0123456789")).start();
 	}
 }
 

@@ -19,19 +19,16 @@ public class ThreadLocal1Test {
 	
 	public void execute(){
 		for (int j = 0; j < 10; j++) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// 获取当前线程的本地变量，然后累加1000次
-					int num = container.get();
-					for (int i = 0; i < 1000; i++) {
-						num++;
-					}
-					// 重新设置累加后的本地变量
-					container.set(num);
-					System.out.println(Thread.currentThread().getName() + " : " + container.get());
-					container.remove();
+			new Thread(() -> {
+				// 获取当前线程的本地变量，然后累加1000次
+				int num = container.get();
+				for (int i = 0; i < 1000; i++) {
+					num++;
 				}
+				// 重新设置累加后的本地变量
+				container.set(num);
+				System.out.println(Thread.currentThread().getName() + " : " + container.get());
+				container.remove();
 			}, "Thread-" + j).start();
 		}
 	}

@@ -11,19 +11,16 @@ package com.somnus.thread.threadlocal;
 public class ContextTest {
 	public static void main(String[] args) {
 		for (int j = 0; j < 10; j++) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// 获取当前线程的本地变量，然后累加1000次
-					Integer index = ActionContext.getInstance().getInteger();
-					for (int i = 0; i < 1000; i++) {
-						index++;
-					}
-					// 重新设置累加后的本地变量
-					ActionContext.getInstance().setInteger(index);
-					System.out.println(Thread.currentThread().getName() + " : " + index);
-					ActionContext.getInstance().remove();
+			new Thread(() -> {
+				// 获取当前线程的本地变量，然后累加1000次
+				Integer index = ActionContext.getInstance().getInteger();
+				for (int i = 0; i < 1000; i++) {
+					index++;
 				}
+				// 重新设置累加后的本地变量
+				ActionContext.getInstance().setInteger(index);
+				System.out.println(Thread.currentThread().getName() + " : " + index);
+				ActionContext.getInstance().remove();
 			}, "Thread-" + j).start();
 		}
 	}

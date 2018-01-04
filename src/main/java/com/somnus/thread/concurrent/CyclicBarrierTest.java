@@ -36,23 +36,19 @@ public class CyclicBarrierTest {
 		/** 模拟10个用户 **/
 		for (int i = 1; i <= 10; i++) {
 			final int offset = i;
-			executor.execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println(Thread.currentThread().getName() + "->" + offset + "到达聚餐地点，当前已有" + (cb.getNumberWaiting()+1) + "人到达");
-						//阻塞
-						cb.await();
-						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-						System.out.println(Thread.currentThread().getName() + "->" + offset + "吃完饭了，准备回家。。。。");
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} catch (BrokenBarrierException e) {
-						e.printStackTrace();
-					}
+			executor.execute(() -> {
+				try {
+					TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+					System.out.println(Thread.currentThread().getName() + "->" + offset + "到达聚餐地点，当前已有" + (cb.getNumberWaiting()+1) + "人到达");
+					//阻塞
+					cb.await();
+					TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+					System.out.println(Thread.currentThread().getName() + "->" + offset + "吃完饭了，准备回家。。。。");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (BrokenBarrierException e) {
+					e.printStackTrace();
 				}
-				
 			});
 		}
 		executor.shutdown();

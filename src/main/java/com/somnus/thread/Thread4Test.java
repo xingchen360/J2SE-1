@@ -1,5 +1,8 @@
 package com.somnus.thread;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 /**
  * 
  * @Title: Thread4Test.java 
@@ -15,12 +18,7 @@ public class Thread4Test {
 
         // 同时启动1000个线程，去进行i++计算，看看实际结果
         for (int i = 0; i < 10000; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Counter.getInstance().inc();
-                }
-            }).start();
+            new Thread(() -> Counter.getInstance().inc()).start();
         }
         //如果还有子线程在运行，主线程就让出cpu资源
         //直到所有子线程都运行完了，主线程再继续往下执行
@@ -39,7 +37,7 @@ class Counter {
     public  void inc() {
         // 这里延迟100毫秒，使得结果明显
         try {
-            Thread.sleep(1000);
+        	TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
         } catch (InterruptedException e) {
         }
         count++;

@@ -11,12 +11,7 @@ public class ThreadTest12EggLock{
 	public static void main(String args[]){
 		final Dish dish = new Dish();
 		for (int i = 0; i < 10; i++){
-			new Thread(new Runnable(){
-				private Object egg = new Object();
-				public void run(){
-					dish.putEgg(egg);
-				}
-			}).start();
+			new Thread(() -> dish.putEgg(new Object())).start();
 			
 			new Thread(new Runnable(){
 				public void run(){

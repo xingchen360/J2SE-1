@@ -30,28 +30,13 @@ public class SynObj {
 	public static void main(String[] args) {
         final SynObj obj = new SynObj();
 
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.methodA();
-            }
-        });
+        Thread t1 = new Thread(() -> obj.methodA());
         t1.start();
 
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.methodB();
-            }
-        });
+        Thread t2 = new Thread(() -> obj.methodB());
         t2.start();
 
-        Thread t3 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.methodC();
-            }
-        });
+        Thread t3 = new Thread(() -> obj.methodC());
         t3.start();
     }
 }

@@ -1,6 +1,5 @@
 package com.somnus.thread.pool;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
@@ -20,15 +19,13 @@ public class ExecutorCompletion2 {
         for (int i = 1; i <= 100; i++){
         	final int start = (i -1) * groupNum +1;
 			final int end = i * groupNum;
-    		completionService.submit(new Callable<Long>() {
-    			public Long call() {
-    				Long sum = 0L;
-    				for (int j = start; j <= end; j++) {
-    					System.out.println(Thread.currentThread().getName() + " is looping of " + j + " for start of " + start + " for end of " + end);
-    					sum += j;
-    				}
-    				return sum;
-    			}
+    		completionService.submit(() -> {
+    			Long sum = 0L;
+				for (int j = start; j <= end; j++) {
+					System.out.println(Thread.currentThread().getName() + " is looping of " + j + " for start of " + start + " for end of " + end);
+					sum += j;
+				}
+				return sum;
     		});//返回结果类型FutureTask  
         }
 		

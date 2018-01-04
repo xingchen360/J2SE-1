@@ -1,4 +1,8 @@
 package com.somnus.thread;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 /**
  * 
  * @Title: Thread3Test.java 
@@ -36,7 +40,7 @@ class Runner implements Runnable{
 			     * 如果不是一个线程不断的睡眠，别说3个就算是1W个也是很快的全部执行完（见例子ThreadSleep）
 			     * 因为"同时"启动，"同时"睡眠
 			     */
-				Thread.sleep(500);
+				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(500));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();

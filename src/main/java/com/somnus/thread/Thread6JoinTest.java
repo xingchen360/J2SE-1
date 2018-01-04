@@ -19,20 +19,15 @@ package com.somnus.thread;
 public class Thread6JoinTest {
 	
 	public static void main(String[] args) throws InterruptedException {
-		Join j = new Join();
-		Thread t = new Thread(j);
+		Thread t = new Thread(() -> {
+			for(int i=0;i<100;i++){
+	    		System.out.println(Thread.currentThread().getName()+":Thread running....");
+	    	}
+		});
 		t.start();
 		for(int i = 0;i<100;i++){
 			if(i==10) t.join();
 			System.out.println("main:"+i);
 		}
 	}
-}
-class Join implements Runnable{
-    @Override
-    public void run() {
-    	for(int i=0;i<100;i++){
-    		System.out.println(Thread.currentThread().getName()+":Thread running....");
-    	}
-    }
 }

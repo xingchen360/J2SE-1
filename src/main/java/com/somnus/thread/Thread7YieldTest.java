@@ -14,20 +14,15 @@ package com.somnus.thread;
 public class Thread7YieldTest {
 	
 	public static void main(String[] args) throws InterruptedException {
-		Yield y = new Yield();
-		Thread t = new Thread(y);
+		Thread t = new Thread(() -> {
+			for(int i=0;i<100;i++){
+	    		System.out.println(Thread.currentThread().getName()+":Thread running....");
+	    	}
+		});
 		t.start();
 		for(int i = 0;i<100;i++){
 			if(i%5==0) Thread.yield();
 			System.out.println("main:"+i);
 		}
 	}
-}
-class Yield implements Runnable{
-    @Override
-    public void run() {
-    	for(int i=0;i<100;i++){
-    		System.out.println(Thread.currentThread().getName()+":Thread running....");
-    	}
-    }
 }

@@ -12,17 +12,9 @@ public class ThreadTest11{
 	public static void main(String[] args){
 		final Outputter output = new Outputter();
 
-		new Thread(){
-			public void run(){
-				output.output("abcdefghijklmnopqrstuvwxyz");
-			};
-		}.start();
+		new Thread(() -> output.output("abcdefghijklmnopqrstuvwxyz")).start();
 
-		new Thread(){
-			public void run(){
-				output.output("0123456789");
-			};
-		}.start();
+		new Thread(() -> output.output("0123456789")).start();
 	}
 }
 

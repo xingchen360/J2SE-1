@@ -1,5 +1,8 @@
 package com.somnus.thread;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 public class VolatileDemo {
 	private volatile int number = 0;
 	public int getNumber(){
@@ -7,7 +10,7 @@ public class VolatileDemo {
 	}
 	public void increase(){
 	    try {
-            Thread.sleep(1000);
+	    	TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } 
@@ -16,7 +19,7 @@ public class VolatileDemo {
 	
 	public void increase2(){
         try {
-            Thread.sleep(1000);
+        	TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -28,12 +31,7 @@ public class VolatileDemo {
 	public static void main(String[] args) {
 		final VolatileDemo demo = new VolatileDemo();
 		for(int i = 0;i<10000;i++){
-			new Thread(new Runnable(){
-				@Override
-				public void run() {
-					demo.increase();
-				}
-			}).start();;
+			new Thread(() -> demo.increase()).start();;
 		}
 		//如果还有子线程在运行，主线程就让出cpu资源
 		//直到所有子线程都运行完了，主线程再继续往下执行

@@ -28,21 +28,18 @@ public class SemaphoreTest {
         /** 模拟10个用户 **/
         for (int i = 1; i <= 10; i++) {
             final int offset = i;
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        /** 获取信号量许可 **/
-                        semaphore.acquire();
-                        System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】进入窗口，准备买票");
-                        TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-                        System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】买票完成，即将离开");
-                        TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
-                        System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】离开售票窗口-->还有"+ semaphore.getQueueLength() +"个人在等待排队");
-                        semaphore.release();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            executor.execute(() -> {
+            	try {
+                    /** 获取信号量许可 **/
+                    semaphore.acquire();
+                    System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】进入窗口，准备买票");
+                    TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+                    System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】买票完成，即将离开");
+                    TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+                    System.out.println(Thread.currentThread().getName() + "用户【" + offset+ "】离开售票窗口-->还有"+ semaphore.getQueueLength() +"个人在等待排队");
+                    semaphore.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
  
             });

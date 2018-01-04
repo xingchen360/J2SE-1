@@ -1,5 +1,8 @@
 package com.somnus.thread;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 /** 
  * 这里启动了10W个线程，每个线程睡眠1秒，但用不了10W秒，可能就几秒钟就执行完
  * 在开启的线程不算太多（比如不到万级）每个线程基本都会立即得到执行，而且得到执行的概率都是基本差不多
@@ -11,17 +14,14 @@ public class ThreadSleep {
     public static void main(String[] args) {
         // 同时启动100000个线程
         for (int i = 0; i < 100000; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                    System.out.println("********"+Thread.currentThread().getName() +"********");
+            new Thread(() -> {
+            	try{
+            		TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
                 }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                System.out.println("********"+Thread.currentThread().getName() +"********");
             }).start();
         }
     }

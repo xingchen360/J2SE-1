@@ -11,21 +11,17 @@ public class ThreadTest15{
 	public static void main(String[] args){
 		final Math math = new Math();
 		for(int i=0;i<3;i++){
-			new Thread(new Runnable(){
-				public void run(){
-					for(int i=0;i<10;i++){
-						math.increase();
-						System.out.println(Thread.currentThread().getName()+":increase");
-					}
+			new Thread(() -> {
+				for(int j=0; j<10; j++){
+					math.increase();
+					System.out.println(Thread.currentThread().getName()+":increase");
 				}
 			}).start();
 			
-			new Thread(new Runnable(){
-				public void run(){
-					for(int i=0;i<10;i++){
-						math.decrease();
-						System.out.println(Thread.currentThread().getName()+":decrease");
-					}
+			new Thread(() -> {
+				for(int j=0; j<10; j++){
+					math.decrease();
+					System.out.println(Thread.currentThread().getName()+":decrease");
 				}
 			}).start();
 		}

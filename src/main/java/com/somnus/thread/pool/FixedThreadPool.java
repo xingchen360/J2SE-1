@@ -23,17 +23,15 @@ public class FixedThreadPool {
         ExecutorService executor = Executors.newFixedThreadPool(3);
         for (int i = 1; i <=10; i++){
             final int taskID = i;
-            executor.execute(new Runnable(){
-                public void run(){
-                    for (int j = 1; j <= 10; j++){
-                        try{
-                        	TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
-                        }
-                        catch (InterruptedException e){
-                            e.printStackTrace();
-                        }
-                        System.out.println(Thread.currentThread().getName() + " is looping of " + j + " for task of " + taskID);
+            executor.execute(() -> {
+            	for (int j = 1; j <= 10; j++){
+                    try{
+                    	TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
                     }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    System.out.println(Thread.currentThread().getName() + " is looping of " + j + " for task of " + taskID);
                 }
             });
         }

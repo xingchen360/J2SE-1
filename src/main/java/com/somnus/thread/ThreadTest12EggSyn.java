@@ -7,18 +7,9 @@ public class ThreadTest12EggSyn{
 	public static void main(String args[]){
 		final Plate plate = new Plate();
 		for (int i = 0; i < 10; i++){
-			new Thread(new Runnable(){
-				private Object egg = new Object();
-				public void run(){
-					plate.putEgg(egg);
-				}
-			}).start();
+			new Thread(() -> plate.putEgg(new Object())).start();
 			
-			new Thread(new Runnable(){
-				public void run(){
-					plate.getEgg();
-				}
-			}).start();
+			new Thread(() -> plate.getEgg()).start();
 		}
 	}
 }
