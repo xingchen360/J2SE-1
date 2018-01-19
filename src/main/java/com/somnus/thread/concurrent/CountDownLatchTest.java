@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class CountDownLatchTest {
 
 	public static void main(String[] args) throws InterruptedException {
-		// 用于判断发令之前运动员是否已经完全进入准备状态，需要等待5个运动员，所以参数为10
+		// 用于判断发令之前运动员是否已经完全进入准备状态，需要等待10个运动员，所以参数为10
 		final CountDownLatch runner = new CountDownLatch(10);
 		// 用于判断裁判是否已经发令，只需要等待一个裁判，所以参数为1
 		final CountDownLatch referee = new CountDownLatch(1);
