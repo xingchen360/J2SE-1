@@ -2,11 +2,11 @@ package com.somnus.map;
 
 import java.util.UUID;
 
-public class ConcurrentHashMap {
+public class HashMap {
 	
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		
-		java.util.concurrent.ConcurrentHashMap<String,String> map = new java.util.concurrent.ConcurrentHashMap<String,String>();
+		java.util.HashMap<String,String> map = new java.util.HashMap<String,String>();
 
 		for (int i = 0; i < 10000; i++) {
             new Thread(() -> {
@@ -16,6 +16,7 @@ public class ConcurrentHashMap {
             	System.out.println(Thread.currentThread().getName()+" put over");
             }).start();
         }
-	
+		
 	}
+
 }

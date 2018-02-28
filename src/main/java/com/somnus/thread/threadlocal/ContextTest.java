@@ -12,6 +12,7 @@ public class ContextTest {
 	public static void main(String[] args) {
 		for (int j = 0; j < 10; j++) {
 			new Thread(() -> {
+				System.out.println(ActionContext.getInstance());
 				// 获取当前线程的本地变量，然后累加1000次
 				Integer index = ActionContext.getInstance().getInteger();
 				for (int i = 0; i < 1000; i++) {
