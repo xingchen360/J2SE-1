@@ -1,15 +1,11 @@
 package com.somnus.thread.threadlocal;
 
-/** 
- * @Title: ActionContext.java 
- * @Package com.somnus.thread.threadlocal 
- * @Description: TODO
- * @author Somnus
- * @date 2015年4月25日 上午10:40:32 
- * @version V1.0 
- */
+import org.junit.Test;
+
 public class ContextTest {
-	public static void main(String[] args) {
+	
+	@Test
+	public void test() {
 		for (int j = 0; j < 10; j++) {
 			new Thread(() -> {
 				System.out.println(ActionContext.getInstance());
@@ -25,7 +21,26 @@ public class ContextTest {
 			}, "Thread-" + j).start();
 		}
 	}
+	
+	@Test
+	public void test2() {
+		for (int j = 0; j < 10; j++) {
+			new Thread(() -> {
+				// 获取当前线程的本地变量，然后累加1000次
+				Integer index = ActionContext2.getInteger();
+				for (int i = 0; i < 1000; i++) {
+					index++;
+				}
+				// 重新设置累加后的本地变量
+				ActionContext2.setInteger(index);
+				System.out.println(Thread.currentThread().getName() + " : " + ActionContext2.getInteger());
+				ActionContext2.remove();
+			}, "Thread-" + j).start();
+		}
+	}
 }
+/* Struts2的ActionContext便是采用的此方案 */
+/** 以自身对象作为ThreadLocal绑定值，必须保证每个线程都生成一个自己的上下文对象，并且任何时候拿到的都是属于当前线程的，具体参照 getInstance方法**/
 class ActionContext{
 	private static ThreadLocal<ActionContext>	actionContext = new ThreadLocal<ActionContext>();
 	
@@ -53,7 +68,7 @@ class ActionContext{
 		actionContext.remove();
 	}
 }
-
+/** 以上下文中每个具体的静态属性作为ThreadLocal绑定值，每个线程任何时候拿到上下文类中的属性都是当前线程的**/
 class ActionContext2{
 	
 	private static ThreadLocal<Integer>	container = new ThreadLocal<Integer>() {
@@ -67,11 +82,11 @@ class ActionContext2{
 		return container.get();
 	}
 	
-	public static  void setInteger(Integer num){
+	public static void setInteger(Integer num){
 		container.set(num);
 	}
 	
-	public void remove(){
+	public static void remove(){
 		container.remove();
 	}
 }
