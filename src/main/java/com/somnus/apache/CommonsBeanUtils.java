@@ -1,6 +1,7 @@
 package com.somnus.apache;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.junit.Test;
+
+import com.somnus.apache.Person.Pet;
 
 /**
  * @Title: CommonsBeanUtils.java 
@@ -37,10 +40,18 @@ public class CommonsBeanUtils {
     
     @Test
     public void cloneBean() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException{
-        Person person = new Person("admin","password",null,null);
-        /*克隆对象*/
+        Person person = new Person("admin","password",new Date(),BigDecimal.TEN,new Pet("diu diu"));
+        
+        /** 浅拷贝 **/
         Person person2 = (Person) BeanUtils.cloneBean(person);
-        System.out.println("克隆对象>>" + person2);
+        person2.getPet().setName("mie mie");
+        
+        System.out.println("是否相同？ " + (person == person2));
+        
+        System.out.println("宠物是否相同？ " + (person.getPet() == person2.getPet()));
+        
+        System.out.println(person.getPet() + "||" + person2.getPet());
+        System.out.println(person.getPet().getName() + "||" + person2.getPet().getName());
     }
     
 	@Test
@@ -60,7 +71,7 @@ public class CommonsBeanUtils {
 	
 	@Test
 	public void describe() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-        Person person2 = new Person("admin","password",new Date(),null);
+        Person person2 = new Person("admin","password",new Date(),null,null);
         /*将一个Bean转化为一个Map对象了，如下：key是对象的属性名，value是属性取值对象所得到的字符串，不能进行深层复制*/
         Map<String, String> map2 = BeanUtils.describe(person2);
         System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
@@ -68,7 +79,7 @@ public class CommonsBeanUtils {
 	
 	@Test
 	public void describe2() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-        Person person2 = new Person("admin","password",new Date(),null);
+        Person person2 = new Person("admin","password",new Date(),null,null);
         /*将一个Bean转化为一个Map对象了，如下：key是对象的属性名，value仍然是属性的原始取值，不做字符串转换。换句话说，它是可以进行深层对象复制转换的*/
         Map<String, Object> map2 = PropertyUtils.describe(person2);
         System.out.println(map2.get("username") + ">>" + map2.get("birthday"));
@@ -80,7 +91,7 @@ public class CommonsBeanUtils {
 	 */
     @Test
     public void copyProperties() throws IllegalAccessException, InvocationTargetException{
-        Person person = new Person("admin","password",new Date(),null);
+        Person person = new Person("admin","password",new Date(),null,null);
         /*拥有相同属性的对象转换-->支持属性类型自动转换的功能*/
         People people = new People();
         /*BeanUtils在对Bean赋值时会进行类型转化 */
@@ -90,7 +101,7 @@ public class CommonsBeanUtils {
     
     @Test
     public void copyProperties2() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-        Person person = new Person("admin","password",new Date(),null);
+        Person person = new Person("admin","password",new Date(),null,null);
         /*拥有相同属性的对象转换-->不支持属性类型自动转换的功能*/
         People people = new People();
         /*PropertyUtils不会对类型进行转化，如果类型不同则会抛出异常 */
@@ -100,7 +111,7 @@ public class CommonsBeanUtils {
     
     @Test
     public void reflect() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-        Person person = new Person("admin","password",null,null);
+        Person person = new Person("admin","password",null,null,null);
         /*反射调用get方法*/
         String username = (String) PropertyUtils.getProperty(person, "username");
         System.out.println(username);
@@ -111,7 +122,7 @@ public class CommonsBeanUtils {
     
     @Test
     public void reflect2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
-        Person person = new Person("admin","password",null,null);
+        Person person = new Person("admin","password",null,null,null);
         MethodUtils.invokeMethod(person, "setUsername", new Object[] { "andy" });
         String name = (String) MethodUtils.invokeMethod(person, "getPassword", new Object[] { });
         System.out.println(name);

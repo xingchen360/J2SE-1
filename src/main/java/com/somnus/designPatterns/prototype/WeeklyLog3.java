@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * @Title: WeeklyLog3.java
  * @Package com.somnus.designPatterns.prototype
@@ -22,8 +25,13 @@ public class WeeklyLog3 implements Serializable {
     private String name;
     private String date;
     private String content;
+    
+    public WeeklyLog3(Attachment3 attachment) {
+		super();
+		this.attachment = attachment;
+	}
 
-    public void setAttachment(Attachment3 attachment) {
+	public void setAttachment(Attachment3 attachment) {
         this.attachment = attachment;
     }
 
@@ -66,5 +74,28 @@ public class WeeklyLog3 implements Serializable {
         ByteArrayInputStream bis = new ByteArrayInputStream(bao.toByteArray());
         ObjectInputStream ois = new ObjectInputStream(bis);
         return (WeeklyLog3) ois.readObject();
+    }
+    
+    static class Attachment3 implements Serializable {
+    	private static final long serialVersionUID = 1L;
+    	private String name; // 附件名
+    	
+        public Attachment3(String name) {
+			super();
+			this.name = name;
+		}
+
+		public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        @Override
+        public String toString() {  
+        	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.somnus.designPatterns.prototype;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * @Title: WeeklyLog2.java
  * @Package com.somnus.designPatterns.prototype
@@ -15,8 +18,13 @@ class WeeklyLog2 implements Cloneable {
     private String name;
     private String date;
     private String content;
+    
+    public WeeklyLog2(Attachment2 attachment) {
+		super();
+		this.attachment = attachment;
+	}
 
-    public void setAttachment(Attachment2 attachment) {
+	public void setAttachment(Attachment2 attachment) {
         this.attachment = attachment;
     }
 
@@ -59,4 +67,31 @@ class WeeklyLog2 implements Cloneable {
             return null;
         }
     }
+    
+    static class Attachment2 {
+        private String name; // 附件名
+        
+        public Attachment2(String name) {
+			super();
+			this.name = name;
+		}
+
+		public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public void download() {
+            System.out.println("下载附件，文件名为" + name);
+        }
+        
+        @Override
+        public String toString() {  
+        	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
+        }
+    }
 }
+

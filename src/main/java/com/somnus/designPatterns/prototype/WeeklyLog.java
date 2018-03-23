@@ -1,5 +1,8 @@
 package com.somnus.designPatterns.prototype;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * @Title: WeeklyLog.java
  * @Package com.somnus.designPatterns.prototype
@@ -13,8 +16,15 @@ class WeeklyLog implements Cloneable {
     private String name;
     private String date;
     private String content;
+    
+    public WeeklyLog(String name, String date, String content) {
+		super();
+		this.name = name;
+		this.date = date;
+		this.content = content;
+	}
 
-    public void setName(String name) {
+	public void setName(String name) {
         this.name = name;
     }
 
@@ -48,5 +58,10 @@ class WeeklyLog implements Cloneable {
             System.out.println("不支持复制！");
             return null;
         }
+    }
+    
+    @Override
+    public String toString() {  
+    	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
     }
 }

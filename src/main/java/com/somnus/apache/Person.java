@@ -15,17 +15,20 @@ public class Person implements Serializable{
     private Date birthday;
     private BigDecimal money;
     
+    private Pet pet;
+    
     public Person() {
 		super();
 	}
 	
 	public Person(String username, String password, Date birthday,
-			BigDecimal money) {
+			BigDecimal money, Pet pet) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.birthday = birthday;
 		this.money = money;
+		this.pet = pet;
 	}
     
 	public String getUsername() {
@@ -59,8 +62,40 @@ public class Person implements Serializable{
 	public void setMoney(BigDecimal money) {
 		this.money = money;
 	}
+	
+	public Pet getPet() {
+		return pet;
+	}
+
+	public void setPet(Pet pet) {
+		this.pet = pet;
+	}
 
 	public String toString() {  
     	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
     }
+	
+	static class Pet  implements Serializable{
+		private static final long serialVersionUID = 1L;
+		
+		private String name;
+		
+		public Pet(String name) {
+			super();
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		/*public String toString() {  
+	    	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
+	    }*/
+		
+	}
 }

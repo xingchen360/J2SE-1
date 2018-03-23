@@ -1,11 +1,15 @@
 package com.somnus.apache;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +28,8 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 
+import com.somnus.apache.Person.Pet;
+
 /**
  * 
  * @Title: CommonsLang.java 
@@ -39,9 +45,19 @@ public class CommonsLang {
 	public void SerializationUtils(){
 		System.out.println(this.getClass().getName());
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		Person person = new Person("admin","password",new Date(),null);
-		System.out.println(person);
-		System.out.println(SerializationUtils.clone(person));
+		
+		Person person = new Person("admin","password",new Date(),BigDecimal.TEN,new Pet("diu diu"));
+        
+        /** 深拷贝 **/
+        Person person2 = (Person) SerializationUtils.clone(person);
+        person2.getPet().setName("mie mie");
+        
+        System.out.println("是否相同？ " + (person == person2));
+        
+        System.out.println("宠物是否相同？ " + (person.getPet() == person2.getPet()));
+        
+        System.out.println(person.getPet() + "||" + person2.getPet());
+		
 		somnus();
 	}
 	
@@ -77,6 +93,14 @@ public class CommonsLang {
         System.out.println(ArrayUtils.toString(s3));
         String[] ss = ArrayUtils.subarray(s, 1, 4);
         System.out.println(ArrayUtils.toString(ss));
+        
+        /** Arrays.asList确实会返回一个ArrayList对象，但是该类是Arrays类 中一个私有静态内部类，
+         * 而不是常见的java.util.ArrayList类。这个java.util.Arrays.ArrayList类具有 set()，get()，contains()等方法，
+         * 但是不具有任何添加或移除元素的任何方法。**/
+        /*List<String> list = new ArrayList<>(Arrays.asList(new String[]{"21","是"}));*/
+        
+        List<String> list2 = new ArrayList<>();
+        Collections.addAll(list2, new String[]{"21","是"});
     }
     
     @Test

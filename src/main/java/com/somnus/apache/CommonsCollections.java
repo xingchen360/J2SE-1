@@ -108,10 +108,10 @@ public class CommonsCollections {
     
     public static void main(String[] args) {
     	List<Person> param = new ArrayList<Person>();
-    	param.add(new Person("admin","password",new Date(),null));
-    	param.add(new Person("admin","password2",new Date(),null));
-    	param.add(new Person("admin3","password3",new Date(),null));
-    	param.add(new Person("admin","password4",new Date(),null));
+    	param.add(new Person("admin","password",new Date(),null,null));
+    	param.add(new Person("admin","password2",new Date(),null,null));
+    	param.add(new Person("admin3","password3",new Date(),null,null));
+    	param.add(new Person("admin","password4",new Date(),null,null));
     	
     	CommonsCollections util = new CommonsCollections();
     	System.out.println(util.unique(param, "username"));
