@@ -71,6 +71,7 @@ public class Person implements Serializable{
 		this.pet = pet;
 	}
 
+	@Override
 	public String toString() {  
     	return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);   
     }

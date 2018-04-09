@@ -24,6 +24,7 @@ public class CakeBaker implements Cake {
 		this.cake = new String(buffer);
 	}
 
+	@Override
 	public String getCake() {
 		return cake;
 	}
