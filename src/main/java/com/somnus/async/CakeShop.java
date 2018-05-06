@@ -16,6 +16,7 @@ public class CakeShop {
 		
 		// (2) 为了建立CakeBaker的实体，启动新的线程
 		new Thread() {
+			@Override
 			public void run() {
 				//在匿名内部类中使用count、order、c。
 				CakeBaker cakeBaker = new CakeBaker(count, c);

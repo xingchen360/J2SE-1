@@ -1,11 +1,13 @@
 package com.somnus.apache;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.net.URLCodec;
 import org.junit.Test;
 
 /**
@@ -43,5 +45,14 @@ public class CommonsCodec {
 	public void DigestUtils(){
 		System.out.println(DigestUtils.md5Hex("admin"));
 		/*System.out.println(DigestUtils.shaHex("admin"));*/
+	}
+	
+	@Test
+	public void URLCodec() throws UnsupportedEncodingException, DecoderException {
+		System.out.println(java.net.URLEncoder.encode("hello&魔都","UTF-8"));
+        System.out.println(java.net.URLDecoder.decode("hello%26%E9%AD%94%E9%83%BD","UTF-8"));
+        
+        System.out.println(new URLCodec().encode("hello&魔都","UTF-8"));
+        System.out.println(new URLCodec().decode("hello%26%E9%AD%94%E9%83%BD","UTF-8"));
 	}
 }
