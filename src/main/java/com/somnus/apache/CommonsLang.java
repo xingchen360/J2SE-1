@@ -41,6 +41,12 @@ import com.somnus.apache.Person.Pet;
  */
 public class CommonsLang {
 	
+	public static void main(String[] args) {
+		String name = "abcabc";
+		String name_ = name.replace("b", "a");
+		System.out.println(name + "-->" + name_);
+	}
+	
 	@Test
 	public void SerializationUtils(){
 		System.out.println(this.getClass().getName());
@@ -213,7 +219,7 @@ public class CommonsLang {
         String[] s2 = StringUtils.split(str2, ",");
         System.out.println(ArrayUtils.toString(s2));//{aaa,bbb,ccc}
         String str22 = "aaa|bbb|ccc";  
-        String[] s22 = StringUtils.split(str22, "\\|");
+        String[] s22 = StringUtils.split(str22, "[|]");
         System.out.println(ArrayUtils.toString(s22));//{aaa,bbb,ccc}
         //去除空字符串 
         String str3 = "aaa,,ccc,";  

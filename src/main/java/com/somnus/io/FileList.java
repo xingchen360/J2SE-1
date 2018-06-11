@@ -14,15 +14,14 @@ import java.io.File;
 public class FileList {
 
 	public static void main(String[] args) {
-		File file = new File("src/main/resources/");
-		String[] names = file.list();
-		for(String data:names){
-			System.out.println(data);
-		}
-		
-		File[] f = file.listFiles();
-		for(File data:f){
-			System.out.println(data.getName());
+		File file = new File("E:\\Apache Tomcat Server");
+		File[] files = file.listFiles();
+		for(int i = 1;i<=files.length-1;i++){
+			System.out.println(files[i].getName());
+			String path = files[i].getParent();  
+            File newfile = new File(path + "/" + i); 
+            files[i].renameTo(newfile);
+			System.out.println(files[i].getName());
 		}
 	}
 	
