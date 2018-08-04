@@ -236,6 +236,12 @@
 			<version>${bouncy.castle.version}</version>
 		</dependency>
 		
+		<dependency>
+    		<groupId>com.google.guava</groupId>
+    		<artifactId>guava</artifactId>
+    		<version>23.0</version>
+		</dependency>
+		
 		<!-- ***********************XML*********************** -->
 		<!-- 加入dom4j 依赖包 -->
 		<dependency>
