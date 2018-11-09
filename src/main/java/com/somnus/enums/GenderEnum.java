@@ -34,33 +34,29 @@ public enum GenderEnum {
      * @return
      */
     public static GenderEnum getByCode(String code) {
-        for (GenderEnum genum : values()) {
-            if (genum.getCode().equals(code)) {
-                return genum;
+        for (GenderEnum ele : values()) {
+            if (ele.getCode().equals(code)) {
+                return ele;
             }
         }
         return null;
     }
     
     public static GenderEnum nameOf(String name){
-    	GenderEnum genum = null;
-		if (name != null){
-			for (GenderEnum type : GenderEnum.values()) {
-				if (type.name().equalsIgnoreCase(name))
-					genum = type;
+    	for (GenderEnum ele : GenderEnum.values()) {
+			if (ele.name().equalsIgnoreCase(name)) {
+				return ele;
 			}
 		}
-		return genum;
+		return null;
 	}
     
     public static GenderEnum descOf(String desc){
-    	GenderEnum genum = null;
-		if (desc != null){
-			for (GenderEnum type : GenderEnum.values()) {
-				if (type.desc.equalsIgnoreCase(desc))
-					genum = type;
+    	for (GenderEnum ele : GenderEnum.values()) {
+			if (ele.desc.equalsIgnoreCase(desc)) {
+				return ele;
 			}
 		}
-		return genum;
+		return null;
 	}
 }

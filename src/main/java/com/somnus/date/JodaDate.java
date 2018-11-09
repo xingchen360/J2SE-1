@@ -68,13 +68,16 @@ public class JodaDate {
                         .toString("yyyy-MM-dd"),  
                 DateTime.now().dayOfYear().withMaximumValue()  
                         .toString("yyyy-MM-dd"))); 
-        
+        // 某月的第一天和最后一天  
         System.out.println(String.format(  
                 "min:%s, max:%s",  
                 new DateTime("2017-03").dayOfMonth().withMinimumValue()  
                         .toString("yyyy-MM-dd"),  
                         new DateTime("2017-03").dayOfMonth().withMaximumValue()  
                         .toString("yyyy-MM-dd"))); 
+        
+        System.out.println(DateTime.now().withDayOfMonth(10).toString("yyyy-MM-dd"));
+        System.out.println(DateTime.now().withDayOfWeek(1).toString("yyyy-MM-dd"));
     }
     
     @Test

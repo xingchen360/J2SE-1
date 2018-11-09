@@ -7,7 +7,7 @@ public class ComparatorTestCase {
 
 	public static void main(String[] args) {
 		
-		TreeSet<People> set = new TreeSet<People>(new Comparator<People>(){
+		TreeSet<People> set = new TreeSet<>(new Comparator<People>(){
 			@Override
             public int compare(People obj1, People obj2){
 				return obj1.age - obj2.age;
@@ -26,24 +26,6 @@ public class ComparatorTestCase {
 class People {
 	
 	public int age;
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + age;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		People other = (People) obj;
-		if (age == other.age)
-			return true;
-		return false;
-	}
 
 	public People(int age) {
 		super();

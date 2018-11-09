@@ -1,5 +1,6 @@
 package com.somnus;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.Locale;
 
@@ -15,6 +16,19 @@ import org.junit.Test;
  * @version V1.0
  */
 public class StringFormat {
+	
+	public String format(String str, Object ...arguments) {
+		for (int i = 0; i < arguments.length; i++) {
+			str = str.replace("{" + i + "}", String.valueOf(arguments[i]));
+		}
+		return str;
+	}
+	public String format2(String str, Object ...arguments) {
+		for (int i = 0; i < arguments.length; i++) {
+			str = str.replaceFirst("{}", String.valueOf(arguments[i]));
+		}
+		return str;
+	}
 	/*
 	String.format()用法
 	1、转换符
@@ -132,5 +146,12 @@ public class StringFormat {
 	    System.out.println(String.format("时区缩写字符串:%tZ%n",date));
 	    System.out.println(String.format("1970-1-1 00:00:00 到现在所经过的秒数：%ts%n",date));
 	    System.out.println(String.format("1970-1-1 00:00:00 到现在所经过的毫秒数：%tQ%n",date));
+	}
+	
+	@Test
+	public void test() {
+		System.out.println(MessageFormat.format("报文中，{0}元素个数超过限制，最多{1}个！",1,2));
+		System.out.println(format("报文中，{0}元素个数超过限制，最多{1}个！",1,2));
+		System.out.println(format2("报文中，{}元素个数超过限制，最多{}个！",1,2));
 	}
 }

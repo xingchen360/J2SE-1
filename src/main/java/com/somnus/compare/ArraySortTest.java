@@ -45,7 +45,7 @@ public class ArraySortTest {
 	
 	@Test
 	public void test6(){
-		People[] pArray = {new People(3), new People(8), new People(6)};
+		People[] pArray = {new People(6), new People(8), new People(6)};
 		Arrays.sort(pArray, new Comparator<People>(){
 			@Override
             public int compare(People obj1, People obj2){
@@ -57,7 +57,7 @@ public class ArraySortTest {
 	
 	@Test
 	public void test7(){
-		Person[] pArray = {new Person(3), new Person(8), new Person(6)};
+		Person[] pArray = {new Person(6), new Person(8), new Person(6)};
 		Arrays.sort(pArray);
 		System.out.println(Arrays.toString(pArray));
 	}

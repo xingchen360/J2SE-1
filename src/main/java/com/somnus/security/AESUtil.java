@@ -12,8 +12,7 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -22,7 +21,7 @@ import org.apache.commons.codec.binary.Base64;
  * @author Somnus
  * date 2015年4月8日 下午2:10:44  
  */
-public class DESUtil {
+public class AESUtil {
     /** 
      * ALGORITHM 算法 <br> 
      * 可替换为以下任意一种算法，同时key值的size相应改变。 
@@ -44,7 +43,7 @@ public class DESUtil {
      * SecretKey secretKey = keyFactory.generateSecret(desKey); 
      * </code> 
      */
-    public static final String ALGORITHM = "DES";
+    public static final String ALGORITHM = "AES";
 
     /**
      *   
@@ -57,14 +56,9 @@ public class DESUtil {
      * @throws Exception 
      */
     private static SecretKey keyGenerator(byte[] key) throws Exception {
-        DESKeySpec desKey = new DESKeySpec(key);
-        //创建一个密匙工厂，然后用它把DESKeySpec转换成
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM);
-        SecretKey securekey = keyFactory.generateSecret(desKey);
-        
         /*当使用其他对称加密算法时，如AES、Blowfish等算法时，用下述代码替换上述三行代码 */
-        /*SecretKey secretKey = new SecretKeySpec(key,KEY_ALGORITHM);*/  
-        return securekey;
+        SecretKey secretKey = new SecretKeySpec(key,ALGORITHM);
+        return secretKey;
     }
 
     /** 
