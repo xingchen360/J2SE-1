@@ -22,7 +22,7 @@ import org.junit.Test;
 public class ExecutorCompletion {
 	
 	@Test
-	public void main() throws InterruptedException {
+	public void total() throws InterruptedException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
   
         // 构建完成服务  
@@ -35,7 +35,7 @@ public class ExecutorCompletion {
         		int sum = 0;
 				for (int j = 1; j <= 10; j++) {
 					try {
-						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));// 为了测试出效果，让每次任务执行都需要一定时间
+						TimeUnit.MILLISECONDS.sleep(new Random().nextInt(100));// 为了测试出效果，让每次任务执行都需要一定时间
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -52,7 +52,7 @@ public class ExecutorCompletion {
         // 按照完成顺序,打印结果  
         for (int i = 1; i <= 10; i++) {
             try {  
-                System.out.println(completionService.take().get());// 阻塞，知道有任务完成可以获取结果  
+                System.out.println(completionService.take().get());// 阻塞，直到有任务完成可以获取结果  
                 // System.out.println(completionService.poll());//poll直接返回，不阻塞。但是没有完成的任务则返回null
                 // System.out.println(completionService.poll(5, TimeUnit.SECONDS));//阻塞等待指定时间，如果有完成结果返回，没有的直接返回null<span style="white-space:pre">                                                                               <span style="white-space:pre">  </span>// completionService.submit(new RunnableTask(),2);//completionService提交Runnable任务是无法获取结果的</span>  
             } catch (InterruptedException e) {
@@ -95,7 +95,7 @@ public class ExecutorCompletion {
 		long result = 0L;
   
         for (int i = 0; i < 100; i++) {
-            try {  
+            try {
                 result += completionService.take().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
